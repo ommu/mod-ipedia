@@ -25,6 +25,10 @@
  * The followings are the available columns in table '_view_ipedia_positions':
  * @property string $position_id
  * @property string $position_name
+ * @property string $position_desc
+ * @property string $position_task
+ * @property string $position_jobdesc
+ * @property string $position_knowledge
  * @property string $skills
  * @property string $skill_all
  */
@@ -52,6 +56,14 @@ class ViewIpediaPositions extends CActiveRecord
 	}
 
 	/**
+	 * @return string the primarykey column
+	 */
+	public function primaryKey()
+	{
+		return 'position_id';
+	}
+
+	/**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -60,6 +72,7 @@ class ViewIpediaPositions extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('position_name', 'required'),
+			array('position_desc, position_task, position_jobdesc, position_knowledge', 'length', 'max'=>1),
 			array('position_id', 'length', 'max'=>11),
 			array('position_name', 'length', 'max'=>64),
 			array('skills', 'length', 'max'=>23),
@@ -89,6 +102,10 @@ class ViewIpediaPositions extends CActiveRecord
 		return array(
 			'position_id' => Yii::t('attribute', 'Position'),
 			'position_name' => Yii::t('attribute', 'Position Name'),
+			'position_desc' => Yii::t('attribute', 'Position Desc'),
+			'position_task' => Yii::t('attribute', 'Position Task'),
+			'position_jobdesc' => Yii::t('attribute', 'Position Jobdesc'),
+			'position_knowledge' => Yii::t('attribute', 'Position Knowledge'),
 			'skills' => Yii::t('attribute', 'Skills'),
 			'skill_all' => Yii::t('attribute', 'Skill All'),
 		);
@@ -119,13 +136,17 @@ class ViewIpediaPositions extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.position_id',strtolower($this->position_id),true);
+		$criteria->compare('t.position_id',$this->position_id);
 		$criteria->compare('t.position_name',strtolower($this->position_name),true);
-		$criteria->compare('t.skills',strtolower($this->skills),true);
-		$criteria->compare('t.skill_all',strtolower($this->skill_all),true);
+		$criteria->compare('t.position_desc',$this->position_desc);
+		$criteria->compare('t.position_task',$this->position_task);
+		$criteria->compare('t.position_jobdesc',$this->position_jobdesc);
+		$criteria->compare('t.position_knowledge',$this->position_knowledge);
+		$criteria->compare('t.skills',$this->skills);
+		$criteria->compare('t.skill_all',$this->skill_all);
 
 		if(!isset($_GET['ViewIpediaPositions_sort']))
-			$criteria->order = 't. DESC';
+			$criteria->order = 't.position_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -155,6 +176,10 @@ class ViewIpediaPositions extends CActiveRecord
 		} else {
 			$this->defaultColumns[] = 'position_id';
 			$this->defaultColumns[] = 'position_name';
+			$this->defaultColumns[] = 'position_desc';
+			$this->defaultColumns[] = 'position_task';
+			$this->defaultColumns[] = 'position_jobdesc';
+			$this->defaultColumns[] = 'position_knowledge';
 			$this->defaultColumns[] = 'skills';
 			$this->defaultColumns[] = 'skill_all';
 		}
@@ -167,20 +192,16 @@ class ViewIpediaPositions extends CActiveRecord
 	 */
 	protected function afterConstruct() {
 		if(count($this->defaultColumns) == 0) {
-			/*
-			$this->defaultColumns[] = array(
-				'class' => 'CCheckBoxColumn',
-				'name' => 'id',
-				'selectableRows' => 2,
-				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
-			);
-			*/
 			$this->defaultColumns[] = array(
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			$this->defaultColumns[] = 'position_id';
+			//$this->defaultColumns[] = 'position_id';
 			$this->defaultColumns[] = 'position_name';
+			$this->defaultColumns[] = 'position_desc';
+			$this->defaultColumns[] = 'position_task';
+			$this->defaultColumns[] = 'position_jobdesc';
+			$this->defaultColumns[] = 'position_knowledge';
 			$this->defaultColumns[] = 'skills';
 			$this->defaultColumns[] = 'skill_all';
 		}
@@ -203,72 +224,5 @@ class ViewIpediaPositions extends CActiveRecord
 			return $model;			
 		}
 	}
-
-	/**
-	 * before validate attributes
-	 */
-	/*
-	protected function beforeValidate() {
-		if(parent::beforeValidate()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
-	}
-	*/
-	
-	/**
-	 * before save attributes
-	 */
-	/*
-	protected function beforeSave() {
-		if(parent::beforeSave()) {
-		}
-		return true;	
-	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
 
 }
