@@ -44,7 +44,6 @@ class IpediaIndustries extends CActiveRecord
 	public $industry_name_i;
 	
 	// Variable Search
-	public $industry_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -86,7 +85,7 @@ class IpediaIndustries extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('industry_id, publish, tag_id, industry_desc, creation_date, creation_id, modified_date, modified_id,
-				industry_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				industry_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -123,7 +122,6 @@ class IpediaIndustries extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'industry_name_i' => Yii::t('attribute', 'Industry'),
-			'industry_search' => Yii::t('attribute', 'Industry'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -202,7 +200,7 @@ class IpediaIndustries extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 
-		$criteria->compare('view.industry_name',strtolower($this->industry_search), true);
+		$criteria->compare('view.industry_name',strtolower($this->industry_name_i), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 		
@@ -267,7 +265,7 @@ class IpediaIndustries extends CActiveRecord
 			);
 			if(!isset($_GET['tag'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'industry_search',
+					'name' => 'industry_name_i',
 					'value' => '$data->view->industry_name',
 				);				
 			}

@@ -41,7 +41,6 @@ class IpediaOrganizations extends CActiveRecord
 	public $organization_name_i;
 	
 	// Variable Search
-	public $organization_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -82,7 +81,7 @@ class IpediaOrganizations extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('organization_id, publish, directory_id, creation_date, creation_id, modified_date, modified_id,
-				organization_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				organization_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -115,8 +114,7 @@ class IpediaOrganizations extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
-			'organization_name_i' => Yii::t('attribute', 'Organization Name'),
-			'organization_search' => Yii::t('attribute', 'Organization'),
+			'organization_name_i' => Yii::t('attribute', 'Organization'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -193,7 +191,7 @@ class IpediaOrganizations extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
-		$criteria->compare('view.organization_name',strtolower($this->organization_search), true);
+		$criteria->compare('view.organization_name',strtolower($this->organization_name_i), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -257,7 +255,7 @@ class IpediaOrganizations extends CActiveRecord
 			);
 			if(!isset($_GET['directory'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'organization_search',
+					'name' => 'organization_name_i',
 					'value' => '$data->view->organization_name',
 				);
 			}

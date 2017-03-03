@@ -43,7 +43,6 @@ class IpediaSkills extends CActiveRecord
 	public $skill_name_i;
 	
 	// Variable Search
-	public $skill_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -85,7 +84,7 @@ class IpediaSkills extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('skill_id, publish, tag_id, skill_desc, creation_date, creation_id, modified_date, modified_id,
-				skill_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				skill_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -121,7 +120,6 @@ class IpediaSkills extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'skill_name_i' => Yii::t('attribute', 'Skill'),
-			'skill_search' => Yii::t('attribute', 'Skill'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -200,7 +198,7 @@ class IpediaSkills extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
-		$criteria->compare('view.skill_name',strtolower($this->skill_search), true);
+		$criteria->compare('view.skill_name',strtolower($this->skill_name_i), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -265,7 +263,7 @@ class IpediaSkills extends CActiveRecord
 			);
 			if(!isset($_GET['tag'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'skill_search',
+					'name' => 'skill_name_i',
 					'value' => '$data->view->skill_name',
 				);				
 			}

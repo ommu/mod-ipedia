@@ -10,3 +10,77 @@ db_table_name	:
 
  
 db_sql_filename	: 
+
+plugin_menu		:
+	- urlTitle: Companies
+		urlRules: {siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: o/company/manage, attr: -, icon: -}
+	- urlTitle: Universities
+		urlRules: {siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: o/university/manage, attr: -, icon: -}
+	- urlTitle: Organizations
+		urlRules: {siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: o/organization/manage, attr: -, icon: -}
+	- urlTitle: Positions
+		urlRules: {siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: o/position/manage, attr: -, icon: -}
+	- urlTitle: Majors
+		urlRules: {siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: o/major/manage, attr: -, icon: -}
+	- urlTitle: Datas
+		urlRules: {siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: -, attr: -, icon: -}
+		submenu :
+			- urlTitle: Directories
+				urlRules: {siteType: 0,1, userLevel: 1,2}
+				urlPath: {url: o/directory/manage, attr: -, icon: -}
+			- urlTitle: Skills
+				urlRules: {siteType: 0,1, userLevel: 1,2}
+				urlPath: {url: o/skill/manage, attr: -, icon: -}
+			- urlTitle: Industries
+				urlRules: {siteType: 0,1, userLevel: 1,2}
+				urlPath: {url: o/industry/manage, attr: -, icon: -}
+
+content_menu	:
+
+# controller o/company
+	- urlTitle: Add Company
+		urlRules: {ipedia, o/company, manage, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: add, attr: -, icon: -}
+# controller o/university
+	- urlTitle: Add University
+		urlRules: {ipedia, o/university, manage, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: add, attr: -, icon: -}
+# controller o/organization
+	- urlTitle: Add Organization
+		urlRules: {ipedia, o/organization, manage, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: add, attr: -, icon: -}
+# controller o/position
+	- urlTitle: Back to manage
+		urlRules: {ipedia, o/position, add,edit,view, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: manage, attr: -, icon: -}
+	- urlTitle: Add Position
+		urlRules: {ipedia, o/position, manage, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: add, attr: -, icon: -}
+	- urlTitle: Edit Position
+		urlRules: {ipedia, o/position, view, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: edit, attr: -, icon: -}
+	- urlTitle: View Position
+		urlRules: {ipedia, o/position, edit, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: view, attr: -, icon: -}
+# controller o/major
+	- urlTitle: Add Major
+		urlRules: {ipedia, o/major, manage, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: add, attr: -, icon: -}
+# controller o/directory
+	- urlTitle: Add Directory
+		urlRules: {ipedia, o/directory, manage, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: add, attr: -, icon: -}
+# controller o/skill
+	- urlTitle: Add Skill
+		urlRules: {ipedia, o/skill, manage, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: add, attr: -, icon: -}
+# controller o/industry
+	- urlTitle: Add Industry
+		urlRules: {ipedia, o/industry, manage, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: add, attr: -, icon: -}
