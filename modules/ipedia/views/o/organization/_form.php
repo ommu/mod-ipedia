@@ -22,35 +22,35 @@
 )); ?>
 
 <div class="dialog-content">
-<fieldset>
-	<?php //begin.Messages ?>
-	<div id="ajax-message">
-		<?php echo $form->errorSummary($model); ?>
-	</div>
-	<?php //begin.Messages ?>
-
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'organization_name_i'); ?>
-		<div class="desc">
-			<?php if(!$model->getErrors())
-				$model->organization_name_i = $model->view->organization_name;
-			echo $form->textField($model,'organization_name_i',array('class'=>'span-8')); ?>
-			<?php echo $form->error($model,'organization_name_i'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
+	<fieldset>
+		<?php //begin.Messages ?>
+		<div id="ajax-message">
+			<?php echo $form->errorSummary($model); ?>
 		</div>
-	</div>
+		<?php //begin.Messages ?>
 
-	<div class="clearfix publish">
-		<?php echo $form->labelEx($model,'publish'); ?>
-		<div class="desc">
-			<?php echo $form->checkBox($model,'publish'); ?>
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'organization_name_i'); ?>
+			<div class="desc">
+				<?php if(!$model->getErrors())
+					$model->organization_name_i = $model->view->organization_name;
+				echo $form->textField($model,'organization_name_i',array('class'=>'span-8')); ?>
+				<?php echo $form->error($model,'organization_name_i'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
+			</div>
+		</div>
+
+		<div class="clearfix publish">
 			<?php echo $form->labelEx($model,'publish'); ?>
-			<?php echo $form->error($model,'publish'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
+			<div class="desc">
+				<?php echo $form->checkBox($model,'publish'); ?>
+				<?php echo $form->labelEx($model,'publish'); ?>
+				<?php echo $form->error($model,'publish'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
+			</div>
 		</div>
-	</div>
 
-</fieldset>
+	</fieldset>
 </div>
 <div class="dialog-submit">
 	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') ,array('onclick' => 'setEnableSave()')); ?>
