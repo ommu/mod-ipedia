@@ -25,40 +25,34 @@
 		array(
 			'name'=>'position_id',
 			'value'=>$model->position_id,
-			//'value'=>$model->position_id != '' ? $model->position_id : '-',
 		),
 		array(
 			'name'=>'publish',
 			'value'=>$model->publish == '1' ? Chtml::image(Yii::app()->theme->baseUrl.'/images/icons/publish.png') : Chtml::image(Yii::app()->theme->baseUrl.'/images/icons/unpublish.png'),
-			//'value'=>$model->publish,
+			'type'=>'raw',
 		),
 		array(
 			'name'=>'position_name',
-			'value'=>$model->position_name,
-			//'value'=>$model->position_name != '' ? $model->position_name : '-',
+			'value'=>$model->position_name != '' ? $model->position_name : '-',
 		),
 		array(
 			'name'=>'position_desc',
 			'value'=>$model->position_desc != '' ? $model->position_desc : '-',
-			//'value'=>$model->position_desc != '' ? CHtml::link($model->position_desc, Yii::app()->request->baseUrl.'/public/visit/'.$model->position_desc, array('target' => '_blank')) : '-',
 			'type'=>'raw',
 		),
 		array(
 			'name'=>'position_task',
 			'value'=>$model->position_task != '' ? $model->position_task : '-',
-			//'value'=>$model->position_task != '' ? CHtml::link($model->position_task, Yii::app()->request->baseUrl.'/public/visit/'.$model->position_task, array('target' => '_blank')) : '-',
 			'type'=>'raw',
 		),
 		array(
 			'name'=>'position_jobdesc',
 			'value'=>$model->position_jobdesc != '' ? $model->position_jobdesc : '-',
-			//'value'=>$model->position_jobdesc != '' ? CHtml::link($model->position_jobdesc, Yii::app()->request->baseUrl.'/public/visit/'.$model->position_jobdesc, array('target' => '_blank')) : '-',
 			'type'=>'raw',
 		),
 		array(
 			'name'=>'position_knowledge',
 			'value'=>$model->position_knowledge != '' ? $model->position_knowledge : '-',
-			//'value'=>$model->position_knowledge != '' ? CHtml::link($model->position_knowledge, Yii::app()->request->baseUrl.'/public/visit/'.$model->position_knowledge, array('target' => '_blank')) : '-',
 			'type'=>'raw',
 		),
 		array(
@@ -67,8 +61,7 @@
 		),
 		array(
 			'name'=>'creation_id',
-			'value'=>$model->creation_id,
-			//'value'=>$model->creation_id != 0 ? $model->creation_id : '-',
+			'value'=>$model->creation_id != 0 ? $model->creation->displayname : '-',
 		),
 		array(
 			'name'=>'modified_date',
@@ -76,8 +69,7 @@
 		),
 		array(
 			'name'=>'modified_id',
-			'value'=>$model->modified_id,
-			//'value'=>$model->modified_id != 0 ? $model->modified_id : '-',
+			'value'=>$model->modified_id != 0 ? $model->modified->displayname : '-',
 		),
 	),
 )); ?>
