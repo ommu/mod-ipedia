@@ -147,7 +147,7 @@ class IpediaDirectories extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 		
-		// Custom Search		
+		// Custom Search
 		$criteria->with = array(
 			'creation' => array(
 				'alias'=>'creation',
