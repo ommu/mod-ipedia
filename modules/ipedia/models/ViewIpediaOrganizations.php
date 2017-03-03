@@ -167,7 +167,7 @@ class ViewIpediaOrganizations extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			$this->defaultColumns[] = 'organization_id';
+			//$this->defaultColumns[] = 'organization_id';
 			$this->defaultColumns[] = 'organization_name';
 		}
 		parent::afterConstruct();

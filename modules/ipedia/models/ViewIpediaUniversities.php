@@ -178,7 +178,7 @@ class ViewIpediaUniversities extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			$this->defaultColumns[] = 'university_id';
+			//$this->defaultColumns[] = 'university_id';
 			$this->defaultColumns[] = 'university_name';
 			$this->defaultColumns[] = 'majors';
 			$this->defaultColumns[] = 'major_all';
