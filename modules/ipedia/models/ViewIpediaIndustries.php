@@ -54,6 +54,14 @@ class ViewIpediaIndustries extends CActiveRecord
 	}
 
 	/**
+	 * @return string the primarykey column
+	 */
+	public function primaryKey()
+	{
+		return 'industry_id';
+	}
+
+	/**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -132,7 +140,7 @@ class ViewIpediaIndustries extends CActiveRecord
 		$criteria->compare('t.company_all',strtolower($this->company_all),true);
 
 		if(!isset($_GET['ViewIpediaIndustries_sort']))
-			$criteria->order = 't. DESC';
+			$criteria->order = 't.industry_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -176,19 +184,11 @@ class ViewIpediaIndustries extends CActiveRecord
 	 */
 	protected function afterConstruct() {
 		if(count($this->defaultColumns) == 0) {
-			/*
-			$this->defaultColumns[] = array(
-				'class' => 'CCheckBoxColumn',
-				'name' => 'id',
-				'selectableRows' => 2,
-				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
-			);
-			*/
 			$this->defaultColumns[] = array(
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			$this->defaultColumns[] = 'industry_id';
+			//$this->defaultColumns[] = 'industry_id';
 			$this->defaultColumns[] = 'industry_name';
 			$this->defaultColumns[] = 'majors';
 			$this->defaultColumns[] = 'major_all';
@@ -214,72 +214,5 @@ class ViewIpediaIndustries extends CActiveRecord
 			return $model;			
 		}
 	}
-
-	/**
-	 * before validate attributes
-	 */
-	/*
-	protected function beforeValidate() {
-		if(parent::beforeValidate()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
-	}
-	*/
-	
-	/**
-	 * before save attributes
-	 */
-	/*
-	protected function beforeSave() {
-		if(parent::beforeSave()) {
-		}
-		return true;	
-	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
 
 }

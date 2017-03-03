@@ -41,6 +41,12 @@
 class IpediaIndustries extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $industry_name_i;
+	
+	// Variable Search
+	public $industry_search;
+	public $creation_search;
+	public $modified_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -69,14 +75,18 @@ class IpediaIndustries extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tag_id, industry_desc, creation_date, creation_id, modified_id', 'required'),
+			array('
+				industry_name_i', 'required'),
+			array('
+				industry_name_i', 'vIndustryName'),
 			array('publish', 'numerical', 'integerOnly'=>true),
 			array('tag_id', 'length', 'max'=>11),
 			array('creation_id, modified_id', 'length', 'max'=>10),
-			array('modified_date', 'safe'),
+			array('tag_id, industry_desc', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('industry_id, publish, tag_id, industry_desc, creation_date, creation_id, modified_date, modified_id', 'safe', 'on'=>'search'),
+			array('industry_id, publish, tag_id, industry_desc, creation_date, creation_id, modified_date, modified_id,
+				industry_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -88,8 +98,11 @@ class IpediaIndustries extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'view' => array(self::BELONGS_TO, 'ViewIpediaIndustries', 'industry_id'),
+			'tag' => array(self::BELONGS_TO, 'OmmuTags', 'tag_id'),
+			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
+			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 			'ommuIpediaCompanyIndustries_relation' => array(self::HAS_MANY, 'OmmuIpediaCompanyIndustry', 'industry_id'),
-			'tag_relation' => array(self::BELONGS_TO, 'OmmuCoreTags', 'tag_id'),
 			'ommuIpediaIndustryMajors_relation' => array(self::HAS_MANY, 'OmmuIpediaIndustryMajor', 'industry_id'),
 			'ommuVacancyIndustries_relation' => array(self::HAS_MANY, 'OmmuVacancyIndustry', 'industry_id'),
 		);
@@ -109,6 +122,10 @@ class IpediaIndustries extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
+			'industry_name_i' => Yii::t('attribute', 'Industry'),
+			'industry_search' => Yii::t('attribute', 'Industry'),
+			'creation_search' => Yii::t('attribute', 'Creation'),
+			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
 		/*
 			'Industry' => 'Industry',
@@ -140,6 +157,21 @@ class IpediaIndustries extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+		
+		// Custom Search		
+		$criteria->with = array(
+			'view' => array(
+				'alias'=>'view',
+			),
+			'creation' => array(
+				'alias'=>'creation',
+				'select'=>'displayname'
+			),
+			'modified' => array(
+				'alias'=>'modified',
+				'select'=>'displayname'
+			),
+		);
 
 		$criteria->compare('t.industry_id',strtolower($this->industry_id),true);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
@@ -170,6 +202,10 @@ class IpediaIndustries extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 
+		$criteria->compare('view.industry_name',strtolower($this->industry_search), true);
+		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
+		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
+		
 		if(!isset($_GET['IpediaIndustries_sort']))
 			$criteria->order = 't.industry_id DESC';
 
@@ -229,22 +265,17 @@ class IpediaIndustries extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			if(!isset($_GET['type'])) {
+			if(!isset($_GET['tag'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->industry_id)), $data->publish, 1)',
-					'htmlOptions' => array(
-						'class' => 'center',
-					),
-					'filter'=>array(
-						1=>Yii::t('phrase', 'Yes'),
-						0=>Yii::t('phrase', 'No'),
-					),
-					'type' => 'raw',
-				);
+					'name' => 'industry_search',
+					'value' => '$data->view->industry_name',
+				);				
 			}
-			$this->defaultColumns[] = 'tag_id';
-			$this->defaultColumns[] = 'industry_desc';
+			//$this->defaultColumns[] = 'industry_desc';
+			$this->defaultColumns[] = array(
+				'name' => 'creation_search',
+				'value' => '$data->creation->displayname',
+			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_date',
 				'value' => 'Utility::dateFormat($data->creation_date)',
@@ -271,34 +302,20 @@ class IpediaIndustries extends CActiveRecord
 					),
 				), true),
 			);
-			$this->defaultColumns[] = 'creation_id';
-			$this->defaultColumns[] = array(
-				'name' => 'modified_date',
-				'value' => 'Utility::dateFormat($data->modified_date)',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),
-				'filter' => Yii::app()->controller->widget('zii.widgets.jui.CJuiDatePicker', array(
-					'model'=>$this,
-					'attribute'=>'modified_date',
-					'language' => 'ja',
-					'i18nScriptFile' => 'jquery.ui.datepicker-en.js',
-					//'mode'=>'datetime',
+			if(!isset($_GET['type'])) {
+				$this->defaultColumns[] = array(
+					'name' => 'publish',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->industry_id)), $data->publish, 1)',
 					'htmlOptions' => array(
-						'id' => 'modified_date_filter',
+						'class' => 'center',
 					),
-					'options'=>array(
-						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
-						'showOtherMonths' => true,
-						'selectOtherMonths' => true,
-						'changeMonth' => true,
-						'changeYear' => true,
-						'showButtonPanel' => true,
+					'filter'=>array(
+						1=>Yii::t('phrase', 'Yes'),
+						0=>Yii::t('phrase', 'No'),
 					),
-				), true),
-			);
-			$this->defaultColumns[] = 'modified_id';
+					'type' => 'raw',
+				);
+			}
 		}
 		parent::afterConstruct();
 	}
@@ -321,70 +338,54 @@ class IpediaIndustries extends CActiveRecord
 	}
 
 	/**
+	 * Get company name validation
+	 */
+	public function vIndustryName()
+	{
+		$criteria=new CDbCriteria;
+		$criteria->with = array(
+			'tag' => array(
+				'alias'=>'tag',
+				'select'=>'body'
+			),
+		);
+		$criteria->compare('tag.body', strtolower($this->industry_name_i));
+		$model = self::model()->find($criteria);
+		if($model != null)
+			$this->addError('industry_name_i', Yii::t('phrase', 'Industry sudah terdaftar'));
+	}
+
+	/**
 	 * before validate attributes
 	 */
-	/*
 	protected function beforeValidate() {
-		if(parent::beforeValidate()) {
-			// Create action
+		if(parent::beforeValidate()) {		
+			if($this->isNewRecord)
+				$this->creation_id = Yii::app()->user->id;	
+			else
+				$this->modified_id = Yii::app()->user->id;
 		}
 		return true;
 	}
-	*/
-
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
-	}
-	*/
 	
 	/**
 	 * before save attributes
 	 */
-	/*
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
+			$criteria=new CDbCriteria;
+			$criteria->compare('t.body', strtolower($this->industry_name_i));
+			$model = OmmuTags::model()->find($criteria);
+			if($model != null)
+				$this->tag_id = $model->tag_id;
+			else {
+				$tag=new OmmuTags;
+				$tag->body = $this->industry_name_i;
+				if($tag->save())
+					$this->tag_id = $tag->tag_id;
+			}			
 		}
 		return true;	
 	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
 
 }
