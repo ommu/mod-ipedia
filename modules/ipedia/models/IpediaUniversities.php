@@ -41,6 +41,12 @@
 class IpediaUniversities extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $university_name_i;
+	
+	// Variable Search
+	public $university_search;
+	public $creation_search;
+	public $modified_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -69,15 +75,18 @@ class IpediaUniversities extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('directory_id, acreditation, creation_date, creation_id, modified_id', 'required'),
+			array('
+				university_name_i', 'required'),
+			array('
+				university_name_i', 'vUniversityName'),
 			array('publish', 'numerical', 'integerOnly'=>true),
-			array('directory_id, creation_id', 'length', 'max'=>11),
+			array('directory_id, creation_id, modified_id', 'length', 'max'=>11),
 			array('acreditation', 'length', 'max'=>1),
-			array('modified_id', 'length', 'max'=>10),
-			array('modified_date', 'safe'),
+			array('directory_id, acreditation', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('university_id, publish, directory_id, acreditation, creation_date, creation_id, modified_date, modified_id', 'safe', 'on'=>'search'),
+			array('university_id, publish, directory_id, acreditation, creation_date, creation_id, modified_date, modified_id,
+				university_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -89,8 +98,11 @@ class IpediaUniversities extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'view' => array(self::BELONGS_TO, 'ViewIpediaUniversities', 'university_id'),
+			'directory' => array(self::BELONGS_TO, 'IpediaDirectories', 'directory_id'),
+			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
+			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 			'ommuCvEducations_relation' => array(self::HAS_MANY, 'OmmuCvEducations', 'university_id'),
-			'directory_relation' => array(self::BELONGS_TO, 'OmmuIpediaDirectories', 'directory_id'),
 			'ommuIpediaUniversityMajors_relation' => array(self::HAS_MANY, 'OmmuIpediaUniversityMajor', 'university_id'),
 			'ommuVacancyUniversities_relation' => array(self::HAS_MANY, 'OmmuVacancyUniversity', 'university_id'),
 		);
@@ -110,6 +122,10 @@ class IpediaUniversities extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
+			'university_name_i' => Yii::t('attribute', 'University Name'),
+			'university_search' => Yii::t('attribute', 'University'),
+			'creation_search' => Yii::t('attribute', 'Creation'),
+			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
 		/*
 			'University' => 'University',
@@ -141,6 +157,21 @@ class IpediaUniversities extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+		
+		// Custom Search		
+		$criteria->with = array(
+			'view' => array(
+				'alias'=>'view',
+			),
+			'creation' => array(
+				'alias'=>'creation',
+				'select'=>'displayname'
+			),
+			'modified' => array(
+				'alias'=>'modified',
+				'select'=>'displayname'
+			),
+		);
 
 		$criteria->compare('t.university_id',strtolower($this->university_id),true);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
@@ -170,6 +201,10 @@ class IpediaUniversities extends CActiveRecord
 			$criteria->compare('t.modified_id',$_GET['modified']);
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
+		
+		$criteria->compare('view.university_name',strtolower($this->university_search), true);
+		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
+		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
 		if(!isset($_GET['IpediaUniversities_sort']))
 			$criteria->order = 't.university_id DESC';
@@ -230,22 +265,23 @@ class IpediaUniversities extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			if(!isset($_GET['type'])) {
+			if(!isset($_GET['directory'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->university_id)), $data->publish, 1)',
-					'htmlOptions' => array(
-						'class' => 'center',
-					),
-					'filter'=>array(
-						1=>Yii::t('phrase', 'Yes'),
-						0=>Yii::t('phrase', 'No'),
-					),
-					'type' => 'raw',
+					'name' => 'university_search',
+					'value' => '$data->view->university_name',
 				);
 			}
-			$this->defaultColumns[] = 'directory_id';
-			$this->defaultColumns[] = 'acreditation';
+			$this->defaultColumns[] = array(
+				'name' => 'acreditation',
+				'value' => '$data->acreditation',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'creation_search',
+				'value' => '$data->creation->displayname',
+			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_date',
 				'value' => 'Utility::dateFormat($data->creation_date)',
@@ -272,34 +308,20 @@ class IpediaUniversities extends CActiveRecord
 					),
 				), true),
 			);
-			$this->defaultColumns[] = 'creation_id';
-			$this->defaultColumns[] = array(
-				'name' => 'modified_date',
-				'value' => 'Utility::dateFormat($data->modified_date)',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),
-				'filter' => Yii::app()->controller->widget('zii.widgets.jui.CJuiDatePicker', array(
-					'model'=>$this,
-					'attribute'=>'modified_date',
-					'language' => 'ja',
-					'i18nScriptFile' => 'jquery.ui.datepicker-en.js',
-					//'mode'=>'datetime',
+			if(!isset($_GET['type'])) {
+				$this->defaultColumns[] = array(
+					'name' => 'publish',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->university_id)), $data->publish, 1)',
 					'htmlOptions' => array(
-						'id' => 'modified_date_filter',
+						'class' => 'center',
 					),
-					'options'=>array(
-						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
-						'showOtherMonths' => true,
-						'selectOtherMonths' => true,
-						'changeMonth' => true,
-						'changeYear' => true,
-						'showButtonPanel' => true,
+					'filter'=>array(
+						1=>Yii::t('phrase', 'Yes'),
+						0=>Yii::t('phrase', 'No'),
 					),
-				), true),
-			);
-			$this->defaultColumns[] = 'modified_id';
+					'type' => 'raw',
+				);
+			}
 		}
 		parent::afterConstruct();
 	}
@@ -322,70 +344,54 @@ class IpediaUniversities extends CActiveRecord
 	}
 
 	/**
+	 * Get company name validation
+	 */
+	public function vUniversityName()
+	{
+		$criteria=new CDbCriteria;
+		$criteria->with = array(
+			'directory' => array(
+				'alias'=>'directory',
+				'select'=>'directory_name'
+			),
+		);
+		$criteria->compare('directory.directory_name', strtolower($this->university_name_i));
+		$model = self::model()->find($criteria);
+		if($model != null)
+			$this->addError('university_name_i', Yii::t('phrase', 'University sudah terdaftar'));
+	}
+
+	/**
 	 * before validate attributes
 	 */
-	/*
 	protected function beforeValidate() {
-		if(parent::beforeValidate()) {
-			// Create action
+		if(parent::beforeValidate()) {		
+			if($this->isNewRecord)
+				$this->creation_id = Yii::app()->user->id;	
+			else
+				$this->modified_id = Yii::app()->user->id;
 		}
 		return true;
 	}
-	*/
-
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
-	}
-	*/
 	
 	/**
 	 * before save attributes
 	 */
-	/*
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
+			$criteria=new CDbCriteria;
+			$criteria->compare('t.directory_name', strtolower($this->university_name_i));
+			$model = IpediaDirectories::model()->find($criteria);
+			if($model != null)
+				$this->directory_id = $model->directory_id;
+			else {
+				$directory=new IpediaDirectories;
+				$directory->directory_name = $this->university_name_i;
+				if($directory->save())
+					$this->directory_id = $directory->directory_id;
+			}			
 		}
 		return true;	
 	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
 
 }

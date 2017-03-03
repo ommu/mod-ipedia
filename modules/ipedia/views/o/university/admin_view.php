@@ -19,35 +19,26 @@
 	);
 ?>
 
-<?php //begin.Messages ?>
-<?php
-if(Yii::app()->user->hasFlash('success'))
-	echo Utility::flashSuccess(Yii::app()->user->getFlash('success'));
-?>
-<?php //end.Messages ?>
-
+<div class="dialog-content">
 <?php $this->widget('application.components.system.FDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		array(
 			'name'=>'university_id',
 			'value'=>$model->university_id,
-			//'value'=>$model->university_id != '' ? $model->university_id : '-',
 		),
 		array(
 			'name'=>'publish',
 			'value'=>$model->publish == '1' ? Chtml::image(Yii::app()->theme->baseUrl.'/images/icons/publish.png') : Chtml::image(Yii::app()->theme->baseUrl.'/images/icons/unpublish.png'),
-			//'value'=>$model->publish,
+			'type'=>'raw',
 		),
 		array(
 			'name'=>'directory_id',
-			'value'=>$model->directory_id,
-			//'value'=>$model->directory_id != '' ? $model->directory_id : '-',
+			'value'=>$model->directory_id != 0 ? $model->view->university_name : '-',
 		),
 		array(
 			'name'=>'acreditation',
-			'value'=>$model->acreditation,
-			//'value'=>$model->acreditation != '' ? $model->acreditation : '-',
+			'value'=>$model->acreditation != '' ? $model->acreditation : '-',
 		),
 		array(
 			'name'=>'creation_date',
@@ -55,8 +46,7 @@ if(Yii::app()->user->hasFlash('success'))
 		),
 		array(
 			'name'=>'creation_id',
-			'value'=>$model->creation_id,
-			//'value'=>$model->creation_id != 0 ? $model->creation_id : '-',
+			'value'=>$model->creation_id != 0 ? $model->creation->displayname : '-',
 		),
 		array(
 			'name'=>'modified_date',
@@ -64,13 +54,10 @@ if(Yii::app()->user->hasFlash('success'))
 		),
 		array(
 			'name'=>'modified_id',
-			'value'=>$model->modified_id,
-			//'value'=>$model->modified_id != 0 ? $model->modified_id : '-',
+			'value'=>$model->modified_id != 0 ? $model->modified->displayname : '-',
 		),
 	),
 )); ?>
-
-<div class="dialog-content">
 </div>
 <div class="dialog-submit">
 	<?php echo CHtml::button(Yii::t('phrase', 'Close'), array('id'=>'closed')); ?>
