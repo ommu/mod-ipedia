@@ -23,7 +23,7 @@
  * This is the model class for table "_view_ipedia_organizations".
  *
  * The followings are the available columns in table '_view_ipedia_organizations':
- * @property string $directory_id
+ * @property string $organization_id
  * @property string $organization_name
  */
 class ViewIpediaOrganizations extends CActiveRecord
@@ -50,6 +50,14 @@ class ViewIpediaOrganizations extends CActiveRecord
 	}
 
 	/**
+	 * @return string the primarykey column
+	 */
+	public function primaryKey()
+	{
+		return 'organization_id';
+	}
+
+	/**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -57,12 +65,12 @@ class ViewIpediaOrganizations extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('directory_id', 'required'),
-			array('directory_id', 'length', 'max'=>11),
+			array('organization_id', 'required'),
+			array('organization_id', 'length', 'max'=>11),
 			array('organization_name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('directory_id, organization_name', 'safe', 'on'=>'search'),
+			array('organization_id, organization_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -83,11 +91,11 @@ class ViewIpediaOrganizations extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'directory_id' => Yii::t('attribute', 'Directory'),
+			'organization_id' => Yii::t('attribute', 'Organization'),
 			'organization_name' => Yii::t('attribute', 'Organization Name'),
 		);
 		/*
-			'Directory' => 'Directory',
+			'Organization' => 'Organization',
 			'Organization Name' => 'Organization Name',
 		
 		*/
@@ -111,11 +119,11 @@ class ViewIpediaOrganizations extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.directory_id',strtolower($this->directory_id),true);
+		$criteria->compare('t.organization_id',strtolower($this->organization_id),true);
 		$criteria->compare('t.organization_name',strtolower($this->organization_name),true);
 
 		if(!isset($_GET['ViewIpediaOrganizations_sort']))
-			$criteria->order = 't. DESC';
+			$criteria->order = 't.organization_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -143,7 +151,7 @@ class ViewIpediaOrganizations extends CActiveRecord
 				$this->defaultColumns[] = $val;
 			}
 		} else {
-			$this->defaultColumns[] = 'directory_id';
+			$this->defaultColumns[] = 'organization_id';
 			$this->defaultColumns[] = 'organization_name';
 		}
 
@@ -155,19 +163,11 @@ class ViewIpediaOrganizations extends CActiveRecord
 	 */
 	protected function afterConstruct() {
 		if(count($this->defaultColumns) == 0) {
-			/*
-			$this->defaultColumns[] = array(
-				'class' => 'CCheckBoxColumn',
-				'name' => 'id',
-				'selectableRows' => 2,
-				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
-			);
-			*/
 			$this->defaultColumns[] = array(
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			$this->defaultColumns[] = 'directory_id';
+			$this->defaultColumns[] = 'organization_id';
 			$this->defaultColumns[] = 'organization_name';
 		}
 		parent::afterConstruct();
@@ -189,72 +189,4 @@ class ViewIpediaOrganizations extends CActiveRecord
 			return $model;			
 		}
 	}
-
-	/**
-	 * before validate attributes
-	 */
-	/*
-	protected function beforeValidate() {
-		if(parent::beforeValidate()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
-	}
-	*/
-	
-	/**
-	 * before save attributes
-	 */
-	/*
-	protected function beforeSave() {
-		if(parent::beforeSave()) {
-		}
-		return true;	
-	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
-
 }
