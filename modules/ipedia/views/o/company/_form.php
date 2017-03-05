@@ -35,7 +35,23 @@
 			<div class="desc">
 				<?php if(!$model->getErrors())
 					$model->company_name_i = $model->view->company_name;
-				echo $form->textField($model,'company_name_i',array('class'=>'span-8')); ?>
+				//echo $form->textField($model,'company_name_i',array('class'=>'span-8'));
+				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+					'model' => $model,
+					'attribute' => 'company_name_i',
+					'source' => Yii::app()->controller->createUrl('o/directory/suggest'),
+					'options' => array(
+						//'delay '=> 50,
+						'minLength' => 1,
+						'showAnim' => 'fold',
+						'select' => "js:function(event, ui) {
+							$('#IpediaCompanies_company_name_i').val(ui.item.value);
+						}"
+					),
+					'htmlOptions' => array(
+						'class'	=> 'span-8',
+					),
+				));?>
 				<?php echo $form->error($model,'company_name_i'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>

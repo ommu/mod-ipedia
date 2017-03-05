@@ -100,9 +100,9 @@ class IpediaDirectories extends CActiveRecord
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 			'companies' => array(self::HAS_MANY, 'IpediaCompanies', 'directory_id'),
-			'locations' => array(self::HAS_MANY, 'IpediaDirectoryLocation', 'directory_id'),
 			'organizations' => array(self::HAS_MANY, 'IpediaOrganizations', 'directory_id'),
 			'universities' => array(self::HAS_MANY, 'IpediaUniversities', 'directory_id'),
+			'locations' => array(self::HAS_MANY, 'IpediaDirectoryLocation', 'directory_id'),
 		);
 	}
 

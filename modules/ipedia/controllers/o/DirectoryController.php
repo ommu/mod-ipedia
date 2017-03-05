@@ -78,7 +78,7 @@ class DirectoryController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array(),
+				'actions'=>array('suggest'),
 				'users'=>array('@'),
 				'expression'=>'isset(Yii::app()->user->level)',
 				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
@@ -104,6 +104,68 @@ class DirectoryController extends Controller
 	public function actionIndex() 
 	{
 		$this->redirect(array('manage'));
+	}
+	
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionSuggest($data='company', $limit=10) 
+	{
+		if(Yii::app()->request->isAjaxRequest) {
+			if(isset($_GET['term'])) {
+				$criteria = new CDbCriteria;
+				if(!isset($data) || (isset($data) && $data == 'company')) {	
+					$criteria->with = array(
+						'companies' => array(
+							'alias'=>'companies',
+							'together' => true,
+						),
+					);
+					$criteria->condition = 't.publish = :publish AND t.directory_name LIKE :directory AND companies.directory_id IS NULL';
+				} else if(isset($data) && $data == 'organization') {	
+					$criteria->with = array(
+						'organizations' => array(
+							'alias'=>'organizations',
+							'together' => true,
+						),
+					);
+					$criteria->condition = 't.publish = :publish AND t.directory_name LIKE :directory AND organizations.directory_id IS NULL';
+				} else if(isset($data) && $data == 'university') {	
+					$criteria->with = array(
+						'universities' => array(
+							'alias'=>'universities',
+							'together' => true,
+						),
+					);
+					$criteria->condition = 't.publish = :publish AND t.directory_name LIKE :directory AND universities.directory_id IS NULL';
+				}
+				$criteria->select = "t.directory_id, t.directory_name";
+				$criteria->limit = $limit;
+				$criteria->order = "t.directory_id ASC";
+				$criteria->params = array(
+					':publish' => '1',
+					':directory' => '%' . strtolower($_GET['term']) . '%',
+				);
+				$model = IpediaDirectories::model()->findAll($criteria);
+				/*
+				echo '<pre>';
+				print_r($model);
+				echo '</pre>';
+				*/
+				
+				if($model) {
+					foreach($model as $items) {
+						$result[] = array('id' => $items->directory_id, 'value' => $items->directory_name);
+					}
+				}
+			}
+			echo CJSON::encode($result);
+			Yii::app()->end();
+			
+		} else
+			throw new CHttpException(404, Yii::t('phrase', 'The requested page does not exist.'));
 	}
 
 	/**
