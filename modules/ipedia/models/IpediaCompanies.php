@@ -45,6 +45,7 @@ class IpediaCompanies extends CActiveRecord
 	public $company_name_i;
 	
 	// Variable Search
+	public $industry_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -85,7 +86,7 @@ class IpediaCompanies extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('company_id, publish, directory_id, creation_date, creation_id, modified_date, modified_id,
-				company_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
+				company_name_i, industry_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -123,6 +124,7 @@ class IpediaCompanies extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'company_name_i' => Yii::t('attribute', 'Company'),
+			'industry_search' => Yii::t('attribute', 'Industries'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -200,6 +202,7 @@ class IpediaCompanies extends CActiveRecord
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
 		$criteria->compare('view.company_name',strtolower($this->company_name_i), true);
+		$criteria->compare('view.industries',$this->industry_search);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -267,6 +270,14 @@ class IpediaCompanies extends CActiveRecord
 					'value' => '$data->view->company_name',
 				);
 			}
+			$this->defaultColumns[] = array(
+				'name' => 'industry_search',
+				'value' => 'CHtml::link($data->view->industries, Yii::app()->controller->createUrl("o/companyindustry/manage",array(\'company\'=>$data->company_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
+			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
 				'value' => '$data->creation->displayname',
