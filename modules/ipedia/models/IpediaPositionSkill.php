@@ -39,6 +39,12 @@
 class IpediaPositionSkill extends CActiveRecord
 {
 	public $defaultColumns = array();
+	
+	// Variable Search
+	public $position_search;
+	public $skill_search;
+	public $creation_search;
+	public $modified_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -67,13 +73,14 @@ class IpediaPositionSkill extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('position_id, skill_id, creation_date, creation_id, modified_id', 'required'),
+			array('position_id, skill_id', 'required'),
 			array('publish', 'numerical', 'integerOnly'=>true),
 			array('position_id, skill_id, creation_id, modified_id', 'length', 'max'=>11),
-			array('modified_date', 'safe'),
+			array('', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, publish, position_id, skill_id, creation_date, creation_id, modified_date, modified_id', 'safe', 'on'=>'search'),
+			array('id, publish, position_id, skill_id, creation_date, creation_id, modified_date, modified_id,
+				position_search, skill_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -85,8 +92,10 @@ class IpediaPositionSkill extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'position_relation' => array(self::BELONGS_TO, 'OmmuIpediaPositions', 'position_id'),
-			'skill_relation' => array(self::BELONGS_TO, 'OmmuIpediaSkills', 'skill_id'),
+			'position' => array(self::BELONGS_TO, 'IpediaPositions', 'position_id'),
+			'skill' => array(self::BELONGS_TO, 'IpediaSkills', 'skill_id'),
+			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
+			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 		);
 	}
 
@@ -104,6 +113,10 @@ class IpediaPositionSkill extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
+			'position_search' => Yii::t('attribute', 'Position'),
+			'skill_search' => Yii::t('attribute', 'Skill'),
+			'creation_search' => Yii::t('attribute', 'Creation'),
+			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
 		/*
 			'ID' => 'ID',
@@ -135,6 +148,26 @@ class IpediaPositionSkill extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+		
+		// Custom Search		
+		$criteria->with = array(
+			'position' => array(
+				'alias'=>'position',
+				'select'=>'position_name'
+			),
+			'skill.view' => array(
+				'alias'=>'skill_v',
+				'select'=>'skill_name'
+			),
+			'creation' => array(
+				'alias'=>'creation',
+				'select'=>'displayname'
+			),
+			'modified' => array(
+				'alias'=>'modified',
+				'select'=>'displayname'
+			),
+		);
 
 		$criteria->compare('t.id',strtolower($this->id),true);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
@@ -167,6 +200,11 @@ class IpediaPositionSkill extends CActiveRecord
 			$criteria->compare('t.modified_id',$_GET['modified']);
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
+		
+		$criteria->compare('position.position_name',strtolower($this->position_search), true);
+		$criteria->compare('skill_v.skill_name',strtolower($this->skill_search), true);
+		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
+		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
 		if(!isset($_GET['IpediaPositionSkill_sort']))
 			$criteria->order = 't.id DESC';
@@ -227,22 +265,22 @@ class IpediaPositionSkill extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			if(!isset($_GET['type'])) {
+			if(!isset($_GET['position'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->id)), $data->publish, 1)',
-					'htmlOptions' => array(
-						'class' => 'center',
-					),
-					'filter'=>array(
-						1=>Yii::t('phrase', 'Yes'),
-						0=>Yii::t('phrase', 'No'),
-					),
-					'type' => 'raw',
+					'name' => 'position_search',
+					'value' => '$data->position->position_name',
 				);
 			}
-			$this->defaultColumns[] = 'position_id';
-			$this->defaultColumns[] = 'skill_id';
+			if(!isset($_GET['skill'])) {
+				$this->defaultColumns[] = array(
+					'name' => 'skill_search',
+					'value' => '$data->skill->view->skill_name',
+				);
+			}
+			$this->defaultColumns[] = array(
+				'name' => 'creation_search',
+				'value' => '$data->creation->displayname',
+			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_date',
 				'value' => 'Utility::dateFormat($data->creation_date)',
@@ -269,34 +307,20 @@ class IpediaPositionSkill extends CActiveRecord
 					),
 				), true),
 			);
-			$this->defaultColumns[] = 'creation_id';
-			$this->defaultColumns[] = array(
-				'name' => 'modified_date',
-				'value' => 'Utility::dateFormat($data->modified_date)',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),
-				'filter' => Yii::app()->controller->widget('zii.widgets.jui.CJuiDatePicker', array(
-					'model'=>$this,
-					'attribute'=>'modified_date',
-					'language' => 'ja',
-					'i18nScriptFile' => 'jquery.ui.datepicker-en.js',
-					//'mode'=>'datetime',
+			if(!isset($_GET['type'])) {
+				$this->defaultColumns[] = array(
+					'name' => 'publish',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->id)), $data->publish, 1)',
 					'htmlOptions' => array(
-						'id' => 'modified_date_filter',
+						'class' => 'center',
 					),
-					'options'=>array(
-						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
-						'showOtherMonths' => true,
-						'selectOtherMonths' => true,
-						'changeMonth' => true,
-						'changeYear' => true,
-						'showButtonPanel' => true,
+					'filter'=>array(
+						1=>Yii::t('phrase', 'Yes'),
+						0=>Yii::t('phrase', 'No'),
 					),
-				), true),
-			);
-			$this->defaultColumns[] = 'modified_id';
+					'type' => 'raw',
+				);
+			}
 		}
 		parent::afterConstruct();
 	}
@@ -321,68 +345,14 @@ class IpediaPositionSkill extends CActiveRecord
 	/**
 	 * before validate attributes
 	 */
-	/*
 	protected function beforeValidate() {
-		if(parent::beforeValidate()) {
-			// Create action
+		if(parent::beforeValidate()) {		
+			if($this->isNewRecord)
+				$this->creation_id = Yii::app()->user->id;	
+			else
+				$this->modified_id = Yii::app()->user->id;
 		}
 		return true;
 	}
-	*/
-
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
-	}
-	*/
-	
-	/**
-	 * before save attributes
-	 */
-	/*
-	protected function beforeSave() {
-		if(parent::beforeSave()) {
-		}
-		return true;	
-	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
 
 }

@@ -50,6 +50,7 @@ class IpediaPositions extends CActiveRecord
 	public $position_task_search;
 	public $position_jobdesc_search;
 	public $position_knowledge_search;
+	public $skill_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -88,7 +89,7 @@ class IpediaPositions extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('position_id, publish, position_name, position_desc, position_task, position_jobdesc, position_knowledge, creation_date, creation_id, modified_date, modified_id,
-				position_desc_search, position_task_search, position_jobdesc_search, position_knowledge_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				position_desc_search, position_task_search, position_jobdesc_search, position_knowledge_search, skill_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -131,6 +132,7 @@ class IpediaPositions extends CActiveRecord
 			'position_task_search' => Yii::t('attribute', 'Task'),
 			'position_jobdesc_search' => Yii::t('attribute', 'Jobdesc'),
 			'position_knowledge_search' => Yii::t('attribute', 'Knowledge'),
+			'skill_search' => Yii::t('attribute', 'Skill'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -215,7 +217,8 @@ class IpediaPositions extends CActiveRecord
 		$criteria->compare('view.position_desc',$this->position_desc_search);
 		$criteria->compare('view.position_task',$this->position_task_search);
 		$criteria->compare('view.position_jobdesc',$this->position_jobdesc_search);
-		$criteria->compare('view.position_knowledge',$this->position_knowledge_search);		
+		$criteria->compare('view.position_knowledge',$this->position_knowledge_search);
+		$criteria->compare('view.skills',$this->skill_search);		
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -314,6 +317,14 @@ class IpediaPositions extends CActiveRecord
 						'showButtonPanel' => true,
 					),
 				), true),
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'skill_search',
+				'value' => 'CHtml::link($data->view->skills, Yii::app()->controller->createUrl("o/positionskill/manage",array(\'position\'=>$data->position_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'position_desc_search',
