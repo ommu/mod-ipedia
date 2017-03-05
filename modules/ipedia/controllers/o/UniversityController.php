@@ -150,6 +150,7 @@ class UniversityController extends Controller
 		if(isset($_POST['IpediaUniversities'])) {
 			$model->attributes=$_POST['IpediaUniversities'];
 			
+			$jsonError = CActiveForm::validate($model);			
 			if(strlen($jsonError) > 2) {
 				echo $jsonError;
 

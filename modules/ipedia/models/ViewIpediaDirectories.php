@@ -25,6 +25,12 @@
  * The followings are the available columns in table '_view_ipedia_directories':
  * @property string $directory_id
  * @property string $directory_name
+ * @property string $companies
+ * @property string $company_id
+ * @property string $organizations
+ * @property string $organization_id
+ * @property string $universities
+ * @property string $university_id
  * @property string $locations
  * @property string $location_all
  */
@@ -67,13 +73,13 @@ class ViewIpediaDirectories extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('directory_id', 'length', 'max'=>11),
+			array('directory_id, company_id, organization_id, university_id', 'length', 'max'=>11),
 			array('locations', 'length', 'max'=>23),
 			array('location_all', 'length', 'max'=>21),
 			array('directory_name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('directory_id, directory_name, locations, location_all', 'safe', 'on'=>'search'),
+			array('directory_id, directory_name, company_id, organization_id, university_id, locations, location_all', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -96,6 +102,12 @@ class ViewIpediaDirectories extends CActiveRecord
 		return array(
 			'directory_id' => Yii::t('attribute', 'Directory'),
 			'directory_name' => Yii::t('attribute', 'Directory Name'),
+			'companies' => Yii::t('attribute', 'Companies'),
+			'company_id' => Yii::t('attribute', 'Company'),
+			'organizations' => Yii::t('attribute', 'Organizations'),
+			'organization_id' => Yii::t('attribute', 'Organization'),
+			'universities' => Yii::t('attribute', 'Universities'),
+			'university_id' => Yii::t('attribute', 'University'),
 			'locations' => Yii::t('attribute', 'Locations'),
 			'location_all' => Yii::t('attribute', 'Location All'),
 		);
@@ -128,6 +140,12 @@ class ViewIpediaDirectories extends CActiveRecord
 
 		$criteria->compare('t.directory_id',strtolower($this->directory_id),true);
 		$criteria->compare('t.directory_name',strtolower($this->directory_name),true);
+		$criteria->compare('t.companies',strtolower($this->companies),true);
+		$criteria->compare('t.company_id',strtolower($this->company_id),true);
+		$criteria->compare('t.organizations',strtolower($this->organizations),true);
+		$criteria->compare('t.organization_id',strtolower($this->organization_id),true);
+		$criteria->compare('t.universities',strtolower($this->universities),true);
+		$criteria->compare('t.university_id',strtolower($this->university_id),true);
 		$criteria->compare('t.locations',strtolower($this->locations),true);
 		$criteria->compare('t.location_all',strtolower($this->location_all),true);
 
@@ -162,6 +180,12 @@ class ViewIpediaDirectories extends CActiveRecord
 		} else {
 			$this->defaultColumns[] = 'directory_id';
 			$this->defaultColumns[] = 'directory_name';
+			$this->defaultColumns[] = 'companies';
+			$this->defaultColumns[] = 'company_id';
+			$this->defaultColumns[] = 'organizations';
+			$this->defaultColumns[] = 'organization_id';
+			$this->defaultColumns[] = 'universities';
+			$this->defaultColumns[] = 'university_id';
 			$this->defaultColumns[] = 'locations';
 			$this->defaultColumns[] = 'location_all';
 		}
@@ -181,6 +205,12 @@ class ViewIpediaDirectories extends CActiveRecord
 			//$this->defaultColumns[] = 'directory_id';
 			$this->defaultColumns[] = 'directory_name';
 			$this->defaultColumns[] = 'locations';
+			$this->defaultColumns[] = 'companies';
+			$this->defaultColumns[] = 'company_id';
+			$this->defaultColumns[] = 'organizations';
+			$this->defaultColumns[] = 'organization_id';
+			$this->defaultColumns[] = 'universities';
+			$this->defaultColumns[] = 'university_id';
 			$this->defaultColumns[] = 'location_all';
 		}
 		parent::afterConstruct();

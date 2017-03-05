@@ -42,6 +42,9 @@ class IpediaDirectories extends CActiveRecord
 	public $defaultColumns = array();
 	
 	// Variable Search
+	public $company_search;
+	public $organization_search;
+	public $university_search;
 	public $location_search;
 	public $creation_search;
 	public $modified_search;
@@ -81,7 +84,7 @@ class IpediaDirectories extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('directory_id, publish, directory_name, creation_date, creation_id, modified_date, modified_id,
-				location_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				company_search, organization_search, university_search, location_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -116,6 +119,9 @@ class IpediaDirectories extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
+			'company_search' => Yii::t('attribute', 'Company'),
+			'organization_search' => Yii::t('attribute', 'Organization'),
+			'university_search' => Yii::t('attribute', 'University'),
 			'location_search' => Yii::t('attribute', 'Locations'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
@@ -190,6 +196,9 @@ class IpediaDirectories extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
+		$criteria->compare('view.companies',$this->company_search);
+		$criteria->compare('view.organizations',$this->organization_search);
+		$criteria->compare('view.universities',$this->university_search);
 		$criteria->compare('view.locations',$this->location_search);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
@@ -292,6 +301,42 @@ class IpediaDirectories extends CActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),	
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'company_search',
+				'value' => '$data->view->companies == 1 ? Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'organization_search',
+				'value' => '$data->view->organizations == 1 ? Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'university_search',
+				'value' => '$data->view->universities == 1 ? Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
 				'type' => 'raw',
 			);
 			if(!isset($_GET['type'])) {
