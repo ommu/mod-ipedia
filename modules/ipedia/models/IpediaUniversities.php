@@ -44,6 +44,7 @@ class IpediaUniversities extends CActiveRecord
 	public $university_name_i;
 	
 	// Variable Search
+	public $major_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -85,7 +86,7 @@ class IpediaUniversities extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('university_id, publish, directory_id, acreditation, creation_date, creation_id, modified_date, modified_id,
-				university_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
+				university_name_i, major_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -122,6 +123,7 @@ class IpediaUniversities extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'university_name_i' => Yii::t('attribute', 'University'),
+			'major_search' => Yii::t('attribute', 'Majors'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -201,6 +203,7 @@ class IpediaUniversities extends CActiveRecord
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
 		$criteria->compare('view.university_name',strtolower($this->university_name_i), true);
+		$criteria->compare('view.majors',$this->major_search);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -305,6 +308,14 @@ class IpediaUniversities extends CActiveRecord
 						'showButtonPanel' => true,
 					),
 				), true),
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'major_search',
+				'value' => 'CHtml::link($data->view->majors, Yii::app()->controller->createUrl("o/universitymajor/manage",array(\'university\'=>$data->university_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
 			);
 			if(!isset($_GET['type'])) {
 				$this->defaultColumns[] = array(
