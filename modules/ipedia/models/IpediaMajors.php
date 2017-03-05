@@ -42,6 +42,8 @@ class IpediaMajors extends CActiveRecord
 	public $defaultColumns = array();
 	
 	// Variable Search
+	public $university_search;
+	public $industry_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -80,7 +82,7 @@ class IpediaMajors extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('major_id, publish, major_name, major_desc, creation_date, creation_id, modified_date, modified_id,
-				creation_search, modified_search', 'safe', 'on'=>'search'),
+				university_search, industry_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -115,6 +117,8 @@ class IpediaMajors extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
+			'university_search' => Yii::t('attribute', 'Universities'),
+			'industry_search' => Yii::t('attribute', 'Industries'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -151,6 +155,9 @@ class IpediaMajors extends CActiveRecord
 		
 		// Custom Search
 		$criteria->with = array(
+			'view' => array(
+				'alias'=>'view',
+			),
 			'creation' => array(
 				'alias'=>'creation',
 				'select'=>'displayname'
@@ -187,6 +194,8 @@ class IpediaMajors extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
+		$criteria->compare('view.universities',strtolower($this->university_search), true);
+		$criteria->compare('view.industries',strtolower($this->industry_search), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -252,6 +261,22 @@ class IpediaMajors extends CActiveRecord
 			$this->defaultColumns[] = array(
 				'name' => 'major_name',
 				'value' => '$data->major_name',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'university_search',
+				'value' => 'CHtml::link($data->view->universities, Yii::app()->controller->createUrl("o/universitymajor/manage",array(\'major\'=>$data->major_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'industry_search',
+				'value' => 'CHtml::link($data->view->industries != null && $data->view->industries != 0 ? $data->view->industries : \'0\', Yii::app()->controller->createUrl("o/industrymajor/manage",array(\'major\'=>$data->major_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
 			);
 			//$this->defaultColumns[] = 'major_desc';
 			$this->defaultColumns[] = array(
