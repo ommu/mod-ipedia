@@ -44,6 +44,8 @@ class IpediaIndustries extends CActiveRecord
 	public $industry_name_i;
 	
 	// Variable Search
+	public $major_search;
+	public $company_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -85,7 +87,7 @@ class IpediaIndustries extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('industry_id, publish, tag_id, industry_desc, creation_date, creation_id, modified_date, modified_id,
-				industry_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
+				industry_name_i, major_search, company_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -122,6 +124,8 @@ class IpediaIndustries extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'industry_name_i' => Yii::t('attribute', 'Industry'),
+			'major_search' => Yii::t('attribute', 'Majors'),
+			'company_search' => Yii::t('attribute', 'Companies'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -201,6 +205,8 @@ class IpediaIndustries extends CActiveRecord
 			$criteria->compare('t.modified_id',$this->modified_id);
 
 		$criteria->compare('view.industry_name',strtolower($this->industry_name_i), true);
+		$criteria->compare('view.majors',$this->major_search);
+		$criteria->compare('view.companies',$this->company_search);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 		
@@ -270,6 +276,22 @@ class IpediaIndustries extends CActiveRecord
 				);				
 			}
 			//$this->defaultColumns[] = 'industry_desc';
+			$this->defaultColumns[] = array(
+				'name' => 'major_search',
+				'value' => 'CHtml::link($data->view->majors, Yii::app()->controller->createUrl("o/industrymajor/manage",array(\'industry\'=>$data->industry_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'company_search',
+				'value' => 'CHtml::link($data->view->companies != null && $data->view->companies != 0 ? $data->view->companies : \'0\', Yii::app()->controller->createUrl("o/companyindustry/manage",array(\'industry\'=>$data->industry_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
+			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
 				'value' => '$data->creation->displayname',

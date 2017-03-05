@@ -37,17 +37,15 @@ if(Yii::app()->user->hasFlash('success'))
 		array(
 			'name'=>'publish',
 			'value'=>$model->publish == '1' ? Chtml::image(Yii::app()->theme->baseUrl.'/images/icons/publish.png') : Chtml::image(Yii::app()->theme->baseUrl.'/images/icons/unpublish.png'),
-			//'value'=>$model->publish,
+			'type'=>'raw',
 		),
 		array(
 			'name'=>'industry_id',
-			'value'=>$model->industry_id,
-			//'value'=>$model->industry_id != '' ? $model->industry_id : '-',
+			'value'=>$model->industry_id != 0 ? $model->industry->view->industry_name : '-',
 		),
 		array(
 			'name'=>'major_id',
-			'value'=>$model->major_id,
-			//'value'=>$model->major_id != '' ? $model->major_id : '-',
+			'value'=>$model->major_id != 0 ? $model->major->major_name : '-',
 		),
 		array(
 			'name'=>'creation_date',
@@ -55,8 +53,7 @@ if(Yii::app()->user->hasFlash('success'))
 		),
 		array(
 			'name'=>'creation_id',
-			'value'=>$model->creation_id,
-			//'value'=>$model->creation_id != 0 ? $model->creation_id : '-',
+			'value'=>$model->creation_id != 0 ? $model->creation->displayname  : '-',
 		),
 		array(
 			'name'=>'modified_date',
@@ -64,8 +61,7 @@ if(Yii::app()->user->hasFlash('success'))
 		),
 		array(
 			'name'=>'modified_id',
-			'value'=>$model->modified_id,
-			//'value'=>$model->modified_id != 0 ? $model->modified_id : '-',
+			'value'=>$model->modified_id != 0 ? $model->modified->displayname : '-',
 		),
 	),
 )); ?>

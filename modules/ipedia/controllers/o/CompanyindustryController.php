@@ -144,7 +144,7 @@ class CompanyindustryController extends Controller
 
 		$this->pageTitle = Yii::t('phrase', 'View Ipedia Company Industries');
 		$this->pageDescription = '';
-		$this->pageMeta = $setting->meta_keyword;
+		$this->pageMeta = '';
 		$this->render('/o/company_industry/admin_view',array(
 			'model'=>$model,
 		));

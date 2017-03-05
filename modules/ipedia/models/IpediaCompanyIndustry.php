@@ -92,10 +92,10 @@ class IpediaCompanyIndustry extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
-			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 			'company' => array(self::BELONGS_TO, 'IpediaCompanies', 'company_id'),
 			'industry' => array(self::BELONGS_TO, 'IpediaIndustries', 'industry_id'),
+			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
+			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 		);
 	}
 
@@ -265,13 +265,13 @@ class IpediaCompanyIndustry extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			if(!isset($_GET['company']))
+			if(!isset($_GET['company'])) {
 				$this->defaultColumns[] = array(
 					'name' => 'company_search',
 					'value' => '$data->company->view->company_name',
 				);
 			}
-			if(!isset($_GET['industry']))
+			if(!isset($_GET['industry'])) {
 				$this->defaultColumns[] = array(
 					'name' => 'industry_search',
 					'value' => '$data->industry->view->industry_name',
