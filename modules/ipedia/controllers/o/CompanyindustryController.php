@@ -141,6 +141,10 @@ class CompanyindustryController extends Controller
 	public function actionView($id) 
 	{
 		$model=$this->loadModel($id);
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
 
 		$this->pageTitle = Yii::t('phrase', 'View Ipedia Company Industries');
 		$this->pageDescription = '';
