@@ -42,6 +42,7 @@ class IpediaDirectories extends CActiveRecord
 	public $defaultColumns = array();
 	
 	// Variable Search
+	public $location_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -80,7 +81,7 @@ class IpediaDirectories extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('directory_id, publish, directory_name, creation_date, creation_id, modified_date, modified_id,
-				creation_search, modified_search', 'safe', 'on'=>'search'),
+				location_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -115,6 +116,7 @@ class IpediaDirectories extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
+			'location_search' => Yii::t('attribute', 'Locations'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -150,6 +152,9 @@ class IpediaDirectories extends CActiveRecord
 		
 		// Custom Search
 		$criteria->with = array(
+			'view' => array(
+				'alias'=>'view',
+			),
 			'creation' => array(
 				'alias'=>'creation',
 				'select'=>'displayname'
@@ -185,6 +190,7 @@ class IpediaDirectories extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
+		$criteria->compare('view.locations',$this->location_search);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -249,6 +255,14 @@ class IpediaDirectories extends CActiveRecord
 			$this->defaultColumns[] = array(
 				'name' => 'directory_name',
 				'value' => '$data->directory_name',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'location_search',
+				'value' => 'CHtml::link($data->view->locations, Yii::app()->controller->createUrl("o/location/manage",array(\'directory\'=>$data->directory_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
