@@ -271,14 +271,6 @@ class IpediaCompanies extends CActiveRecord
 				);
 			}
 			$this->defaultColumns[] = array(
-				'name' => 'industry_search',
-				'value' => 'CHtml::link($data->view->industries, Yii::app()->controller->createUrl("o/companyindustry/manage",array(\'company\'=>$data->company_id,\'type\'=>\'publish\')))',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),	
-				'type' => 'raw',
-			);
-			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
 				'value' => '$data->creation->displayname',
 			);
@@ -307,6 +299,14 @@ class IpediaCompanies extends CActiveRecord
 						'showButtonPanel' => true,
 					),
 				), true),
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'industry_search',
+				'value' => 'CHtml::link($data->view->industries, Yii::app()->controller->createUrl("o/companyindustry/manage",array(\'company\'=>$data->company_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
 			);
 			if(!isset($_GET['type'])) {
 				$this->defaultColumns[] = array(

@@ -277,22 +277,6 @@ class IpediaIndustries extends CActiveRecord
 			}
 			//$this->defaultColumns[] = 'industry_desc';
 			$this->defaultColumns[] = array(
-				'name' => 'major_search',
-				'value' => 'CHtml::link($data->view->majors, Yii::app()->controller->createUrl("o/industrymajor/manage",array(\'industry\'=>$data->industry_id,\'type\'=>\'publish\')))',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),	
-				'type' => 'raw',
-			);
-			$this->defaultColumns[] = array(
-				'name' => 'company_search',
-				'value' => 'CHtml::link($data->view->companies != null && $data->view->companies != 0 ? $data->view->companies : \'0\', Yii::app()->controller->createUrl("o/companyindustry/manage",array(\'industry\'=>$data->industry_id,\'type\'=>\'publish\')))',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),	
-				'type' => 'raw',
-			);
-			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
 				'value' => '$data->creation->displayname',
 			);
@@ -321,6 +305,22 @@ class IpediaIndustries extends CActiveRecord
 						'showButtonPanel' => true,
 					),
 				), true),
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'major_search',
+				'value' => 'CHtml::link($data->view->majors, Yii::app()->controller->createUrl("o/industrymajor/manage",array(\'industry\'=>$data->industry_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'company_search',
+				'value' => 'CHtml::link($data->view->companies != null && $data->view->companies != 0 ? $data->view->companies : \'0\', Yii::app()->controller->createUrl("o/companyindustry/manage",array(\'industry\'=>$data->industry_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
 			);
 			if(!isset($_GET['type'])) {
 				$this->defaultColumns[] = array(

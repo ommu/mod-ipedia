@@ -262,22 +262,6 @@ class IpediaMajors extends CActiveRecord
 				'name' => 'major_name',
 				'value' => '$data->major_name',
 			);
-			$this->defaultColumns[] = array(
-				'name' => 'university_search',
-				'value' => 'CHtml::link($data->view->universities, Yii::app()->controller->createUrl("o/universitymajor/manage",array(\'major\'=>$data->major_id,\'type\'=>\'publish\')))',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),	
-				'type' => 'raw',
-			);
-			$this->defaultColumns[] = array(
-				'name' => 'industry_search',
-				'value' => 'CHtml::link($data->view->industries != null && $data->view->industries != 0 ? $data->view->industries : \'0\', Yii::app()->controller->createUrl("o/industrymajor/manage",array(\'major\'=>$data->major_id,\'type\'=>\'publish\')))',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),	
-				'type' => 'raw',
-			);
 			//$this->defaultColumns[] = 'major_desc';
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
@@ -308,6 +292,22 @@ class IpediaMajors extends CActiveRecord
 						'showButtonPanel' => true,
 					),
 				), true),
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'university_search',
+				'value' => 'CHtml::link($data->view->universities, Yii::app()->controller->createUrl("o/universitymajor/manage",array(\'major\'=>$data->major_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'industry_search',
+				'value' => 'CHtml::link($data->view->industries != null && $data->view->industries != 0 ? $data->view->industries : \'0\', Yii::app()->controller->createUrl("o/industrymajor/manage",array(\'major\'=>$data->major_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
 			);
 			if(!isset($_GET['type'])) {
 				$this->defaultColumns[] = array(

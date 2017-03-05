@@ -257,14 +257,6 @@ class IpediaDirectories extends CActiveRecord
 				'value' => '$data->directory_name',
 			);
 			$this->defaultColumns[] = array(
-				'name' => 'location_search',
-				'value' => 'CHtml::link($data->view->locations, Yii::app()->controller->createUrl("o/location/manage",array(\'directory\'=>$data->directory_id,\'type\'=>\'publish\')))',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),	
-				'type' => 'raw',
-			);
-			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
 				'value' => '$data->creation->displayname',
 			);
@@ -293,6 +285,14 @@ class IpediaDirectories extends CActiveRecord
 						'showButtonPanel' => true,
 					),
 				), true),
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'location_search',
+				'value' => 'CHtml::link($data->view->locations, Yii::app()->controller->createUrl("o/location/manage",array(\'directory\'=>$data->directory_id,\'type\'=>\'publish\')))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
 			);
 			if(!isset($_GET['type'])) {
 				$this->defaultColumns[] = array(
