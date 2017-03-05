@@ -194,8 +194,8 @@ class IpediaMajors extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
-		$criteria->compare('view.universities',strtolower($this->university_search), true);
-		$criteria->compare('view.industries',strtolower($this->industry_search), true);
+		$criteria->compare('view.universities',$this->university_search);
+		$criteria->compare('view.industries',$this->industry_search);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
