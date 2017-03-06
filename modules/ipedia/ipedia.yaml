@@ -64,10 +64,10 @@ content_menu	:
 		urlPath: {url: add, attr: -, icon: -}
 	- urlTitle: Edit Position
 		urlRules: {ipedia, o/position, view, siteType: 0,1, userLevel: 1,2}
-		urlPath: {url: edit, attr: -, icon: -}
+		urlPath: {url: edit, attr: id=$_GET*id, icon: -}
 	- urlTitle: View Position
 		urlRules: {ipedia, o/position, edit, siteType: 0,1, userLevel: 1,2}
-		urlPath: {url: view, attr: -, icon: -}
+		urlPath: {url: view, attr: id=$_GET*id, icon: -}
 # controller o/major
 	- urlTitle: Add Major
 		urlRules: {ipedia, o/major, manage, siteType: 0,1, userLevel: 1,2}
@@ -84,3 +84,7 @@ content_menu	:
 	- urlTitle: Add Industry
 		urlRules: {ipedia, o/industry, manage, siteType: 0,1, userLevel: 1,2}
 		urlPath: {url: add, attr: -, icon: -}
+# controller o/location
+	- urlTitle: Add Location
+		urlRules: {ipedia, o/location, manage, siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: add, attr: directory=$_GET*directory, icon: -}

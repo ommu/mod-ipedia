@@ -111,12 +111,15 @@ class DirectoryController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionSuggest($data='company', $limit=10) 
+	public function actionSuggest($data=null, $limit=10) 
 	{
 		if(Yii::app()->request->isAjaxRequest) {
 			if(isset($_GET['term'])) {
 				$criteria = new CDbCriteria;
-				if(!isset($data) || (isset($data) && $data == 'company')) {	
+				if(!isset($data))
+					$criteria->condition = 't.publish = :publish AND t.directory_name LIKE :directory';
+				
+				else if(isset($data) && $data == 'company') {	
 					$criteria->with = array(
 						'companies' => array(
 							'alias'=>'companies',

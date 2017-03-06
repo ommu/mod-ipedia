@@ -142,13 +142,26 @@ class LocationController extends Controller
 	 */
 	public function actionAdd() 
 	{
-		$model=new IpediaDirectoryLocation;
+		$id = $_GET['directory'];
+		$directory_name = '';
+		$model=new IpediaDirectoryLocation;	
+		
+		if(isset($id) && $id != '') {
+			$directory = IpediaDirectories::model()->findByPk($id);
+			if($directory != null)
+				$directory_name = ': '.$directory->directory_name;
+		}
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
 		if(isset($_POST['IpediaDirectoryLocation'])) {
 			$model->attributes=$_POST['IpediaDirectoryLocation'];
+			
+			if($directory != null) {
+				$model->directory_name_i = $directory->directory_name;
+				$model->directory_id = $directory->directory_id;				
+			}
 			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
@@ -175,11 +188,12 @@ class LocationController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 600;
 
-		$this->pageTitle = Yii::t('phrase', 'Create Ipedia Directory Locations');
+		$this->pageTitle = Yii::t('phrase', 'Create Ipedia Directory Locations').$directory_name;
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_add',array(
 			'model'=>$model,
+			'directory'=>$directory,
 		));
 	}
 
@@ -191,6 +205,7 @@ class LocationController extends Controller
 	public function actionEdit($id) 
 	{
 		$model=$this->loadModel($id);
+		$directory_name = ': '.$model->directory->directory_name;
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
@@ -223,7 +238,7 @@ class LocationController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 600;
 
-		$this->pageTitle = Yii::t('phrase', 'Update Ipedia Directory Locations');
+		$this->pageTitle = Yii::t('phrase', 'Update Ipedia Directory Locations').$directory_name;
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_edit',array(

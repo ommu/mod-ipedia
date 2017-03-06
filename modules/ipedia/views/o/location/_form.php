@@ -22,98 +22,102 @@
 )); ?>
 
 <div class="dialog-content">
-<fieldset>
+	<fieldset>
 
-	<?php //begin.Messages ?>
-	<div id="ajax-message">
-		<?php echo $form->errorSummary($model); ?>
-	</div>
-	<?php //begin.Messages ?>
-
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'directory_id'); ?>
-		<div class="desc">
-			<?php echo $form->textField($model,'directory_id',array('size'=>11,'maxlength'=>11)); ?>
-			<?php echo $form->error($model,'directory_id'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
+		<?php //begin.Messages ?>
+		<div id="ajax-message">
+			<?php echo $form->errorSummary($model); ?>
 		</div>
-	</div>
+		<?php //begin.Messages ?>
 
-	<div class="clearfix publish">
-		<?php echo $form->labelEx($model,'headquarters'); ?>
-		<div class="desc">
-			<?php echo $form->checkBox($model,'headquarters'); ?>
+		<?php if($model->isNewRecord && $directory == null) {?>
+			<div class="clearfix">
+				<?php echo $form->labelEx($model,'directory_name_i'); ?>
+				<div class="desc">
+					<?php if(!$model->getErrors())
+						$model->directory_name_i = $model->view->directory_name;
+					//echo $form->textField($model,'directory_name_i',array('class'=>'span-8'));
+					$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+						'model' => $model,
+						'attribute' => 'directory_name_i',
+						'source' => Yii::app()->controller->createUrl('o/directory/suggest'),
+						'options' => array(
+							//'delay '=> 50,
+							'minLength' => 1,
+							'showAnim' => 'fold',
+							'select' => "js:function(event, ui) {
+								$('#IpediaDirectoryLocation_directory_name_i').val(ui.item.value);
+								$('#IpediaDirectoryLocation_directory_id').val(ui.item.id);
+							}"
+						),
+						'htmlOptions' => array(
+							'class'	=> 'span-8',
+						),
+					));
+					echo $form->hiddenField($model,'directory_id');?>
+					<?php echo $form->error($model,'directory_name_i'); ?>
+					<?php /*<div class="small-px silent"></div>*/?>
+				</div>
+			</div>
+		<?php }?>
+
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'address'); ?>
+			<div class="desc">
+				<?php echo $form->textArea($model,'address',array('rows'=>6, 'cols'=>50, 'class'=>'span-10 smaller')); ?>
+				<?php echo $form->error($model,'address'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
+			</div>
+		</div>
+
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'city_id'); ?>
+			<div class="desc">
+				<?php echo $form->textField($model,'city_id',array('maxlength'=>11)); ?>
+				<?php echo $form->error($model,'city_id'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
+			</div>
+		</div>
+
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'district_id'); ?>
+			<div class="desc">
+				<?php echo $form->textField($model,'district_id',array('maxlength'=>11)); ?>
+				<?php echo $form->error($model,'district_id'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
+			</div>
+		</div>
+
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'village_id'); ?>
+			<div class="desc">
+				<?php echo $form->textField($model,'village_id',array('maxlength'=>11)); ?>
+				<?php echo $form->error($model,'village_id'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
+			</div>
+		</div>
+
+		<div class="clearfix publish">
 			<?php echo $form->labelEx($model,'headquarters'); ?>
-			<?php echo $form->error($model,'headquarters'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
+			<div class="desc">
+				<?php echo $form->checkBox($model,'headquarters'); ?>
+				<?php echo $form->labelEx($model,'headquarters'); ?>
+				<?php echo $form->error($model,'headquarters'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
+			</div>
 		</div>
-	</div>
 
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'address'); ?>
-		<div class="desc">
-			<?php echo $form->textArea($model,'address',array('rows'=>6, 'cols'=>50)); ?>
-			<?php echo $form->error($model,'address'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
-
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'country_id'); ?>
-		<div class="desc">
-			<?php echo $form->textField($model,'country_id'); ?>
-			<?php echo $form->error($model,'country_id'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
-
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'province_id'); ?>
-		<div class="desc">
-			<?php echo $form->textField($model,'province_id'); ?>
-			<?php echo $form->error($model,'province_id'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
-
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'city_id'); ?>
-		<div class="desc">
-			<?php echo $form->textField($model,'city_id',array('size'=>11,'maxlength'=>11)); ?>
-			<?php echo $form->error($model,'city_id'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
-
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'district_id'); ?>
-		<div class="desc">
-			<?php echo $form->textField($model,'district_id',array('size'=>11,'maxlength'=>11)); ?>
-			<?php echo $form->error($model,'district_id'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
-
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'village_id'); ?>
-		<div class="desc">
-			<?php echo $form->textField($model,'village_id',array('size'=>11,'maxlength'=>11)); ?>
-			<?php echo $form->error($model,'village_id'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
-
-	<div class="clearfix publish">
-		<?php echo $form->labelEx($model,'publish'); ?>
-		<div class="desc">
-			<?php echo $form->checkBox($model,'publish'); ?>
+		<div class="clearfix publish">
 			<?php echo $form->labelEx($model,'publish'); ?>
-			<?php echo $form->error($model,'publish'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
+			<div class="desc">
+				<?php echo $form->checkBox($model,'publish'); ?>
+				<?php echo $form->labelEx($model,'publish'); ?>
+				<?php echo $form->error($model,'publish'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
+			</div>
 		</div>
-	</div>
 
-</fieldset>
+	</fieldset>
 </div>
 <div class="dialog-submit">
 	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') ,array('onclick' => 'setEnableSave()')); ?>

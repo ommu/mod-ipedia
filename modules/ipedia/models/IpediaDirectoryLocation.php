@@ -44,9 +44,9 @@
 class IpediaDirectoryLocation extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $directory_name_i;
 	
 	// Variable Search
-	public $directory_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -77,14 +77,15 @@ class IpediaDirectoryLocation extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('directory_id', 'required'),
+			array('directory_id,
+				directory_name_i', 'required'),
 			array('publish, headquarters, country_id, province_id', 'numerical', 'integerOnly'=>true),
 			array('directory_id, city_id, district_id, village_id, creation_id, modified_id', 'length', 'max'=>11),
-			array('address, country_id, province_id, city_id', 'safe'),
+			array('directory_id, address, country_id, province_id, city_id, district_id, village_id', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('location_id, publish, directory_id, headquarters, address, country_id, province_id, city_id, district_id, village_id, creation_date, creation_id, modified_date, modified_id,
-				directory_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				directory_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -96,6 +97,7 @@ class IpediaDirectoryLocation extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'view' => array(self::BELONGS_TO, 'ViewIpediaDirectoryLocation', 'location_id'),
 			'directory' => array(self::BELONGS_TO, 'IpediaDirectories', 'directory_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
@@ -122,7 +124,7 @@ class IpediaDirectoryLocation extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
-			'directory_search' => Yii::t('attribute', 'Directory'),
+			'directory_name_i' => Yii::t('attribute', 'Directory'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -214,7 +216,7 @@ class IpediaDirectoryLocation extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
-		$criteria->compare('directory.directory_name',strtolower($this->directory_search), true);
+		$criteria->compare('directory.directory_name',strtolower($this->directory_name_i), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -285,7 +287,7 @@ class IpediaDirectoryLocation extends CActiveRecord
 			);
 			if(!isset($_GET['directory'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'directory_search',
+					'name' => 'directory_name_i',
 					'value' => '$data->directory->directory_name',
 				);
 			}

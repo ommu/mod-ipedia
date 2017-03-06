@@ -34,12 +34,12 @@
 			<?php echo $form->labelEx($model,'company_name_i'); ?>
 			<div class="desc">
 				<?php if(!$model->getErrors())
-					$model->company_name_i = $model->view->company_name;
+					$model->company_name_i = $model->view->directory_name;
 				//echo $form->textField($model,'company_name_i',array('class'=>'span-8'));
 				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
 					'model' => $model,
 					'attribute' => 'company_name_i',
-					'source' => Yii::app()->controller->createUrl('o/directory/suggest'),
+					'source' => Yii::app()->controller->createUrl('o/directory/suggest', array('data'=>'company')),
 					'options' => array(
 						//'delay '=> 50,
 						'minLength' => 1,
