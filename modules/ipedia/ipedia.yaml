@@ -42,7 +42,7 @@ plugin_menu		:
 				urlPath: {url: o/industry/manage, attr: -, icon: -}
 	- urlTitle: Settings
 		urlRules: {siteType: 0,1, userLevel: 1,2}
-		urlPath: {url: o/major/manage, attr: -, icon: -}
+		urlPath: {url: o/setting/edit, attr: -, icon: -}
 
 content_menu	:
 
