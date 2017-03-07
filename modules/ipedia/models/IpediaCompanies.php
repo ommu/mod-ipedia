@@ -43,6 +43,7 @@ class IpediaCompanies extends CActiveRecord
 {
 	public $defaultColumns = array();
 	public $company_name_i;
+	public $company_industry_i;
 	
 	// Variable Search
 	public $industry_search;
@@ -82,7 +83,8 @@ class IpediaCompanies extends CActiveRecord
 				company_name_i', 'vCompanyName'),
 			array('publish', 'numerical', 'integerOnly'=>true),
 			array('directory_id, creation_id, modified_id', 'length', 'max'=>11),
-			array('directory_id', 'safe'),
+			array('directory_id,
+				company_industry_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('company_id, publish, directory_id, creation_date, creation_id, modified_date, modified_id,
@@ -102,10 +104,10 @@ class IpediaCompanies extends CActiveRecord
 			'directory' => array(self::BELONGS_TO, 'IpediaDirectories', 'directory_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
+			'industries' => array(self::HAS_MANY, 'IpediaCompanyIndustry', 'company_id'),
 			'ommuCvExperiences_relation' => array(self::HAS_MANY, 'OmmuCvExperiences', 'company_id'),
 			'ommuCvReferenceReferees_relation' => array(self::HAS_MANY, 'OmmuCvReferenceReferee', 'company_id'),
 			'ommuCvTrainings_relation' => array(self::HAS_MANY, 'OmmuCvTrainings', 'company_id'),
-			'ommuIpediaCompanyIndustries_relation' => array(self::HAS_MANY, 'OmmuIpediaCompanyIndustry', 'company_id'),
 			'ommuMemberCompanies_relation' => array(self::HAS_MANY, 'OmmuMemberCompany', 'company_id'),
 		);
 	}
@@ -124,6 +126,7 @@ class IpediaCompanies extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'company_name_i' => Yii::t('attribute', 'Company'),
+			'company_industry_i' => Yii::t('attribute', 'Industry'),
 			'industry_search' => Yii::t('attribute', 'Industries'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),

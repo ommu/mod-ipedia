@@ -103,8 +103,8 @@ class IpediaIndustries extends CActiveRecord
 			'tag' => array(self::BELONGS_TO, 'OmmuTags', 'tag_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
-			'ommuIpediaCompanyIndustries_relation' => array(self::HAS_MANY, 'OmmuIpediaCompanyIndustry', 'industry_id'),
-			'ommuIpediaIndustryMajors_relation' => array(self::HAS_MANY, 'OmmuIpediaIndustryMajor', 'industry_id'),
+			'majors' => array(self::HAS_MANY, 'IpediaIndustryMajor', 'industry_id'),
+			'companies' => array(self::HAS_MANY, 'IpediaCompanyIndustry', 'industry_id'),
 			'ommuVacancyIndustries_relation' => array(self::HAS_MANY, 'OmmuVacancyIndustry', 'industry_id'),
 		);
 	}

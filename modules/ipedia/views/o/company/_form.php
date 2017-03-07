@@ -34,7 +34,7 @@
 			<?php echo $form->labelEx($model,'company_name_i'); ?>
 			<div class="desc">
 				<?php if(!$model->getErrors())
-					$model->company_name_i = $model->view->directory_name;
+					$model->company_name_i = $model->view->company_name;
 				//echo $form->textField($model,'company_name_i',array('class'=>'span-8'));
 				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
 					'model' => $model,
@@ -56,6 +56,55 @@
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>
+				
+		<?php if(!$model->isNewRecord) {?>
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'company_industry_i'); ?>
+			<div class="desc">
+				<?php //echo $form->textField($model,'company_industry_i',array('maxlength'=>32,'class'=>'span-6'));
+				$url = Yii::app()->controller->createUrl('o/companyindustry/add', array('type'=>'ipedia'));
+				$company = $model->company_id;
+				$tagId = 'IpediaCompanies_company_industry_i';
+				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+					'model' => $model,
+					'attribute' => 'company_industry_i',
+					'source' => Yii::app()->controller->createUrl('o/industry/suggest', array('data'=>'company','id'=>$model->company_id)),
+					'options' => array(
+						//'delay '=> 50,
+						'minLength' => 1,
+						'showAnim' => 'fold',
+						'select' => "js:function(event, ui) {
+							$.ajax({
+								type: 'post',
+								url: '$url',
+								data: { company_id: '$company', industry_id: ui.item.id, industry: ui.item.value },
+								dataType: 'json',
+								success: function(response) {
+									$('form #$tagId').val('');
+									$('form #industry-suggest').append(response.data);
+								}
+							});
+
+						}"
+					),
+					'htmlOptions' => array(
+						'class'	=> 'span-6',
+					),
+				));
+				echo $form->error($model,'company_industry_i');?>
+				<div id="industry-suggest" class="suggest clearfix">
+					<?php
+					$industries = $model->industries;
+					if(!empty($industries)) {
+						foreach($industries as $key => $val) {?>
+						<div><?php echo $val->industry->view->industry_name;?><?php echo $val->publish == 0 ? ' '.Yii::t('phrase', '(Unpublish)') : ''?></div>
+					<?php }
+					}?>
+				</div>
+				<?php if($model->isNewRecord) {?><span class="small-px">tambahkan tanda koma (,) jika ingin menambahkan keyword lebih dari satu</span><?php }?>
+			</div>
+		</div>
+		<?php }?>
 
 		<div class="clearfix publish">
 			<?php echo $form->labelEx($model,'publish'); ?>

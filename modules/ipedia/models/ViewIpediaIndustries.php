@@ -87,6 +87,8 @@ class ViewIpediaIndustries extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'majors' => array(self::HAS_MANY, 'IpediaIndustryMajor', 'industry_id'),
+			'companies' => array(self::HAS_MANY, 'IpediaCompanyIndustry', 'industry_id'),
 		);
 	}
 
