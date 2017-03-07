@@ -128,6 +128,15 @@ class MajorController extends Controller
 								$items[] = $val->major_id;
 						}
 					}
+				} else if(isset($data) && $data == 'industry') {	
+					if($id != null) {
+						$industry = IpediaIndustries::getInfo($id);
+						$majors = $industry->majors;
+						if(!empty($majors)) {
+							foreach($majors as $key => $val)
+								$items[] = $val->major_id;
+						}
+					}
 				}
 				$criteria->select = "t.major_id, t.major_name";
 				$criteria->compare('t.publish',1);
