@@ -46,24 +46,24 @@
 			'value'=>$model->address != '' ? $model->address : '-',
 		),
 		array(
-			'name'=>'country_id',
-			'value'=>$model->country_id != 0 ? $model->country_id : '-',
-		),
-		array(
-			'name'=>'province_id',
-			'value'=>$model->province_id != 0 ? $model->province_id : '-',
-		),
-		array(
-			'name'=>'city_id',
-			'value'=>$model->city_id != 0 ? $model->city_id : '-',
+			'name'=>'village_id',
+			'value'=>$model->village_id != 0 ? $model->view->village_name : '-',
 		),
 		array(
 			'name'=>'district_id',
-			'value'=>$model->district_id != 0 ? $model->district_id : '-',
+			'value'=>$model->district_id != 0 ? $model->view->district_name : '-',
 		),
 		array(
-			'name'=>'village_id',
-			'value'=>$model->village_id != 0 ? $model->village_id : '-',
+			'name'=>'city_id',
+			'value'=>$model->city_id != 0 ? $model->view->city_name : '-',
+		),
+		array(
+			'name'=>'province_id',
+			'value'=>$model->province_id != 0 ? $model->view->province_name : '-',
+		),
+		array(
+			'name'=>'country_id',
+			'value'=>$model->country_id != 0 ? $model->view->country_name : '-',
 		),
 		array(
 			'name'=>'creation_date',

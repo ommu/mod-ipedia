@@ -25,11 +25,11 @@
  * The followings are the available columns in table '_view_ipedia_directory_location':
  * @property string $location_id
  * @property string $directory_name
+ * @property string $village_name
+ * @property string $district_name
  * @property string $city_name
  * @property string $province_name
  * @property string $country_name
- * @property string $district_name
- * @property string $village_name
  */
 class ViewIpediaDirectoryLocation extends CActiveRecord
 {
@@ -71,11 +71,11 @@ class ViewIpediaDirectoryLocation extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('location_id', 'length', 'max'=>11),
-			array('city_name, province_name, country_name, district_name, village_name', 'length', 'max'=>64),
+			array('village_name, district_name, city_name, province_name, country_name', 'length', 'max'=>64),
 			array('directory_name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('location_id, directory_name, city_name, province_name, country_name, district_name, village_name', 'safe', 'on'=>'search'),
+			array('village_name, district_name, location_id, directory_name, city_name, province_name, country_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -98,11 +98,11 @@ class ViewIpediaDirectoryLocation extends CActiveRecord
 		return array(
 			'location_id' => Yii::t('attribute', 'Location'),
 			'directory_name' => Yii::t('attribute', 'Directory Name'),
+			'village_name' => Yii::t('attribute', 'Village Name'),
+			'district_name' => Yii::t('attribute', 'District Name'),
 			'city_name' => Yii::t('attribute', 'City Name'),
 			'province_name' => Yii::t('attribute', 'Province Name'),
 			'country_name' => Yii::t('attribute', 'Country Name'),
-			'district_name' => Yii::t('attribute', 'District Name'),
-			'village_name' => Yii::t('attribute', 'Village Name'),
 		);
 		/*
 			'Location' => 'Location',
@@ -136,11 +136,11 @@ class ViewIpediaDirectoryLocation extends CActiveRecord
 
 		$criteria->compare('t.location_id',strtolower($this->location_id),true);
 		$criteria->compare('t.directory_name',strtolower($this->directory_name),true);
+		$criteria->compare('t.village_name',strtolower($this->village_name),true);
+		$criteria->compare('t.district_name',strtolower($this->district_name),true);
 		$criteria->compare('t.city_name',strtolower($this->city_name),true);
 		$criteria->compare('t.province_name',strtolower($this->province_name),true);
 		$criteria->compare('t.country_name',strtolower($this->country_name),true);
-		$criteria->compare('t.district_name',strtolower($this->district_name),true);
-		$criteria->compare('t.village_name',strtolower($this->village_name),true);
 
 		if(!isset($_GET['ViewIpediaDirectoryLocation_sort']))
 			$criteria->order = 't. DESC';
@@ -173,11 +173,11 @@ class ViewIpediaDirectoryLocation extends CActiveRecord
 		} else {
 			$this->defaultColumns[] = 'location_id';
 			$this->defaultColumns[] = 'directory_name';
+			$this->defaultColumns[] = 'village_name';
+			$this->defaultColumns[] = 'district_name';
 			$this->defaultColumns[] = 'city_name';
 			$this->defaultColumns[] = 'province_name';
 			$this->defaultColumns[] = 'country_name';
-			$this->defaultColumns[] = 'district_name';
-			$this->defaultColumns[] = 'village_name';
 		}
 
 		return $this->defaultColumns;
@@ -194,11 +194,11 @@ class ViewIpediaDirectoryLocation extends CActiveRecord
 			);
 			//$this->defaultColumns[] = 'location_id';
 			$this->defaultColumns[] = 'directory_name';
+			$this->defaultColumns[] = 'village_name';
+			$this->defaultColumns[] = 'district_name';
 			$this->defaultColumns[] = 'city_name';
 			$this->defaultColumns[] = 'province_name';
 			$this->defaultColumns[] = 'country_name';
-			$this->defaultColumns[] = 'district_name';
-			$this->defaultColumns[] = 'village_name';
 		}
 		parent::afterConstruct();
 	}

@@ -71,28 +71,88 @@
 		</div>
 
 		<div class="clearfix">
-			<?php echo $form->labelEx($model,'city_id'); ?>
+			<?php echo $form->labelEx($model,'city_name_i'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'city_id',array('maxlength'=>11)); ?>
-				<?php echo $form->error($model,'city_id'); ?>
+				<?php //echo $form->textField($model,'city_id',array('maxlength'=>11));
+				if(!$model->getErrors())
+					$model->city_name_i = $model->view->city_name;
+				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+					'model' => $model,
+					'attribute' => 'city_name_i',
+					'source' => Yii::app()->createUrl('zonecity/suggest'),
+					'options' => array(
+						//'delay '=> 50,
+						'minLength' => 1,
+						'showAnim' => 'fold',
+						'select' => "js:function(event, ui) {
+							$('#IpediaDirectoryLocation_city_name_i').val(ui.item.value);
+							$('#IpediaDirectoryLocation_city_id').val(ui.item.id);
+						}"
+					),
+					'htmlOptions' => array(
+						'class'	=> 'span-6',
+					),
+				));
+				echo $form->hiddenField($model,'city_id');?>
+				<?php echo $form->error($model,'city_name_i'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>
 
 		<div class="clearfix">
-			<?php echo $form->labelEx($model,'district_id'); ?>
+			<?php echo $form->labelEx($model,'district_name_i'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'district_id',array('maxlength'=>11)); ?>
-				<?php echo $form->error($model,'district_id'); ?>
+				<?php //echo $form->textField($model,'district_id',array('maxlength'=>11));
+				if(!$model->getErrors())
+					$model->district_name_i = $model->view->district_name;
+				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+					'model' => $model,
+					'attribute' => 'district_name_i',
+					'source' => Yii::app()->createUrl('zonedistrict/suggest'),
+					'options' => array(
+						//'delay '=> 50,
+						'minLength' => 1,
+						'showAnim' => 'fold',
+						'select' => "js:function(event, ui) {
+							$('#IpediaDirectoryLocation_district_name_i').val(ui.item.value);
+							$('#IpediaDirectoryLocation_district_id').val(ui.item.id);
+						}"
+					),
+					'htmlOptions' => array(
+						'class'	=> 'span-6',
+					),
+				));
+				echo $form->hiddenField($model,'district_id'); ?>
+				<?php echo $form->error($model,'district_name_i'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>
 
 		<div class="clearfix">
-			<?php echo $form->labelEx($model,'village_id'); ?>
+			<?php echo $form->labelEx($model,'village_name_i'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'village_id',array('maxlength'=>11)); ?>
-				<?php echo $form->error($model,'village_id'); ?>
+				<?php //echo $form->textField($model,'village_id',array('maxlength'=>11));
+				if(!$model->getErrors())
+					$model->village_name_i = $model->view->village_name;
+				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+					'model' => $model,
+					'attribute' => 'village_name_i',
+					'source' => Yii::app()->createUrl('zonevillage/suggest'),
+					'options' => array(
+						//'delay '=> 50,
+						'minLength' => 1,
+						'showAnim' => 'fold',
+						'select' => "js:function(event, ui) {
+							$('#IpediaDirectoryLocation_village_name_i').val(ui.item.value);
+							$('#IpediaDirectoryLocation_village_id').val(ui.item.id);
+						}"
+					),
+					'htmlOptions' => array(
+						'class'	=> 'span-6',
+					),
+				));
+				echo $form->hiddenField($model,'village_id'); ?>
+				<?php echo $form->error($model,'village_name_i'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>

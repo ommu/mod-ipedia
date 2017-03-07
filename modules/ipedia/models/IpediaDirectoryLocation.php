@@ -45,6 +45,11 @@ class IpediaDirectoryLocation extends CActiveRecord
 {
 	public $defaultColumns = array();
 	public $directory_name_i;
+	public $village_name_i;
+	public $district_name_i;
+	public $city_name_i;
+	public $province_name_i;
+	public $country_name_i;
 	
 	// Variable Search
 	public $creation_search;
@@ -81,11 +86,12 @@ class IpediaDirectoryLocation extends CActiveRecord
 				directory_name_i', 'required'),
 			array('publish, headquarters, country_id, province_id', 'numerical', 'integerOnly'=>true),
 			array('directory_id, city_id, district_id, village_id, creation_id, modified_id', 'length', 'max'=>11),
-			array('directory_id, address, country_id, province_id, city_id, district_id, village_id', 'safe'),
+			array('directory_id, address, country_id, province_id, city_id, district_id, village_id,
+				village_name_i, district_name_i, city_name_i, province_name_i, country_name_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('location_id, publish, directory_id, headquarters, address, country_id, province_id, city_id, district_id, village_id, creation_date, creation_id, modified_date, modified_id,
-				directory_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
+				directory_name_i, village_name_i, district_name_i, city_name_i, province_name_i, country_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -125,6 +131,11 @@ class IpediaDirectoryLocation extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'directory_name_i' => Yii::t('attribute', 'Directory'),
+			'village_name_i' => Yii::t('attribute', 'Village'),
+			'district_name_i' => Yii::t('attribute', 'District'),
+			'city_name_i' => Yii::t('attribute', 'City'),
+			'province_name_i' => Yii::t('attribute', 'Province'),
+			'country_name_i' => Yii::t('attribute', 'Country'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
