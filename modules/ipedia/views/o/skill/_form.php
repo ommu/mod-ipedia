@@ -49,6 +49,54 @@
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>
+		
+		<?php if(!$model->isNewRecord) {?>
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'skill_position_i'); ?>
+			<div class="desc">
+				<?php //echo $form->textField($model,'skill_position_i',array('maxlength'=>32,'class'=>'span-6'));
+				$url = Yii::app()->controller->createUrl('o/positionskill/add', array('type'=>'ipedia'));
+				$skill = $model->skill_id;
+				$tagId = 'IpediaSkills_skill_position_i';
+				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+					'model' => $model,
+					'attribute' => 'skill_position_i',
+					'source' => Yii::app()->controller->createUrl('o/position/suggest', array('data'=>'skill','id'=>$model->skill_id)),
+					'options' => array(
+						//'delay '=> 50,
+						'minLength' => 1,
+						'showAnim' => 'fold',
+						'select' => "js:function(event, ui) {
+							$.ajax({
+								type: 'post',
+								url: '$url',
+								data: { skill_id: '$skill', position_id: ui.item.id, position: ui.item.value },
+								dataType: 'json',
+								success: function(response) {
+									$('form #$tagId').val('');
+									$('form #position-suggest').append(response.data);
+								}
+							});
+
+						}"
+					),
+					'htmlOptions' => array(
+						'class'	=> 'span-6',
+					),
+				));
+				echo $form->error($model,'skill_position_i');?>
+				<div id="position-suggest" class="suggest clearfix">
+					<?php
+					$positions = $model->positions;
+					if(!empty($positions)) {
+						foreach($positions as $key => $val) {?>
+						<div><?php echo $val->position->position_name;?><?php echo $val->publish == 0 ? ' '.Yii::t('phrase', '(Unpublish)') : ''?></div>
+					<?php }
+					}?>
+				</div>
+			</div>
+		</div>
+		<?php }?>
 
 		<div class="clearfix publish">
 			<?php echo $form->labelEx($model,'publish'); ?>

@@ -41,6 +41,7 @@ class IpediaSkills extends CActiveRecord
 {
 	public $defaultColumns = array();
 	public $skill_name_i;
+	public $skill_position_i;
 	
 	// Variable Search
 	public $position_search;
@@ -81,7 +82,8 @@ class IpediaSkills extends CActiveRecord
 				skill_name_i', 'vSkillName'),
 			array('publish', 'numerical', 'integerOnly'=>true),
 			array('tag_id, creation_id, modified_id', 'length', 'max'=>11),
-			array('tag_id, skill_desc', 'safe'),
+			array('tag_id, skill_desc,
+				skill_position_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('skill_id, publish, tag_id, skill_desc, creation_date, creation_id, modified_date, modified_id,
@@ -101,8 +103,8 @@ class IpediaSkills extends CActiveRecord
 			'tag' => array(self::BELONGS_TO, 'OmmuTags', 'tag_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
+			'positions' => array(self::HAS_MANY, 'IpediaPositionSkill', 'skill_id'),
 			'ommuCvSkills_relation' => array(self::HAS_MANY, 'OmmuCvSkills', 'skill_id'),
-			'ommuIpediaPositionSkills_relation' => array(self::HAS_MANY, 'OmmuIpediaPositionSkill', 'skill_id'),
 		);
 	}
 
@@ -121,6 +123,7 @@ class IpediaSkills extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'skill_name_i' => Yii::t('attribute', 'Skill'),
+			'skill_position_i' => Yii::t('attribute', 'Position'),
 			'position_search' => Yii::t('attribute', 'Positions'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
