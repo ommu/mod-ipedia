@@ -122,9 +122,9 @@ class MajorController extends Controller
 				if(isset($data) && $data == 'university') {	
 					if($id != null) {
 						$university = IpediaUniversities::getInfo($id);
-						$university = $university->majors;
-						if(!empty($university)) {
-							foreach($university as $key => $val)
+						$majors = $university->majors;
+						if(!empty($majors)) {
+							foreach($majors as $key => $val)
 								$items[] = $val->major_id;
 						}
 					}

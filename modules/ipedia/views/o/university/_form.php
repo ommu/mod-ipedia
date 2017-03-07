@@ -114,7 +114,6 @@
 		</div>
 		<?php }?>
 
-
 		<div class="clearfix publish">
 			<?php echo $form->labelEx($model,'publish'); ?>
 			<div class="desc">
