@@ -10,6 +10,7 @@
  * TOC :
  *	Index
  *	Manage
+ *	Add
  *	View
  *	RunAction
  *	Delete
@@ -82,7 +83,7 @@ class IndustrymajorController extends Controller
 				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('manage','view','runaction','delete','publish'),
+				'actions'=>array('add','manage','view','runaction','delete','publish'),
 				'users'=>array('@'),
 				'expression'=>'isset(Yii::app()->user->level) && in_array(Yii::app()->user->level, array(1,2))',
 			),
@@ -102,6 +103,44 @@ class IndustrymajorController extends Controller
 	public function actionIndex() 
 	{
 		$this->redirect(array('manage'));
+	}
+
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionAdd() 
+	{
+		$model=new IpediaIndustryMajor;
+		
+		$condition = 0;
+		if(isset($_POST['industry_id'], $_POST['major_id'], $_POST['industry']))
+			$condition = 1;
+		if(isset($_POST['industry_id'], $_POST['major_id'], $_POST['major']))
+			$condition = 2;
+
+		// Uncomment the following line if AJAX validation is needed
+		$this->performAjaxValidation($model);
+
+		if($condition != 0) {
+			$model->industry_id = $_POST['industry_id'];
+			$model->major_id = $_POST['major_id'];
+			if($condition == 1)
+				$model->industry_name_i = $_POST['industry'];
+			if($condition == 2)
+				$model->major_name_i = $_POST['major'];
+
+			if($model->save()) {
+				if(isset($_GET['type']) && $_GET['type'] == 'ipedia')
+					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id,'type'=>'ipedia'));
+				else 
+					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id));
+				$industry_name = $model->publish == 0 ? $model->industry->view->industry_name.' '.Yii::t('phrase', '(Unpublish)') : $model->industry->view->industry_name;
+				echo CJSON::encode(array(
+					'data' => '<div>'.$industry_name.'</div>',
+				));
+			}
+		}
 	}
 
 	/**

@@ -39,6 +39,8 @@
 class IpediaIndustryMajor extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $industry_name_i;
+	public $major_name_i;
 	
 	// Variable Search
 	public $industry_search;
@@ -76,7 +78,8 @@ class IpediaIndustryMajor extends CActiveRecord
 			array('industry_id, major_id', 'required'),
 			array('publish', 'numerical', 'integerOnly'=>true),
 			array('industry_id, major_id, creation_id, modified_id', 'length', 'max'=>11),
-			array('', 'safe'),
+			array('
+				industry_name_i, major_name_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, publish, industry_id, major_id, creation_date, creation_id, modified_date, modified_id,
@@ -351,6 +354,34 @@ class IpediaIndustryMajor extends CActiveRecord
 				$this->creation_id = Yii::app()->user->id;	
 			else
 				$this->modified_id = Yii::app()->user->id;
+		}
+		return true;
+	}
+	
+	/**
+	 * before save attributes
+	 */
+	protected function beforeSave() {
+		if(parent::beforeSave()) {
+			if($this->isNewRecord) {
+				if($this->industry_id == 0) {
+					$industry = IpediaIndustries::model()->with('view')->find(array(
+						'select' => 't.industry_id',
+						'condition' => 'view.industry_name = :industry',
+						'params' => array(
+							':industry' => strtolower(trim($this->industry_name_i)),
+						),
+					));
+					if($industry != null)
+						$this->industry_id = $industry->industry_id;
+					else {
+						$data = new IpediaIndustries;
+						$data->industry_name_i = $this->industry_name_i;
+						if($data->save())
+							$this->industry_id = $data->industry_id;
+					}					
+				}
+			}
 		}
 		return true;
 	}

@@ -46,6 +46,55 @@
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>
+				
+		<?php if(!$model->isNewRecord) {?>
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'major_industry_i'); ?>
+			<div class="desc">
+				<?php //echo $form->textField($model,'major_industry_i',array('maxlength'=>32,'class'=>'span-6'));
+				$url = Yii::app()->controller->createUrl('o/industrymajor/add', array('type'=>'ipedia'));
+				$major = $model->major_id;
+				$tagId = 'IpediaMajors_major_industry_i';
+				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+					'model' => $model,
+					'attribute' => 'major_industry_i',
+					'source' => Yii::app()->controller->createUrl('o/industry/suggest', array('data'=>'major','id'=>$model->major_id)),
+					'options' => array(
+						//'delay '=> 50,
+						'minLength' => 1,
+						'showAnim' => 'fold',
+						'select' => "js:function(event, ui) {
+							$.ajax({
+								type: 'post',
+								url: '$url',
+								data: { major_id: '$major', industry_id: ui.item.id, industry: ui.item.value },
+								dataType: 'json',
+								success: function(response) {
+									$('form #$tagId').val('');
+									$('form #industry-suggest').append(response.data);
+								}
+							});
+
+						}"
+					),
+					'htmlOptions' => array(
+						'class'	=> 'span-6',
+					),
+				));
+				echo $form->error($model,'major_industry_i');?>
+				<div id="industry-suggest" class="suggest clearfix">
+					<?php
+					$industries = $model->industries;
+					if(!empty($industries)) {
+						foreach($industries as $key => $val) {?>
+						<div><?php echo $val->industry->view->industry_name;?><?php echo $val->publish == 0 ? ' '.Yii::t('phrase', '(Unpublish)') : ''?></div>
+					<?php }
+					}?>
+				</div>
+				<?php if($model->isNewRecord) {?><span class="small-px">tambahkan tanda koma (,) jika ingin menambahkan keyword lebih dari satu</span><?php }?>
+			</div>
+		</div>
+		<?php }?>
 
 		<div class="clearfix publish">
 			<?php echo $form->labelEx($model,'publish'); ?>

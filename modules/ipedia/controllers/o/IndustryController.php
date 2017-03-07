@@ -154,8 +154,8 @@ class IndustryController extends Controller
 					foreach($model as $items) {
 						$result[] = array('id' => $items->industry_id, 'value' => $items->view->industry_name);
 					}
-				} else
-					$result[] = array('id' => 0, 'value' => $_GET['term']);
+				} //else
+				//	$result[] = array('id' => 0, 'value' => $_GET['term']);
 			}
 			echo CJSON::encode($result);
 			Yii::app()->end();
