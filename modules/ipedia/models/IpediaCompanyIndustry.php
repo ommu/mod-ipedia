@@ -39,6 +39,7 @@
 class IpediaCompanyIndustry extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $company_name_i;
 	public $industry_name_i;
 	
 	// Variable Search
@@ -78,7 +79,7 @@ class IpediaCompanyIndustry extends CActiveRecord
 			array('publish', 'numerical', 'integerOnly'=>true),
 			array('company_id, industry_id, creation_id, modified_id', 'length', 'max'=>11),
 			array('
-				industry_name_i', 'safe'),
+				company_name_i, industry_name_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, publish, company_id, industry_id, creation_date, creation_id, modified_date, modified_id,
@@ -363,6 +364,24 @@ class IpediaCompanyIndustry extends CActiveRecord
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
 			if($this->isNewRecord) {
+				if($this->company_id == 0) {
+					$company = IpediaCompanies::model()->with('view')->find(array(
+						'select' => 't.company_id',
+						'condition' => 'view.company_name = :company',
+						'params' => array(
+							':company' => strtolower(trim($this->company_name_i)),
+						),
+					));
+					if($company != null)
+						$this->company_id = $company->company_id;
+					else {
+						$data = new IpediaCompanies;
+						$data->company_name_i = $this->company_name_i;
+						if($data->save())
+							$this->company_id = $data->company_id;
+					}					
+				}
+				
 				if($this->industry_id == 0) {
 					$industry = IpediaIndustries::model()->with('view')->find(array(
 						'select' => 't.industry_id',

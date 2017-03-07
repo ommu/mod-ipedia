@@ -9,8 +9,8 @@
  *
  * TOC :
  *	Index
- *	Manage
  *	Add
+ *	Manage
  *	View
  *	RunAction
  *	Delete
@@ -112,23 +112,35 @@ class CompanyindustryController extends Controller
 	public function actionAdd() 
 	{
 		$model=new IpediaCompanyIndustry;
+		
+		$condition = 0;
+		if(isset($_POST['company_id'], $_POST['industry_id'], $_POST['company']))
+			$condition = 1;
+		if(isset($_POST['company_id'], $_POST['industry_id'], $_POST['industry']))
+			$condition = 2;
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['company_id'], $_POST['industry_id'], $_POST['industry'])) {
+		if($condition != 0) {
 			$model->company_id = $_POST['company_id'];
 			$model->industry_id = $_POST['industry_id'];
-			$model->industry_name_i = $_POST['industry'];
+			if($condition == 1)
+				$model->company_name_i = $_POST['company'];
+			if($condition == 2)
+				$model->industry_name_i = $_POST['industry'];
 
 			if($model->save()) {
 				if(isset($_GET['type']) && $_GET['type'] == 'ipedia')
 					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id,'type'=>'ipedia'));
 				else 
 					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id));
-				$industry_name = $model->publish == 0 ? $model->industry->view->industry_name.' '.Yii::t('phrase', '(Unpublish)') : $model->industry->view->industry_name;
+				if($condition == 1)
+					$desc_name = $model->publish == 0 ? $model->company->view->company_name.' '.Yii::t('phrase', '(Unpublish)') : $model->company->view->company_name;
+				if($condition == 2)
+					$desc_name = $model->publish == 0 ? $model->industry->view->industry_name.' '.Yii::t('phrase', '(Unpublish)') : $model->industry->view->industry_name;
 				echo CJSON::encode(array(
-					'data' => '<div>'.$industry_name.'</div>',
+					'data' => '<div>'.$desc_name.'</div>',
 				));
 			}
 		}
