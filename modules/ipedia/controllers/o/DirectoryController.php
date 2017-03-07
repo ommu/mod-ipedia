@@ -115,18 +115,15 @@ class DirectoryController extends Controller
 	{
 		if(Yii::app()->request->isAjaxRequest) {
 			if(isset($_GET['term'])) {
-				$criteria = new CDbCriteria;
-				if(!isset($data))
-					$criteria->condition = 't.publish = :publish AND t.directory_name LIKE :directory';
-				
-				else if(isset($data) && $data == 'company') {	
+				$criteria = new CDbCriteria;				
+				if(isset($data) && $data == 'company') {	
 					$criteria->with = array(
 						'companies' => array(
 							'alias'=>'companies',
 							'together' => true,
 						),
 					);
-					$criteria->condition = 't.publish = :publish AND t.directory_name LIKE :directory AND companies.directory_id IS NULL';
+					$criteria->addCondition('companies.directory_id IS NULL');
 				} else if(isset($data) && $data == 'organization') {	
 					$criteria->with = array(
 						'organizations' => array(
@@ -134,7 +131,7 @@ class DirectoryController extends Controller
 							'together' => true,
 						),
 					);
-					$criteria->condition = 't.publish = :publish AND t.directory_name LIKE :directory AND organizations.directory_id IS NULL';
+					$criteria->addCondition('organizations.directory_id IS NULL');
 				} else if(isset($data) && $data == 'university') {	
 					$criteria->with = array(
 						'universities' => array(
@@ -142,18 +139,17 @@ class DirectoryController extends Controller
 							'together' => true,
 						),
 					);
-					$criteria->condition = 't.publish = :publish AND t.directory_name LIKE :directory AND universities.directory_id IS NULL';
+					$criteria->addCondition('universities.directory_id IS NULL');
 				}
 				$criteria->select = "t.directory_id, t.directory_name";
+				$criteria->compare('t.publish',1);
+				$criteria->compare('t.directory_name',strtolower($_GET['term']), true);
 				$criteria->limit = $limit;
 				$criteria->order = "t.directory_id ASC";
-				$criteria->params = array(
-					':publish' => '1',
-					':directory' => '%' . strtolower($_GET['term']) . '%',
-				);
 				$model = IpediaDirectories::model()->findAll($criteria);
 				/*
 				echo '<pre>';
+				print_r($criteria);
 				print_r($model);
 				echo '</pre>';
 				*/
