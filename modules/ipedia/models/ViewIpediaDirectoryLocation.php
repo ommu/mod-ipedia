@@ -134,7 +134,7 @@ class ViewIpediaDirectoryLocation extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.location_id',strtolower($this->location_id),true);
+		$criteria->compare('t.location_id',$this->location_id);
 		$criteria->compare('t.directory_name',strtolower($this->directory_name),true);
 		$criteria->compare('t.village_name',strtolower($this->village_name),true);
 		$criteria->compare('t.district_name',strtolower($this->district_name),true);

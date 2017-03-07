@@ -134,12 +134,12 @@ class ViewIpediaIndustries extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.industry_id',strtolower($this->industry_id),true);
+		$criteria->compare('t.industry_id',$this->industry_id);
 		$criteria->compare('t.industry_name',strtolower($this->industry_name),true);
-		$criteria->compare('t.majors',strtolower($this->majors),true);
-		$criteria->compare('t.major_all',strtolower($this->major_all),true);
-		$criteria->compare('t.companies',strtolower($this->companies),true);
-		$criteria->compare('t.company_all',strtolower($this->company_all),true);
+		$criteria->compare('t.majors',$this->majors);
+		$criteria->compare('t.major_all',$this->major_all);
+		$criteria->compare('t.companies',$this->companies);
+		$criteria->compare('t.company_all',$this->company_all);
 
 		if(!isset($_GET['ViewIpediaIndustries_sort']))
 			$criteria->order = 't.industry_id DESC';

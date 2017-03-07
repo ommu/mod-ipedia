@@ -119,7 +119,7 @@ class ViewIpediaOrganizations extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.organization_id',strtolower($this->organization_id),true);
+		$criteria->compare('t.organization_id',$this->organization_id);
 		$criteria->compare('t.organization_name',strtolower($this->organization_name),true);
 
 		if(!isset($_GET['ViewIpediaOrganizations_sort']))

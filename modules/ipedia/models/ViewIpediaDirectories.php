@@ -138,16 +138,16 @@ class ViewIpediaDirectories extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.directory_id',strtolower($this->directory_id),true);
+		$criteria->compare('t.directory_id',$this->directory_id);
 		$criteria->compare('t.directory_name',strtolower($this->directory_name),true);
-		$criteria->compare('t.companies',strtolower($this->companies),true);
-		$criteria->compare('t.company_id',strtolower($this->company_id),true);
-		$criteria->compare('t.organizations',strtolower($this->organizations),true);
-		$criteria->compare('t.organization_id',strtolower($this->organization_id),true);
-		$criteria->compare('t.universities',strtolower($this->universities),true);
-		$criteria->compare('t.university_id',strtolower($this->university_id),true);
-		$criteria->compare('t.locations',strtolower($this->locations),true);
-		$criteria->compare('t.location_all',strtolower($this->location_all),true);
+		$criteria->compare('t.companies',$this->companies);
+		$criteria->compare('t.company_id',$this->company_id);
+		$criteria->compare('t.organizations',$this->organizations);
+		$criteria->compare('t.organization_id',$this->organization_id);
+		$criteria->compare('t.universities',$this->universities);
+		$criteria->compare('t.university_id',$this->university_id);
+		$criteria->compare('t.locations',$this->locations);
+		$criteria->compare('t.location_all',$this->location_all);
 
 		if(!isset($_GET['ViewIpediaDirectories_sort']))
 			$criteria->order = 't.directory_id DESC';

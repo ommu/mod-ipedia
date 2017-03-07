@@ -126,10 +126,10 @@ class ViewIpediaCompanies extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.company_id',strtolower($this->company_id),true);
+		$criteria->compare('t.company_id',$this->company_id);
 		$criteria->compare('t.company_name',strtolower($this->company_name),true);
-		$criteria->compare('t.industries',strtolower($this->industries),true);
-		$criteria->compare('t.industry_all',strtolower($this->industry_all),true);
+		$criteria->compare('t.industries',$this->industries);
+		$criteria->compare('t.industry_all',$this->industry_all);
 
 		if(!isset($_GET['ViewIpediaCompanies_sort']))
 			$criteria->order = 't.company_id DESC';
