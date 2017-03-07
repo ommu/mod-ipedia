@@ -9,6 +9,7 @@
  *
  * TOC :
  *	Index
+ *	Suggest
  *	Manage
  *	Add
  *	Edit
@@ -99,6 +100,14 @@ class IndustryController extends Controller
 	}
 	
 	/**
+	 * Lists all models.
+	 */
+	public function actionIndex() 
+	{
+		$this->redirect(array('manage'));
+	}
+	
+	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
@@ -119,7 +128,6 @@ class IndustryController extends Controller
 					if($id != null) {
 						$major = IpediaMajors::getInfo($id);
 						$industries = $major->industries;
-						$items = array();
 						if(!empty($industries)) {
 							foreach($industries as $key => $val)
 								$items[] = $val->industry_id;
@@ -162,14 +170,6 @@ class IndustryController extends Controller
 			
 		} else
 			throw new CHttpException(404, Yii::t('phrase', 'The requested page does not exist.'));
-	}
-	
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex() 
-	{
-		$this->redirect(array('manage'));
 	}
 
 	/**

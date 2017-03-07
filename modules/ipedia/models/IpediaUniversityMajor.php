@@ -39,6 +39,8 @@
 class IpediaUniversityMajor extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $university_name_i;
+	public $major_name_i;
 	
 	// Variable Search
 	public $university_search;
@@ -73,10 +75,11 @@ class IpediaUniversityMajor extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('university_id, major_id, creation_date, creation_id, modified_id', 'required'),
+			array('university_id, major_id', 'required'),
 			array('publish', 'numerical', 'integerOnly'=>true),
 			array('university_id, major_id, creation_id, modified_id', 'length', 'max'=>11),
-			array('modified_date', 'safe'),
+			array('
+				university_name_i, major_name_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, publish, university_id, major_id, creation_date, creation_id, modified_date, modified_id,
@@ -167,6 +170,7 @@ class IpediaUniversityMajor extends CActiveRecord
 				'alias'=>'modified',
 				'select'=>'displayname'
 			),
+		);
 
 		$criteria->compare('t.id',strtolower($this->id),true);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
@@ -350,6 +354,52 @@ class IpediaUniversityMajor extends CActiveRecord
 				$this->creation_id = Yii::app()->user->id;	
 			else
 				$this->modified_id = Yii::app()->user->id;
+		}
+		return true;
+	}
+	
+	/**
+	 * before save attributes
+	 */
+	protected function beforeSave() {
+		if(parent::beforeSave()) {
+			if($this->isNewRecord) {
+				if($this->university_id == 0) {
+					$university = IpediaUniversities::model()->with('view')->find(array(
+						'select' => 't.university_id',
+						'condition' => 'view.university_name = :university',
+						'params' => array(
+							':university' => strtolower(trim($this->university_name_i)),
+						),
+					));
+					if($university != null)
+						$this->university_id = $university->university_id;
+					else {
+						$data = new IpediaUniversities;
+						$data->university_name_i = $this->university_name_i;
+						if($data->save())
+							$this->university_id = $data->university_id;
+					}
+				}
+				
+				if($this->major_id == 0) {
+					$major = IpediaMajors::model()->find(array(
+						'select' => 't.major_id, t.major_name',
+						'condition' => 't.major_name = :major',
+						'params' => array(
+							':major' => strtolower(trim($this->major_name_i)),
+						),
+					));
+					if($major != null)
+						$this->major_id = $major->major_id;
+					else {
+						$data = new IpediaMajors;
+						$data->major_name = $this->major_name_i;
+						if($data->save())
+							$this->major_id = $data->major_id;
+					}					
+				}
+			}
 		}
 		return true;
 	}

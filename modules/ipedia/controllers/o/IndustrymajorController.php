@@ -9,8 +9,8 @@
  *
  * TOC :
  *	Index
- *	Manage
  *	Add
+ *	Manage
  *	View
  *	RunAction
  *	Delete
@@ -135,9 +135,12 @@ class IndustrymajorController extends Controller
 					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id,'type'=>'ipedia'));
 				else 
 					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id));
-				$industry_name = $model->publish == 0 ? $model->industry->view->industry_name.' '.Yii::t('phrase', '(Unpublish)') : $model->industry->view->industry_name;
+				if($condition == 1)
+					$desc_name = $model->publish == 0 ? $model->industry->view->industry_name.' '.Yii::t('phrase', '(Unpublish)') : $model->industry->view->industry_name;
+				if($condition == 2)
+					$desc_name = $model->publish == 0 ? $model->major->major_name.' '.Yii::t('phrase', '(Unpublish)') : $model->major->major_name;
 				echo CJSON::encode(array(
-					'data' => '<div>'.$industry_name.'</div>',
+					'data' => '<div>'.$desc_name.'</div>',
 				));
 			}
 		}

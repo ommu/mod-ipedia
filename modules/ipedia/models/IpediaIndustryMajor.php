@@ -379,6 +379,24 @@ class IpediaIndustryMajor extends CActiveRecord
 						$data->industry_name_i = $this->industry_name_i;
 						if($data->save())
 							$this->industry_id = $data->industry_id;
+					}
+				}
+				
+				if($this->major_id == 0) {
+					$major = IpediaMajors::model()->find(array(
+						'select' => 't.major_id, t.major_name',
+						'condition' => 't.major_name = :major',
+						'params' => array(
+							':major' => strtolower(trim($this->major_name_i)),
+						),
+					));
+					if($major != null)
+						$this->major_id = $major->major_id;
+					else {
+						$data = new IpediaMajors;
+						$data->major_name = $this->major_name_i;
+						if($data->save())
+							$this->major_id = $data->major_id;
 					}					
 				}
 			}

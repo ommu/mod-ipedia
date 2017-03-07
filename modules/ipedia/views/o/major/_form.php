@@ -49,6 +49,52 @@
 				
 		<?php if(!$model->isNewRecord) {?>
 		<div class="clearfix">
+			<?php echo $form->labelEx($model,'major_university_i'); ?>
+			<div class="desc">
+				<?php //echo $form->textField($model,'major_university_i',array('maxlength'=>32,'class'=>'span-6'));
+				$url = Yii::app()->controller->createUrl('o/universitymajor/add', array('type'=>'ipedia'));
+				$major = $model->major_id;
+				$tagId = 'IpediaMajors_major_university_i';
+				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+					'model' => $model,
+					'attribute' => 'major_university_i',
+					'source' => Yii::app()->controller->createUrl('o/university/suggest', array('data'=>'major','id'=>$model->major_id)),
+					'options' => array(
+						//'delay '=> 50,
+						'minLength' => 1,
+						'showAnim' => 'fold',
+						'select' => "js:function(event, ui) {
+							$.ajax({
+								type: 'post',
+								url: '$url',
+								data: { major_id: '$major', university_id: ui.item.id, university: ui.item.value },
+								dataType: 'json',
+								success: function(response) {
+									$('form #$tagId').val('');
+									$('form #university-suggest').append(response.data);
+								}
+							});
+
+						}"
+					),
+					'htmlOptions' => array(
+						'class'	=> 'span-6',
+					),
+				));
+				echo $form->error($model,'major_university_i');?>
+				<div id="university-suggest" class="suggest clearfix">
+					<?php
+					$universities = $model->universities;
+					if(!empty($universities)) {
+						foreach($universities as $key => $val) {?>
+						<div><?php echo $val->university->view->university_name;?><?php echo $val->publish == 0 ? ' '.Yii::t('phrase', '(Unpublish)') : ''?></div>
+					<?php }
+					}?>
+				</div>
+			</div>
+		</div>
+		
+		<div class="clearfix">
 			<?php echo $form->labelEx($model,'major_industry_i'); ?>
 			<div class="desc">
 				<?php //echo $form->textField($model,'major_industry_i',array('maxlength'=>32,'class'=>'span-6'));
@@ -91,7 +137,6 @@
 					<?php }
 					}?>
 				</div>
-				<?php if($model->isNewRecord) {?><span class="small-px">tambahkan tanda koma (,) jika ingin menambahkan keyword lebih dari satu</span><?php }?>
 			</div>
 		</div>
 		<?php }?>

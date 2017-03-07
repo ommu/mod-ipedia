@@ -9,6 +9,7 @@
  *
  * TOC :
  *	Index
+ *	Suggest
  *	Manage
  *	Add
  *	Edit
@@ -78,7 +79,7 @@ class UniversityController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array(),
+				'actions'=>array('suggest'),
 				'users'=>array('@'),
 				'expression'=>'isset(Yii::app()->user->level)',
 				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
@@ -104,6 +105,62 @@ class UniversityController extends Controller
 	public function actionIndex() 
 	{
 		$this->redirect(array('manage'));
+	}
+	
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionSuggest($data=null, $id=null, $limit=10) 
+	{
+		if(Yii::app()->request->isAjaxRequest) {
+			if(isset($_GET['term'])) {
+				$criteria = new CDbCriteria;
+				$criteria->with = array(
+					'view' => array(
+						'alias'=>'view',
+					),
+				);
+				$items = array();				
+				if(isset($data) && $data == 'major') {	
+					if($id != null) {
+						$major = IpediaMajors::getInfo($id);
+						$universities = $major->universities;
+						$items = array();
+						if(!empty($universities)) {
+							foreach($universities as $key => $val)
+								$items[] = $val->university_id;
+						}
+					}
+				}
+				$criteria->select = "t.university_id";
+				$criteria->compare('t.publish',1);
+				$criteria->compare('view.university_name',strtolower($_GET['term']), true);
+				if($id != null)
+					$criteria->addNotInCondition('t.university_id',$items);
+				$criteria->limit = $limit;
+				$criteria->order = "t.university_id ASC";
+				$model = IpediaUniversities::model()->findAll($criteria);
+				/*
+				echo '<pre>';
+				print_r($criteria);
+				print_r($model);
+				echo '</pre>';
+				*/
+				
+				if($model) {
+					foreach($model as $items) {
+						$result[] = array('id' => $items->university_id, 'value' => $items->view->university_name);
+					}
+				} //else
+				//	$result[] = array('id' => 0, 'value' => $_GET['term']);
+			}
+			echo CJSON::encode($result);
+			Yii::app()->end();
+			
+		} else
+			throw new CHttpException(404, Yii::t('phrase', 'The requested page does not exist.'));
 	}
 
 	/**
