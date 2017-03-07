@@ -40,6 +40,9 @@ plugin_menu		:
 			- urlTitle: Industries
 				urlRules: {siteType: 0,1, userLevel: 1,2}
 				urlPath: {url: o/industry/manage, attr: -, icon: -}
+	- urlTitle: Settings
+		urlRules: {siteType: 0,1, userLevel: 1,2}
+		urlPath: {url: o/major/manage, attr: -, icon: -}
 
 content_menu	:
 

@@ -34,6 +34,9 @@
 class IpediaSetting extends CActiveRecord
 {
 	public $defaultColumns = array();
+	
+	// Variable Search
+	public $modified_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -62,14 +65,15 @@ class IpediaSetting extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('license, permission, meta_keyword, meta_description, modified_id', 'required'),
+			array('license, permission, meta_keyword, meta_description', 'required'),
 			array('permission', 'numerical', 'integerOnly'=>true),
 			array('license', 'length', 'max'=>32),
 			array('modified_id', 'length', 'max'=>11),
-			array('modified_date', 'safe'),
+			array('', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, license, permission, meta_keyword, meta_description, modified_date, modified_id', 'safe', 'on'=>'search'),
+			array('id, license, permission, meta_keyword, meta_description, modified_date, modified_id,
+				modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,6 +85,7 @@ class IpediaSetting extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 		);
 	}
 
@@ -97,6 +102,7 @@ class IpediaSetting extends CActiveRecord
 			'meta_description' => Yii::t('attribute', 'Meta Description'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
+			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
 		/*
 			'ID' => 'ID',
@@ -127,6 +133,14 @@ class IpediaSetting extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+		
+		// Custom Search		
+		$criteria->with = array(
+			'modified' => array(
+				'alias'=>'modified',
+				'select'=>'displayname'
+			),
+		);
 
 		$criteria->compare('t.id',$this->id);
 		$criteria->compare('t.license',strtolower($this->license),true);
@@ -139,6 +153,8 @@ class IpediaSetting extends CActiveRecord
 			$criteria->compare('t.modified_id',$_GET['modified']);
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
+		
+		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
 		if(!isset($_GET['IpediaSetting_sort']))
 			$criteria->order = 't.id DESC';
@@ -199,20 +215,7 @@ class IpediaSetting extends CActiveRecord
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
 			$this->defaultColumns[] = 'license';
-			if(!isset($_GET['type'])) {
-				$this->defaultColumns[] = array(
-					'name' => 'permission',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("permission",array("id"=>$data->id)), $data->permission, 1)',
-					'htmlOptions' => array(
-						'class' => 'center',
-					),
-					'filter'=>array(
-						1=>Yii::t('phrase', 'Yes'),
-						0=>Yii::t('phrase', 'No'),
-					),
-					'type' => 'raw',
-				);
-			}
+			$this->defaultColumns[] = 'permission';
 			$this->defaultColumns[] = 'meta_keyword';
 			$this->defaultColumns[] = 'meta_description';
 			$this->defaultColumns[] = array(
@@ -241,7 +244,10 @@ class IpediaSetting extends CActiveRecord
 					),
 				), true),
 			);
-			$this->defaultColumns[] = 'modified_id';
+			$this->defaultColumns[] = array(
+				'name' => 'creation_search',
+				'value' => '$data->creation->displayname',
+			);
 		}
 		parent::afterConstruct();
 	}
@@ -262,72 +268,5 @@ class IpediaSetting extends CActiveRecord
 			return $model;			
 		}
 	}
-
-	/**
-	 * before validate attributes
-	 */
-	/*
-	protected function beforeValidate() {
-		if(parent::beforeValidate()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
-	}
-	*/
-	
-	/**
-	 * before save attributes
-	 */
-	/*
-	protected function beforeSave() {
-		if(parent::beforeSave()) {
-		}
-		return true;	
-	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
 
 }
