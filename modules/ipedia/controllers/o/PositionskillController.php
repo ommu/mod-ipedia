@@ -9,6 +9,7 @@
  *
  * TOC :
  *	Index
+ *	Add
  *	Manage
  *	View
  *	RunAction
@@ -82,7 +83,7 @@ class PositionskillController extends Controller
 				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('manage','view','runaction','delete','publish'),
+				'actions'=>array('add','manage','view','runaction','delete','publish'),
 				'users'=>array('@'),
 				'expression'=>'isset(Yii::app()->user->level) && in_array(Yii::app()->user->level, array(1,2))',
 			),
@@ -102,6 +103,47 @@ class PositionskillController extends Controller
 	public function actionIndex() 
 	{
 		$this->redirect(array('manage'));
+	}
+
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionAdd() 
+	{
+		$model=new IpediaPositionSkill;
+		
+		$condition = 0;
+		if(isset($_POST['position_id'], $_POST['skill_id'], $_POST['position']))
+			$condition = 1;
+		if(isset($_POST['position_id'], $_POST['skill_id'], $_POST['skill']))
+			$condition = 2;
+
+		// Uncomment the following line if AJAX validation is needed
+		$this->performAjaxValidation($model);
+
+		if($condition != 0) {
+			$model->position_id = $_POST['position_id'];
+			$model->skill_id = $_POST['skill_id'];
+			if($condition == 1)
+				$model->position_name_i = $_POST['position'];
+			if($condition == 2)
+				$model->skill_name_i = $_POST['skill'];
+
+			if($model->save()) {
+				if(isset($_GET['type']) && $_GET['type'] == 'ipedia')
+					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id,'type'=>'ipedia'));
+				else 
+					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id));
+				if($condition == 1)
+					$desc_name = $model->publish == 0 ? $model->position->position_name.' '.Yii::t('phrase', '(Unpublish)') : $model->position->position_name;
+				if($condition == 2)
+					$desc_name = $model->publish == 0 ? $model->skill->view->skill_name.' '.Yii::t('phrase', '(Unpublish)') : $model->skill->view->skill_name;
+				echo CJSON::encode(array(
+					'data' => '<div>'.$desc_name.'</div>',
+				));
+			}
+		}
 	}
 
 	/**

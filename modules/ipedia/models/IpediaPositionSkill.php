@@ -39,6 +39,8 @@
 class IpediaPositionSkill extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $position_name_i;
+	public $skill_name_i;
 	
 	// Variable Search
 	public $position_search;
@@ -76,7 +78,8 @@ class IpediaPositionSkill extends CActiveRecord
 			array('position_id, skill_id', 'required'),
 			array('publish', 'numerical', 'integerOnly'=>true),
 			array('position_id, skill_id, creation_id, modified_id', 'length', 'max'=>11),
-			array('', 'safe'),
+			array('
+				position_name_i, skill_name_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, publish, position_id, skill_id, creation_date, creation_id, modified_date, modified_id,
@@ -351,6 +354,52 @@ class IpediaPositionSkill extends CActiveRecord
 				$this->creation_id = Yii::app()->user->id;	
 			else
 				$this->modified_id = Yii::app()->user->id;
+		}
+		return true;
+	}
+	
+	/**
+	 * before save attributes
+	 */
+	protected function beforeSave() {
+		if(parent::beforeSave()) {
+			if($this->isNewRecord) {
+				if($this->position_id == 0) {
+					$position = IpediaPositions::model()->find(array(
+						'select' => 't.position_id, t.position_name',
+						'condition' => 't.position_name = :position',
+						'params' => array(
+							':position' => strtolower(trim($this->position_name_i)),
+						),
+					));
+					if($position != null)
+						$this->position_id = $position->position_id;
+					else {
+						$data = new IpediaPositions;
+						$data->position_name = $this->position_name_i;
+						if($data->save())
+							$this->position_id = $data->position_id;
+					}					
+				}
+				
+				if($this->skill_id == 0) {
+					$skill = IpediaSkills::model()->with('view')->find(array(
+						'select' => 't.skill_id',
+						'condition' => 'view.skill_name = :skill',
+						'params' => array(
+							':skill' => strtolower(trim($this->skill_name_i)),
+						),
+					));
+					if($skill != null)
+						$this->skill_id = $skill->skill_id;
+					else {
+						$data = new IpediaSkills;
+						$data->skill_name_i = $this->skill_name_i;
+						if($data->save())
+							$this->skill_id = $data->skill_id;
+					}
+				}
+			}
 		}
 		return true;
 	}

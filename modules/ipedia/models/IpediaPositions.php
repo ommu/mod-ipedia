@@ -44,6 +44,7 @@
 class IpediaPositions extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $position_skill_i;
 	
 	// Variable Search
 	public $position_desc_search;
@@ -85,7 +86,8 @@ class IpediaPositions extends CActiveRecord
 			array('publish', 'numerical', 'integerOnly'=>true),
 			array('position_name', 'length', 'max'=>64),
 			array('creation_id, modified_id', 'length', 'max'=>11),
-			array('position_desc, position_task, position_jobdesc, position_knowledge', 'safe'),
+			array('position_desc, position_task, position_jobdesc, position_knowledge,
+				position_skill_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('position_id, publish, position_name, position_desc, position_task, position_jobdesc, position_knowledge, creation_date, creation_id, modified_date, modified_id,
@@ -104,9 +106,9 @@ class IpediaPositions extends CActiveRecord
 			'view' => array(self::BELONGS_TO, 'ViewIpediaPositions', 'position_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
+			'skills' => array(self::HAS_MANY, 'IpediaPositionSkill', 'position_id'),
 			'ommuCvExperiences_relation' => array(self::HAS_MANY, 'OmmuCvExperiences', 'position_id'),
 			'ommuCvReferenceReferees_relation' => array(self::HAS_MANY, 'OmmuCvReferenceReferee', 'position_id'),
-			'ommuIpediaPositionSkills_relation' => array(self::HAS_MANY, 'OmmuIpediaPositionSkill', 'position_id'),
 			'ommuVacancies_relation' => array(self::HAS_MANY, 'OmmuVacancies', 'position_id'),
 		);
 	}
@@ -128,6 +130,7 @@ class IpediaPositions extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
+			'position_skill_i' => Yii::t('attribute', 'Skill'),
 			'position_desc_search' => Yii::t('attribute', 'Description'),
 			'position_task_search' => Yii::t('attribute', 'Task'),
 			'position_jobdesc_search' => Yii::t('attribute', 'Jobdesc'),
