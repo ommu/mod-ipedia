@@ -65,6 +65,55 @@
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>
+				
+		<?php if(!$model->isNewRecord) {?>
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'university_major_i'); ?>
+			<div class="desc">
+				<?php //echo $form->textField($model,'university_major_i',array('maxlength'=>32,'class'=>'span-6'));
+				$url = Yii::app()->controller->createUrl('o/universitymajor/add', array('type'=>'ipedia'));
+				$university = $model->university_id;
+				$tagId = 'IpediaUniversities_university_major_i';
+				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+					'model' => $model,
+					'attribute' => 'university_major_i',
+					'source' => Yii::app()->controller->createUrl('o/major/suggest', array('data'=>'university','id'=>$model->university_id)),
+					'options' => array(
+						//'delay '=> 50,
+						'minLength' => 1,
+						'showAnim' => 'fold',
+						'select' => "js:function(event, ui) {
+							$.ajax({
+								type: 'post',
+								url: '$url',
+								data: { university_id: '$university', major_id: ui.item.id, major: ui.item.value },
+								dataType: 'json',
+								success: function(response) {
+									$('form #$tagId').val('');
+									$('form #major-suggest').append(response.data);
+								}
+							});
+
+						}"
+					),
+					'htmlOptions' => array(
+						'class'	=> 'span-6',
+					),
+				));
+				echo $form->error($model,'university_major_i');?>
+				<div id="major-suggest" class="suggest clearfix">
+					<?php
+					$majors = $model->majors;
+					if(!empty($majors)) {
+						foreach($majors as $key => $val) {?>
+						<div><?php echo $val->major->major_name;?><?php echo $val->publish == 0 ? ' '.Yii::t('phrase', '(Unpublish)') : ''?></div>
+					<?php }
+					}?>
+				</div>
+			</div>
+		</div>
+		<?php }?>
+
 
 		<div class="clearfix publish">
 			<?php echo $form->labelEx($model,'publish'); ?>

@@ -9,6 +9,7 @@
  *
  * TOC :
  *	Index
+ *	Suggest
  *	Manage
  *	Add
  *	Edit
@@ -78,7 +79,7 @@ class MajorController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array(),
+				'actions'=>array('suggest'),
 				'users'=>array('@'),
 				'expression'=>'isset(Yii::app()->user->level)',
 				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
@@ -104,6 +105,57 @@ class MajorController extends Controller
 	public function actionIndex() 
 	{
 		$this->redirect(array('manage'));
+	}
+	
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionSuggest($data=null, $id=null, $limit=10) 
+	{
+		if(Yii::app()->request->isAjaxRequest) {
+			if(isset($_GET['term'])) {
+				$criteria = new CDbCriteria;
+				$items = array();
+				
+				if(isset($data) && $data == 'university') {	
+					if($id != null) {
+						$university = IpediaUniversities::getInfo($id);
+						$university = $university->majors;
+						if(!empty($university)) {
+							foreach($university as $key => $val)
+								$items[] = $val->major_id;
+						}
+					}
+				}
+				$criteria->select = "t.major_id, t.major_name";
+				$criteria->compare('t.publish',1);
+				$criteria->compare('t.major_name',strtolower($_GET['term']), true);
+				if($id != null)
+					$criteria->addNotInCondition('t.major_id',$items);
+				$criteria->limit = $limit;
+				$criteria->order = "t.major_id ASC";
+				$model = IpediaMajors::model()->findAll($criteria);
+				/*
+				echo '<pre>';
+				print_r($criteria);
+				print_r($model);
+				echo '</pre>';
+				*/
+				
+				if($model) {
+					foreach($model as $items) {
+						$result[] = array('id' => $items->major_id, 'value' => $items->major_name);
+					}
+				} //else
+				//	$result[] = array('id' => 0, 'value' => $_GET['term']);
+			}
+			echo CJSON::encode($result);
+			Yii::app()->end();
+			
+		} else
+			throw new CHttpException(404, Yii::t('phrase', 'The requested page does not exist.'));
 	}
 
 	/**

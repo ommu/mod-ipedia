@@ -42,6 +42,7 @@ class IpediaUniversities extends CActiveRecord
 {
 	public $defaultColumns = array();
 	public $university_name_i;
+	public $university_major_i;
 	
 	// Variable Search
 	public $major_search;
@@ -82,7 +83,8 @@ class IpediaUniversities extends CActiveRecord
 			array('publish', 'numerical', 'integerOnly'=>true),
 			array('directory_id, creation_id, modified_id', 'length', 'max'=>11),
 			array('acreditation', 'length', 'max'=>1),
-			array('directory_id, acreditation', 'safe'),
+			array('directory_id, acreditation,
+				university_major_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('university_id, publish, directory_id, acreditation, creation_date, creation_id, modified_date, modified_id,
@@ -102,8 +104,8 @@ class IpediaUniversities extends CActiveRecord
 			'directory' => array(self::BELONGS_TO, 'IpediaDirectories', 'directory_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
+			'majors' => array(self::HAS_MANY, 'IpediaUniversityMajor', 'university_id'),
 			'ommuCvEducations_relation' => array(self::HAS_MANY, 'OmmuCvEducations', 'university_id'),
-			'ommuIpediaUniversityMajors_relation' => array(self::HAS_MANY, 'OmmuIpediaUniversityMajor', 'university_id'),
 			'ommuVacancyUniversities_relation' => array(self::HAS_MANY, 'OmmuVacancyUniversity', 'university_id'),
 		);
 	}
@@ -123,6 +125,7 @@ class IpediaUniversities extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'university_name_i' => Yii::t('attribute', 'University'),
+			'university_major_i' => Yii::t('attribute', 'Major'),
 			'major_search' => Yii::t('attribute', 'Majors'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
