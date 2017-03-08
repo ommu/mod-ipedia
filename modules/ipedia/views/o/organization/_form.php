@@ -32,7 +32,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'organization_name_i'); ?>
 			<div class="desc">
-				<?php if(!$model->getErrors())
+				<?php if(!$model->isNewRecord && !$model->getErrors())
 					$model->organization_name_i = $model->view->organization_name;
 				//echo $form->textField($model,'organization_name_i',array('class'=>'span-8'));
 				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(

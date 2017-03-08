@@ -33,7 +33,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'industry_name_i'); ?>
 			<div class="desc">
-				<?php if(!$model->getErrors())
+				<?php if(!$model->isNewRecord && !$model->getErrors())
 					$model->industry_name_i = $model->view->industry_name;
 				echo $form->textField($model,'industry_name_i',array('maxlength'=>64,'class'=>'span-8')); ?>
 				<?php echo $form->error($model,'industry_name_i'); ?>

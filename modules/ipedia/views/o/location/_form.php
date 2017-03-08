@@ -34,7 +34,7 @@
 			<div class="clearfix">
 				<?php echo $form->labelEx($model,'directory_name_i'); ?>
 				<div class="desc">
-					<?php if(!$model->getErrors())
+					<?php if(!$model->isNewRecord && !$model->getErrors())
 						$model->directory_name_i = $model->view->directory_name;
 					//echo $form->textField($model,'directory_name_i',array('class'=>'span-8'));
 					$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
