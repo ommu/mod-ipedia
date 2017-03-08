@@ -145,7 +145,7 @@ class IndustryController extends Controller
 				}
 				$criteria->select = "t.industry_id";
 				$criteria->compare('t.publish',1);
-				$criteria->compare('view.industry_name',strtolower($_GET['term']), true);
+				$criteria->compare('view.industry_name',Utility::getUrlTitle(strtolower(trim($_GET['term']))), true);
 				if($id != null)
 					$criteria->addNotInCondition('t.industry_id',$items);
 				$criteria->limit = $limit;

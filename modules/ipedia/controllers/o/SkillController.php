@@ -136,7 +136,7 @@ class SkillController extends Controller
 				}
 				$criteria->select = "t.skill_id";
 				$criteria->compare('t.publish',1);
-				$criteria->compare('view.skill_name',strtolower($_GET['term']), true);
+				$criteria->compare('view.skill_name',Utility::getUrlTitle(strtolower(trim($_GET['term']))), true);
 				if($id != null)
 					$criteria->addNotInCondition('t.skill_id',$items);
 				$criteria->limit = $limit;
