@@ -384,7 +384,7 @@ class IpediaSkills extends CActiveRecord
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
 			$criteria=new CDbCriteria;
-			$criteria->compare('t.body', strtolower($this->skill_name_i));
+			$criteria->compare('t.body', Utility::getUrlTitle(strtolower(trim($this->skill_name_i))));
 			$model = OmmuTags::model()->find($criteria);
 			if($model != null)
 				$this->tag_id = $model->tag_id;
