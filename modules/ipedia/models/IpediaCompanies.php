@@ -105,10 +105,10 @@ class IpediaCompanies extends CActiveRecord
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 			'industries' => array(self::HAS_MANY, 'IpediaCompanyIndustry', 'company_id'),
+			'companies' => array(self::HAS_MANY, 'MemberCompany', 'company_id'),
 			'ommuCvExperiences_relation' => array(self::HAS_MANY, 'OmmuCvExperiences', 'company_id'),
 			'ommuCvReferenceReferees_relation' => array(self::HAS_MANY, 'OmmuCvReferenceReferee', 'company_id'),
 			'ommuCvTrainings_relation' => array(self::HAS_MANY, 'OmmuCvTrainings', 'company_id'),
-			'ommuMemberCompanies_relation' => array(self::HAS_MANY, 'OmmuMemberCompany', 'company_id'),
 		);
 	}
 
