@@ -338,19 +338,19 @@ class IpediaDirectoryLocation extends CActiveRecord
 					),
 				), true),
 			);
+			$this->defaultColumns[] = array(
+				'name' => 'headquarters',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("headquarters",array("id"=>$data->location_id)), $data->headquarters, 1)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
 			if(!isset($_GET['type'])) {
-				$this->defaultColumns[] = array(
-					'name' => 'headquarters',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("headquarters",array("id"=>$data->location_id)), $data->headquarters, 1)',
-					'htmlOptions' => array(
-						'class' => 'center',
-					),
-					'filter'=>array(
-						1=>Yii::t('phrase', 'Yes'),
-						0=>Yii::t('phrase', 'No'),
-					),
-					'type' => 'raw',
-				);
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
 					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->location_id)), $data->publish, 1)',
