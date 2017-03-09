@@ -367,9 +367,9 @@ class IpediaUniversities extends CActiveRecord
 				'select'=>'directory_name'
 			),
 		);
-		$criteria->compare('directory.directory_name', strtolower($this->university_name_i));
+		$criteria->compare('directory.directory_name', strtolower(trim($this->university_name_i)));
 		$model = self::model()->find($criteria);
-		if($model != null)
+		if($this->isNewRecord && $model != null)
 			$this->addError('university_name_i', Yii::t('phrase', 'University sudah terdaftar'));
 	}
 

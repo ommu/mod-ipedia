@@ -336,9 +336,9 @@ class IpediaOrganizations extends CActiveRecord
 				'select'=>'directory_name'
 			),
 		);
-		$criteria->compare('directory.directory_name', strtolower($this->organization_name_i));
+		$criteria->compare('directory.directory_name', strtolower(trim($this->organization_name_i)));
 		$model = self::model()->find($criteria);
-		if($model != null)
+		if($this->isNewRecord && $model != null)
 			$this->addError('organization_name_i', Yii::t('phrase', 'Organization sudah terdaftar'));
 	}
 
