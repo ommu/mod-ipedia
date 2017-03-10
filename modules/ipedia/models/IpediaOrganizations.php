@@ -163,7 +163,7 @@ class IpediaOrganizations extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.organization_id',strtolower($this->organization_id),true);
+		$criteria->compare('t.organization_id',$this->organization_id);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
 			$criteria->compare('t.publish',1);
 		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
@@ -338,7 +338,7 @@ class IpediaOrganizations extends CActiveRecord
 		);
 		$criteria->compare('directory.directory_name', strtolower(trim($this->organization_name_i)));
 		$model = self::model()->find($criteria);
-		if($this->isNewRecord && $model != null)
+		if($model != null)
 			$this->addError('organization_name_i', Yii::t('phrase', 'Organization sudah terdaftar'));
 	}
 
@@ -361,7 +361,7 @@ class IpediaOrganizations extends CActiveRecord
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
 			$criteria=new CDbCriteria;
-			$criteria->compare('t.directory_name', strtolower($this->organization_name_i));
+			$criteria->compare('t.directory_name', strtolower(trim($this->organization_name_i)));
 			$model = IpediaDirectories::model()->find($criteria);
 			if($model != null)
 				$this->directory_id = $model->directory_id;

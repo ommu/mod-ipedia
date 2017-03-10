@@ -44,10 +44,10 @@ class IpediaMajors extends CActiveRecord
 	public $major_industry_i;
 	
 	// Variable Search
-	public $university_search;
-	public $industry_search;
 	public $creation_search;
 	public $modified_search;
+	public $university_search;
+	public $industry_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -85,7 +85,7 @@ class IpediaMajors extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('major_id, publish, major_name, major_desc, creation_date, creation_id, modified_date, modified_id,
-				university_search, industry_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				creation_search, modified_search, university_search, industry_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -122,10 +122,10 @@ class IpediaMajors extends CActiveRecord
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'major_university_i' => Yii::t('attribute', 'University'),
 			'major_industry_i' => Yii::t('attribute', 'Industry'),
-			'university_search' => Yii::t('attribute', 'Universities'),
-			'industry_search' => Yii::t('attribute', 'Industries'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
+			'university_search' => Yii::t('attribute', 'Universities'),
+			'industry_search' => Yii::t('attribute', 'Industries'),
 		);
 		/*
 			'Major' => 'Major',
@@ -173,7 +173,7 @@ class IpediaMajors extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.major_id',strtolower($this->major_id),true);
+		$criteria->compare('t.major_id',$this->major_id);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
 			$criteria->compare('t.publish',1);
 		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
@@ -199,10 +199,10 @@ class IpediaMajors extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
-		$criteria->compare('view.universities',$this->university_search);
-		$criteria->compare('view.industries',$this->industry_search);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
+		$criteria->compare('view.universities',$this->university_search);
+		$criteria->compare('view.industries',$this->industry_search);
 
 		if(!isset($_GET['IpediaMajors_sort']))
 			$criteria->order = 't.major_id DESC';

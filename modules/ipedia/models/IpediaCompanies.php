@@ -46,9 +46,9 @@ class IpediaCompanies extends CActiveRecord
 	public $company_industry_i;
 	
 	// Variable Search
-	public $industry_search;
 	public $creation_search;
 	public $modified_search;
+	public $industry_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -88,7 +88,7 @@ class IpediaCompanies extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('company_id, publish, directory_id, creation_date, creation_id, modified_date, modified_id,
-				company_name_i, industry_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				company_name_i, creation_search, modified_search, industry_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -127,9 +127,9 @@ class IpediaCompanies extends CActiveRecord
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'company_name_i' => Yii::t('attribute', 'Company'),
 			'company_industry_i' => Yii::t('attribute', 'Industry'),
-			'industry_search' => Yii::t('attribute', 'Industries'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
+			'industry_search' => Yii::t('attribute', 'Industries'),
 		);
 		/*
 			'Company' => 'Company',
@@ -176,7 +176,7 @@ class IpediaCompanies extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.company_id',strtolower($this->company_id),true);
+		$criteria->compare('t.company_id',$this->company_id);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
 			$criteria->compare('t.publish',1);
 		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
@@ -205,9 +205,9 @@ class IpediaCompanies extends CActiveRecord
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
 		$criteria->compare('view.company_name',strtolower($this->company_name_i), true);
-		$criteria->compare('view.industries',$this->industry_search);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
+		$criteria->compare('view.industries',$this->industry_search);
 
 		if(!isset($_GET['IpediaCompanies_sort']))
 			$criteria->order = 't.company_id DESC';
@@ -360,7 +360,7 @@ class IpediaCompanies extends CActiveRecord
 		);
 		$criteria->compare('directory.directory_name', strtolower(trim($this->company_name_i)));
 		$model = self::model()->find($criteria);
-		if($this->isNewRecord && $model != null)
+		if($model != null)
 			$this->addError('company_name_i', Yii::t('phrase', 'Company sudah terdaftar'));
 	}
 
@@ -383,7 +383,7 @@ class IpediaCompanies extends CActiveRecord
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
 			$criteria=new CDbCriteria;
-			$criteria->compare('t.directory_name', strtolower($this->company_name_i));
+			$criteria->compare('t.directory_name', strtolower(trim($this->company_name_i)));
 			$model = IpediaDirectories::model()->find($criteria);
 			if($model != null)
 				$this->directory_id = $model->directory_id;

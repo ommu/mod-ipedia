@@ -44,9 +44,9 @@ class IpediaSkills extends CActiveRecord
 	public $skill_position_i;
 	
 	// Variable Search
-	public $position_search;
 	public $creation_search;
 	public $modified_search;
+	public $position_search;
 
 
 	/**
@@ -87,7 +87,7 @@ class IpediaSkills extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('skill_id, publish, tag_id, skill_desc, creation_date, creation_id, modified_date, modified_id,
-				skill_name_i, position_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				skill_name_i, creation_search, modified_search, position_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -124,9 +124,9 @@ class IpediaSkills extends CActiveRecord
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'skill_name_i' => Yii::t('attribute', 'Skill'),
 			'skill_position_i' => Yii::t('attribute', 'Position'),
-			'position_search' => Yii::t('attribute', 'Positions'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
+			'position_search' => Yii::t('attribute', 'Positions'),
 		);
 		/*
 			'Skill' => 'Skill',
@@ -174,7 +174,7 @@ class IpediaSkills extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.skill_id',strtolower($this->skill_id),true);
+		$criteria->compare('t.skill_id',$this->skill_id);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
 			$criteria->compare('t.publish',1);
 		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
@@ -204,9 +204,9 @@ class IpediaSkills extends CActiveRecord
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
 		$criteria->compare('view.skill_name',strtolower($this->skill_name_i), true);
-		$criteria->compare('view.positions',$this->position_search);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
+		$criteria->compare('view.positions',$this->position_search);
 
 		if(!isset($_GET['IpediaSkills_sort']))
 			$criteria->order = 't.skill_id DESC';

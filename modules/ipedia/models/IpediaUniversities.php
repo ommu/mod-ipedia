@@ -45,9 +45,9 @@ class IpediaUniversities extends CActiveRecord
 	public $university_major_i;
 	
 	// Variable Search
-	public $major_search;
 	public $creation_search;
 	public $modified_search;
+	public $major_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -88,7 +88,7 @@ class IpediaUniversities extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('university_id, publish, directory_id, acreditation, creation_date, creation_id, modified_date, modified_id,
-				university_name_i, major_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				university_name_i creation_search, modified_search, major_search,', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -176,7 +176,7 @@ class IpediaUniversities extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.university_id',strtolower($this->university_id),true);
+		$criteria->compare('t.university_id',$this->university_id);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
 			$criteria->compare('t.publish',1);
 		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
@@ -206,9 +206,9 @@ class IpediaUniversities extends CActiveRecord
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
 		$criteria->compare('view.university_name',strtolower($this->university_name_i), true);
-		$criteria->compare('view.majors',$this->major_search);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
+		$criteria->compare('view.majors',$this->major_search);
 
 		if(!isset($_GET['IpediaUniversities_sort']))
 			$criteria->order = 't.university_id DESC';
@@ -369,7 +369,7 @@ class IpediaUniversities extends CActiveRecord
 		);
 		$criteria->compare('directory.directory_name', strtolower(trim($this->university_name_i)));
 		$model = self::model()->find($criteria);
-		if($this->isNewRecord && $model != null)
+		if($model != null)
 			$this->addError('university_name_i', Yii::t('phrase', 'University sudah terdaftar'));
 	}
 
@@ -392,7 +392,7 @@ class IpediaUniversities extends CActiveRecord
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
 			$criteria=new CDbCriteria;
-			$criteria->compare('t.directory_name', strtolower($this->university_name_i));
+			$criteria->compare('t.directory_name', strtolower(trim($this->university_name_i)));
 			$model = IpediaDirectories::model()->find($criteria);
 			if($model != null)
 				$this->directory_id = $model->directory_id;

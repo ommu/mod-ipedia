@@ -12,6 +12,9 @@ class IpediaModule extends CWebModule
 		$this->setImport(array(
 			'ipedia.models.*',
 			'ipedia.components.*',
+			
+			'member.models.MemberCompany',
+			'member.models.ViewMemberCompany',
 		));
 	}
 

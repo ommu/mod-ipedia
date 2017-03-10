@@ -46,10 +46,10 @@ class IpediaIndustries extends CActiveRecord
 	public $industry_company_i;
 	
 	// Variable Search
-	public $major_search;
-	public $company_search;
 	public $creation_search;
 	public $modified_search;
+	public $major_search;
+	public $company_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -90,7 +90,7 @@ class IpediaIndustries extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('industry_id, publish, tag_id, industry_desc, creation_date, creation_id, modified_date, modified_id,
-				industry_name_i, major_search, company_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				industry_name_i, creation_search, modified_search, major_search, company_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -129,10 +129,10 @@ class IpediaIndustries extends CActiveRecord
 			'industry_name_i' => Yii::t('attribute', 'Industry'),
 			'industry_major_i' => Yii::t('attribute', 'Major'),
 			'industry_company_i' => Yii::t('attribute', 'Company'),
-			'major_search' => Yii::t('attribute', 'Majors'),
-			'company_search' => Yii::t('attribute', 'Companies'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
+			'major_search' => Yii::t('attribute', 'Majors'),
+			'company_search' => Yii::t('attribute', 'Companies'),
 		);
 		/*
 			'Industry' => 'Industry',
@@ -180,7 +180,7 @@ class IpediaIndustries extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.industry_id',strtolower($this->industry_id),true);
+		$criteria->compare('t.industry_id',$this->industry_id);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
 			$criteria->compare('t.publish',1);
 		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
@@ -210,10 +210,10 @@ class IpediaIndustries extends CActiveRecord
 			$criteria->compare('t.modified_id',$this->modified_id);
 
 		$criteria->compare('view.industry_name',strtolower($this->industry_name_i), true);
-		$criteria->compare('view.majors',$this->major_search);
-		$criteria->compare('view.companies',$this->company_search);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
+		$criteria->compare('view.majors',$this->major_search);
+		$criteria->compare('view.companies',$this->company_search);
 		
 		if(!isset($_GET['IpediaIndustries_sort']))
 			$criteria->order = 't.industry_id DESC';

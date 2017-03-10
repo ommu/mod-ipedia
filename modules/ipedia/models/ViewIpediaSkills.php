@@ -126,10 +126,10 @@ class ViewIpediaSkills extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.skill_id',strtolower($this->skill_id),true);
+		$criteria->compare('t.skill_id',$this->skill_id);
 		$criteria->compare('t.skill_name',strtolower($this->skill_name),true);
-		$criteria->compare('t.positions',strtolower($this->positions),true);
-		$criteria->compare('t.position_all',strtolower($this->position_all),true);
+		$criteria->compare('t.positions',$this->positions);
+		$criteria->compare('t.position_all',$this->position_all);
 
 		if(!isset($_GET['ViewIpediaSkills_sort']))
 			$criteria->order = 't.skill_id DESC';

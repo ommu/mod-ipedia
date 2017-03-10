@@ -126,10 +126,10 @@ class ViewIpediaUniversities extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.university_id',strtolower($this->university_id),true);
+		$criteria->compare('t.university_id',$this->university_id);
 		$criteria->compare('t.university_name',strtolower($this->university_name),true);
-		$criteria->compare('t.majors',strtolower($this->majors),true);
-		$criteria->compare('t.major_all',strtolower($this->major_all),true);
+		$criteria->compare('t.majors',$this->majors);
+		$criteria->compare('t.major_all',$this->major_all);
 
 		if(!isset($_GET['ViewIpediaUniversities_sort']))
 			$criteria->order = 't.university_id DESC';

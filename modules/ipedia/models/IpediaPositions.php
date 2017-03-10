@@ -47,13 +47,13 @@ class IpediaPositions extends CActiveRecord
 	public $position_skill_i;
 	
 	// Variable Search
+	public $creation_search;
+	public $modified_search;
 	public $position_desc_search;
 	public $position_task_search;
 	public $position_jobdesc_search;
 	public $position_knowledge_search;
 	public $skill_search;
-	public $creation_search;
-	public $modified_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -91,7 +91,7 @@ class IpediaPositions extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('position_id, publish, position_name, position_desc, position_task, position_jobdesc, position_knowledge, creation_date, creation_id, modified_date, modified_id,
-				position_desc_search, position_task_search, position_jobdesc_search, position_knowledge_search, skill_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				creation_search, modified_search, position_desc_search, position_task_search, position_jobdesc_search, position_knowledge_search, skill_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -131,13 +131,13 @@ class IpediaPositions extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'position_skill_i' => Yii::t('attribute', 'Skill'),
+			'creation_search' => Yii::t('attribute', 'Creation'),
+			'modified_search' => Yii::t('attribute', 'Modified'),
 			'position_desc_search' => Yii::t('attribute', 'Description'),
 			'position_task_search' => Yii::t('attribute', 'Task'),
 			'position_jobdesc_search' => Yii::t('attribute', 'Jobdesc'),
 			'position_knowledge_search' => Yii::t('attribute', 'Knowledge'),
 			'skill_search' => Yii::t('attribute', 'Skill'),
-			'creation_search' => Yii::t('attribute', 'Creation'),
-			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
 		/*
 			'Position' => 'Position',
@@ -188,7 +188,7 @@ class IpediaPositions extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.position_id',strtolower($this->position_id),true);
+		$criteria->compare('t.position_id',$this->position_id);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
 			$criteria->compare('t.publish',1);
 		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
@@ -217,13 +217,13 @@ class IpediaPositions extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 
+		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
+		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 		$criteria->compare('view.position_desc',$this->position_desc_search);
 		$criteria->compare('view.position_task',$this->position_task_search);
 		$criteria->compare('view.position_jobdesc',$this->position_jobdesc_search);
 		$criteria->compare('view.position_knowledge',$this->position_knowledge_search);
 		$criteria->compare('view.skills',$this->skill_search);		
-		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
-		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
 		if(!isset($_GET['IpediaPositions_sort']))
 			$criteria->order = 't.position_id DESC';

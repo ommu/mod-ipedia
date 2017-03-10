@@ -42,12 +42,12 @@ class IpediaDirectories extends CActiveRecord
 	public $defaultColumns = array();
 	
 	// Variable Search
+	public $creation_search;
+	public $modified_search;
+	public $location_search;
 	public $company_search;
 	public $organization_search;
 	public $university_search;
-	public $location_search;
-	public $creation_search;
-	public $modified_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -84,7 +84,7 @@ class IpediaDirectories extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('directory_id, publish, directory_name, creation_date, creation_id, modified_date, modified_id,
-				company_search, organization_search, university_search, location_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				creation_search, modified_search, location_search, company_search, organization_search, university_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -119,12 +119,12 @@ class IpediaDirectories extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
+			'creation_search' => Yii::t('attribute', 'Creation'),
+			'modified_search' => Yii::t('attribute', 'Modified'),
+			'location_search' => Yii::t('attribute', 'Locations'),
 			'company_search' => Yii::t('attribute', 'Company'),
 			'organization_search' => Yii::t('attribute', 'Organization'),
 			'university_search' => Yii::t('attribute', 'University'),
-			'location_search' => Yii::t('attribute', 'Locations'),
-			'creation_search' => Yii::t('attribute', 'Creation'),
-			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
 		/*
 			'Directory' => 'Directory',
@@ -171,7 +171,7 @@ class IpediaDirectories extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.directory_id',strtolower($this->directory_id),true);
+		$criteria->compare('t.directory_id',$this->directory_id);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
 			$criteria->compare('t.publish',1);
 		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
@@ -196,12 +196,12 @@ class IpediaDirectories extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
+		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
+		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
+		$criteria->compare('view.locations',$this->location_search);
 		$criteria->compare('view.companies',$this->company_search);
 		$criteria->compare('view.organizations',$this->organization_search);
 		$criteria->compare('view.universities',$this->university_search);
-		$criteria->compare('view.locations',$this->location_search);
-		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
-		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
 		if(!isset($_GET['IpediaDirectories_sort']))
 			$criteria->order = 't.directory_id DESC';

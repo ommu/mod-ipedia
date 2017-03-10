@@ -192,7 +192,7 @@ class IpediaDirectoryLocation extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.location_id',strtolower($this->location_id),true);
+		$criteria->compare('t.location_id',$this->location_id);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
 			$criteria->compare('t.publish',1);
 		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
@@ -211,9 +211,9 @@ class IpediaDirectoryLocation extends CActiveRecord
 		$criteria->compare('t.address',strtolower($this->address),true);
 		$criteria->compare('t.country_id',$this->country_id);
 		$criteria->compare('t.province_id',$this->province_id);
-		$criteria->compare('t.city_id',strtolower($this->city_id),true);
-		$criteria->compare('t.district_id',strtolower($this->district_id),true);
-		$criteria->compare('t.village_id',strtolower($this->village_id),true);
+		$criteria->compare('t.city_id',$this->city_id);
+		$criteria->compare('t.district_id',$this->district_id);
+		$criteria->compare('t.village_id',$this->village_id);
 		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
 		if(isset($_GET['creation']))
