@@ -401,6 +401,7 @@ class IpediaIndustries extends CActiveRecord
 			$criteria=new CDbCriteria;
 			$criteria->compare('t.body', Utility::getUrlTitle(strtolower(trim($this->industry_name_i))));
 			$model = OmmuTags::model()->find($criteria);
+			
 			if($model != null)
 				$this->tag_id = $model->tag_id;
 			else {
