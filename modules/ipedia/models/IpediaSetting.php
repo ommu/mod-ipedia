@@ -228,7 +228,7 @@ class IpediaSetting extends CActiveRecord
 					'model'=>$this,
 					'attribute'=>'modified_date',
 					'language' => 'en',
-					'i18nScriptFile' => 'jquery-ui-i18n.min.js'
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
 					//'mode'=>'datetime',
 					'htmlOptions' => array(
 						'id' => 'modified_date_filter',
