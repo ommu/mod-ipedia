@@ -43,6 +43,9 @@ plugin_menu		:
 			- urlTitle: Industries
 				urlRules: {siteType: "0,1", userLevel: "1,2"}
 				urlPath: {url: o/industry/manage, attr: -, icon: -}
+			- urlTitle: Anothers
+				urlRules: {siteType: "0,1", userLevel: "1,2"}
+				urlPath: {url: o/another/manage, attr: -, icon: -}
 	- urlTitle: Settings
 		urlRules: {siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: o/setting/edit, attr: -, icon: -}
@@ -93,6 +96,10 @@ content_menu	:
 # controller o/industry
 	- urlTitle: Add Industry
 		urlRules: {ipedia, o/industry, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: add, attr: -, icon: -}
+# controller o/another
+	- urlTitle: Add Another
+		urlRules: {ipedia, o/another, manage, siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: add, attr: -, icon: -}
 # controller o/location
 	- urlTitle: Add Location
