@@ -47,7 +47,7 @@ class ViewIpediaMajorIndustry extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '_view_ipedia_major_industry';
+		return '_view_ipedia_statistic_major_industry';
 	}
 
 	/**

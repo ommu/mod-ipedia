@@ -1,12 +1,12 @@
 <?php
 /**
- * IpediaUniversityMajor
+ * IpediaAnothers
  * version: 0.0.1
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
- * @created date 2 March 2017, 14:36 WIB
- * @link https://github.com/ommu/iPedia
+ * @created date 19 April 2017, 02:17 WIB
+ * @link http://opensource.ommu.co
  * @contact (+62)856-299-4114
  *
  * This is the template for generating the model class of a specified table.
@@ -20,34 +20,25 @@
  *
  * --------------------------------------------------------------------------------------
  *
- * This is the model class for table "ommu_ipedia_university_major".
+ * This is the model class for table "ommu_ipedia_anothers".
  *
- * The followings are the available columns in table 'ommu_ipedia_university_major':
- * @property string $id
+ * The followings are the available columns in table 'ommu_ipedia_anothers':
+ * @property string $another_id
  * @property integer $publish
- * @property string $university_id
- * @property string $faculty_id
- * @property string $major_id
+ * @property string $another_name
  * @property string $creation_date
  * @property string $creation_id
  * @property string $modified_date
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuIpediaUniversities $university
- * @property OmmuIpediaMajors $major
+ * @property OmmuIpediaFaculties[] $ommuIpediaFaculties
  */
-class IpediaUniversityMajor extends CActiveRecord
+class IpediaAnothers extends CActiveRecord
 {
 	public $defaultColumns = array();
-	public $university_name_i;
-	public $faculty_name_i;
-	public $major_name_i;
 	
 	// Variable Search
-	public $university_search;
-	public $faculty_search;
-	public $major_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -55,7 +46,7 @@ class IpediaUniversityMajor extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return IpediaUniversityMajor the static model class
+	 * @return IpediaAnothers the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -67,7 +58,7 @@ class IpediaUniversityMajor extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ommu_ipedia_university_major';
+		return 'ommu_ipedia_anothers';
 	}
 
 	/**
@@ -78,15 +69,14 @@ class IpediaUniversityMajor extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('university_id, faculty_id, major_id', 'required'),
+			array('another_name', 'required'),
 			array('publish', 'numerical', 'integerOnly'=>true),
-			array('university_id, faculty_id, major_id, creation_id, modified_id', 'length', 'max'=>11),
-			array('
-				university_name_i, faculty_name_i, major_name_i', 'safe'),
+			array('creation_id, modified_id', 'length', 'max'=>11),
+			array('', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, publish, university_id, faculty_id, major_id, creation_date, creation_id, modified_date, modified_id,
-				university_search, faculty_search, major_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+			array('another_id, publish, another_name, creation_date, creation_id, modified_date, modified_id,
+				creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -98,11 +88,9 @@ class IpediaUniversityMajor extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'university' => array(self::BELONGS_TO, 'IpediaUniversities', 'university_id'),
-			'faculty' => array(self::BELONGS_TO, 'IpediaFaculties', 'faculty_id'),
-			'major' => array(self::BELONGS_TO, 'IpediaMajors', 'major_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
+			'faculties' => array(self::HAS_MANY, 'IpediaFaculties', 'another_id'),
 		);
 	}
 
@@ -112,26 +100,20 @@ class IpediaUniversityMajor extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => Yii::t('attribute', 'ID'),
+			'another_id' => Yii::t('attribute', 'Another'),
 			'publish' => Yii::t('attribute', 'Publish'),
-			'university_id' => Yii::t('attribute', 'University'),
-			'faculty_id' => Yii::t('attribute', 'Faculty'),
-			'major_id' => Yii::t('attribute', 'Major'),
+			'another_name' => Yii::t('attribute', 'Another Name'),
 			'creation_date' => Yii::t('attribute', 'Creation Date'),
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
-			'university_search' => Yii::t('attribute', 'University'),
-			'faculty_search' => Yii::t('attribute', 'Faculty'),
-			'major_search' => Yii::t('attribute', 'Major'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
 		/*
-			'ID' => 'ID',
+			'Another' => 'Another',
 			'Publish' => 'Publish',
-			'University' => 'University',
-			'Major' => 'Major',
+			'Another Name' => 'Another Name',
 			'Creation Date' => 'Creation Date',
 			'Creation' => 'Creation',
 			'Modified Date' => 'Modified Date',
@@ -160,18 +142,6 @@ class IpediaUniversityMajor extends CActiveRecord
 		
 		// Custom Search		
 		$criteria->with = array(
-			'university.view' => array(
-				'alias'=>'university_v',
-				'select'=>'university_name'
-			),
-			'faculty.view' => array(
-				'alias'=>'faculty_v',
-				'select'=>'faculty_name'
-			),
-			'major' => array(
-				'alias'=>'major',
-				'select'=>'major_name'
-			),
 			'creation' => array(
 				'alias'=>'creation',
 				'select'=>'displayname'
@@ -182,7 +152,7 @@ class IpediaUniversityMajor extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.id',strtolower($this->id),true);
+		$criteria->compare('t.another_id',strtolower($this->another_id),true);
 		if(isset($_GET['type']) && $_GET['type'] == 'publish')
 			$criteria->compare('t.publish',1);
 		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
@@ -193,18 +163,7 @@ class IpediaUniversityMajor extends CActiveRecord
 			$criteria->addInCondition('t.publish',array(0,1));
 			$criteria->compare('t.publish',$this->publish);
 		}
-		if(isset($_GET['university']))
-			$criteria->compare('t.university_id',$_GET['university']);
-		else
-			$criteria->compare('t.university_id',$this->university_id);
-		if(isset($_GET['faculty']))
-			$criteria->compare('t.faculty_id',$_GET['faculty']);
-		else
-			$criteria->compare('t.faculty_id',$this->faculty_id);
-		if(isset($_GET['major']))
-			$criteria->compare('t.major_id',$_GET['major']);
-		else
-			$criteria->compare('t.major_id',$this->major_id);
+		$criteria->compare('t.another_name',strtolower($this->another_name),true);
 		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
 		if(isset($_GET['creation']))
@@ -218,14 +177,11 @@ class IpediaUniversityMajor extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
-		$criteria->compare('university_v.university_name',strtolower($this->university_search), true);
-		$criteria->compare('faculty_v.faculty_name',strtolower($this->faculty_search), true);
-		$criteria->compare('major.major_name',strtolower($this->major_search), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
-		if(!isset($_GET['IpediaUniversityMajor_sort']))
-			$criteria->order = 't.id DESC';
+		if(!isset($_GET['IpediaAnothers_sort']))
+			$criteria->order = 't.another_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -253,11 +209,9 @@ class IpediaUniversityMajor extends CActiveRecord
 				$this->defaultColumns[] = $val;
 			}
 		} else {
-			//$this->defaultColumns[] = 'id';
+			//$this->defaultColumns[] = 'another_id';
 			$this->defaultColumns[] = 'publish';
-			$this->defaultColumns[] = 'university_id';
-			$this->defaultColumns[] = 'faculty_id';
-			$this->defaultColumns[] = 'major_id';
+			$this->defaultColumns[] = 'another_name';
 			$this->defaultColumns[] = 'creation_date';
 			$this->defaultColumns[] = 'creation_id';
 			$this->defaultColumns[] = 'modified_date';
@@ -284,24 +238,7 @@ class IpediaUniversityMajor extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			if(!isset($_GET['university'])) {
-				$this->defaultColumns[] = array(
-					'name' => 'university_search',
-					'value' => '$data->university->view->university_name',
-				);
-			}
-			if(!isset($_GET['faculty'])) {
-				$this->defaultColumns[] = array(
-					'name' => 'faculty_search',
-					'value' => '$data->faculty->view->faculty_name',
-				);
-			}
-			if(!isset($_GET['major'])) {
-				$this->defaultColumns[] = array(
-					'name' => 'major_search',
-					'value' => '$data->major->major_name',
-				);
-			}
+			$this->defaultColumns[] = 'another_name';
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
 				'value' => '$data->creation->displayname',
@@ -335,7 +272,7 @@ class IpediaUniversityMajor extends CActiveRecord
 			if(!isset($_GET['type'])) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->id)), $data->publish, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->another_id)), $data->publish, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
@@ -376,70 +313,6 @@ class IpediaUniversityMajor extends CActiveRecord
 				$this->creation_id = Yii::app()->user->id;	
 			else
 				$this->modified_id = Yii::app()->user->id;
-		}
-		return true;
-	}
-	
-	/**
-	 * before save attributes
-	 */
-	protected function beforeSave() {
-		if(parent::beforeSave()) {
-			if($this->isNewRecord) {
-				if($this->university_id == 0) {
-					$university = IpediaUniversities::model()->with('view')->find(array(
-						'select' => 't.university_id',
-						'condition' => 'view.university_name = :university',
-						'params' => array(
-							':university' => strtolower(trim($this->university_name_i)),
-						),
-					));
-					if($university != null)
-						$this->university_id = $university->university_id;
-					else {
-						$data = new IpediaUniversities;
-						$data->university_name_i = $this->university_name_i;
-						if($data->save())
-							$this->university_id = $data->university_id;
-					}
-				}
-				
-				if($this->faculty_id == 0) {
-					$faculty = IpediaFaculties::model()->with('view')->find(array(
-						'select' => 't.faculty_id',
-						'condition' => 'view.faculty_name = :faculty',
-						'params' => array(
-							':faculty' => strtolower(trim($this->faculty_name_i)),
-						),
-					));
-					if($faculty != null)
-						$this->faculty_id = $faculty->faculty_id;
-					else {
-						$data = new IpediaFaculties;
-						$data->faculty_name_i = $this->faculty_name_i;
-						if($data->save())
-							$this->faculty_id = $data->faculty_id;
-					}
-				}
-				
-				if($this->major_id == 0) {
-					$major = IpediaMajors::model()->find(array(
-						'select' => 't.major_id, t.major_name',
-						'condition' => 't.major_name = :major',
-						'params' => array(
-							':major' => strtolower(trim($this->major_name_i)),
-						),
-					));
-					if($major != null)
-						$this->major_id = $major->major_id;
-					else {
-						$data = new IpediaMajors;
-						$data->major_name = $this->major_name_i;
-						if($data->save())
-							$this->major_id = $data->major_id;
-					}					
-				}
-			}
 		}
 		return true;
 	}

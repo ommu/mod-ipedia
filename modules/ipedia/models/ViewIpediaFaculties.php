@@ -1,12 +1,12 @@
 <?php
 /**
- * ViewIpediaIndustryCompany
+ * ViewIpediaFaculties
  * version: 0.0.1
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
- * @created date 2 March 2017, 14:38 WIB
- * @link https://github.com/ommu/iPedia
+ * @created date 19 April 2017, 02:27 WIB
+ * @link http://opensource.ommu.co
  * @contact (+62)856-299-4114
  *
  * This is the template for generating the model class of a specified table.
@@ -20,14 +20,15 @@
  *
  * --------------------------------------------------------------------------------------
  *
- * This is the model class for table "_view_ipedia_industry_company".
+ * This is the model class for table "_view_ipedia_faculties".
  *
- * The followings are the available columns in table '_view_ipedia_industry_company':
- * @property string $industry_id
- * @property string $companies
- * @property string $company_all
+ * The followings are the available columns in table '_view_ipedia_faculties':
+ * @property string $faculty_id
+ * @property string $faculty_name
+ * @property string $majors
+ * @property string $universities
  */
-class ViewIpediaIndustryCompany extends CActiveRecord
+class ViewIpediaFaculties extends CActiveRecord
 {
 	public $defaultColumns = array();
 
@@ -35,7 +36,7 @@ class ViewIpediaIndustryCompany extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ViewIpediaIndustryCompany the static model class
+	 * @return ViewIpediaFaculties the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -47,7 +48,7 @@ class ViewIpediaIndustryCompany extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '_view_ipedia_statistic_industry_company';
+		return '_view_ipedia_faculties';
 	}
 
 	/**
@@ -55,7 +56,7 @@ class ViewIpediaIndustryCompany extends CActiveRecord
 	 */
 	public function primaryKey()
 	{
-		return 'industry_id';
+		return 'faculty_id';
 	}
 
 	/**
@@ -66,13 +67,12 @@ class ViewIpediaIndustryCompany extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('industry_id', 'required'),
-			array('industry_id', 'length', 'max'=>11),
-			array('companies', 'length', 'max'=>23),
-			array('company_all', 'length', 'max'=>21),
+			array('faculty_id', 'length', 'max'=>11),
+			array('majors, universities', 'length', 'max'=>21),
+			array('faculty_name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('industry_id, companies, company_all', 'safe', 'on'=>'search'),
+			array('faculty_id, faculty_name, majors, universities', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -93,14 +93,16 @@ class ViewIpediaIndustryCompany extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'industry_id' => Yii::t('attribute', 'Industry'),
-			'companies' => Yii::t('attribute', 'Companies'),
-			'company_all' => Yii::t('attribute', 'Company All'),
+			'faculty_id' => Yii::t('attribute', 'Faculty'),
+			'faculty_name' => Yii::t('attribute', 'Faculty Name'),
+			'majors' => Yii::t('attribute', 'Majors'),
+			'universities' => Yii::t('attribute', 'Universities'),
 		);
 		/*
-			'Industry' => 'Industry',
-			'Companies' => 'Companies',
-			'Company All' => 'Company All',
+			'Faculty' => 'Faculty',
+			'Faculty Name' => 'Faculty Name',
+			'Majors' => 'Majors',
+			'Universities' => 'Universities',
 		
 		*/
 	}
@@ -123,12 +125,13 @@ class ViewIpediaIndustryCompany extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.industry_id',$this->industry_id);
-		$criteria->compare('t.companies',$this->companies);
-		$criteria->compare('t.company_all',$this->company_all);
+		$criteria->compare('t.faculty_id',$this->faculty_id);
+		$criteria->compare('t.faculty_name',strtolower($this->faculty_name),true);
+		$criteria->compare('t.majors',$this->majors);
+		$criteria->compare('t.universities',$this->universities);
 
-		if(!isset($_GET['ViewIpediaIndustryCompany_sort']))
-			$criteria->order = 't.industry_id DESC';
+		if(!isset($_GET['ViewIpediaFaculties_sort']))
+			$criteria->order = 't.faculty_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -156,9 +159,10 @@ class ViewIpediaIndustryCompany extends CActiveRecord
 				$this->defaultColumns[] = $val;
 			}
 		} else {
-			$this->defaultColumns[] = 'industry_id';
-			$this->defaultColumns[] = 'companies';
-			$this->defaultColumns[] = 'company_all';
+			$this->defaultColumns[] = 'faculty_id';
+			$this->defaultColumns[] = 'faculty_name';
+			$this->defaultColumns[] = 'majors';
+			$this->defaultColumns[] = 'universities';
 		}
 
 		return $this->defaultColumns;
@@ -169,13 +173,22 @@ class ViewIpediaIndustryCompany extends CActiveRecord
 	 */
 	protected function afterConstruct() {
 		if(count($this->defaultColumns) == 0) {
+			/*
+			$this->defaultColumns[] = array(
+				'class' => 'CCheckBoxColumn',
+				'name' => 'id',
+				'selectableRows' => 2,
+				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
+			);
+			*/
 			$this->defaultColumns[] = array(
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			//$this->defaultColumns[] = 'industry_id';
-			$this->defaultColumns[] = 'companies';
-			$this->defaultColumns[] = 'company_all';
+			$this->defaultColumns[] = 'faculty_id';
+			$this->defaultColumns[] = 'faculty_name';
+			$this->defaultColumns[] = 'majors';
+			$this->defaultColumns[] = 'universities';
 		}
 		parent::afterConstruct();
 	}

@@ -25,6 +25,7 @@
  * The followings are the available columns in table '_view_ipedia_universities':
  * @property string $university_id
  * @property string $university_name
+ * @property string $faculties
  * @property string $majors
  * @property string $major_all
  */
@@ -68,12 +69,12 @@ class ViewIpediaUniversities extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('university_id', 'length', 'max'=>11),
-			array('majors', 'length', 'max'=>23),
+			array('faculties, majors', 'length', 'max'=>23),
 			array('major_all', 'length', 'max'=>21),
 			array('university_name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('university_id, university_name, majors, major_all', 'safe', 'on'=>'search'),
+			array('university_id, university_name, faculties, majors, major_all', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -96,6 +97,7 @@ class ViewIpediaUniversities extends CActiveRecord
 		return array(
 			'university_id' => Yii::t('attribute', 'University'),
 			'university_name' => Yii::t('attribute', 'University Name'),
+			'faculties' => Yii::t('attribute', 'Faculties'),
 			'majors' => Yii::t('attribute', 'Majors'),
 			'major_all' => Yii::t('attribute', 'Major All'),
 		);
@@ -128,6 +130,7 @@ class ViewIpediaUniversities extends CActiveRecord
 
 		$criteria->compare('t.university_id',$this->university_id);
 		$criteria->compare('t.university_name',strtolower($this->university_name),true);
+		$criteria->compare('t.faculties',$this->faculties);
 		$criteria->compare('t.majors',$this->majors);
 		$criteria->compare('t.major_all',$this->major_all);
 
@@ -162,6 +165,7 @@ class ViewIpediaUniversities extends CActiveRecord
 		} else {
 			$this->defaultColumns[] = 'university_id';
 			$this->defaultColumns[] = 'university_name';
+			$this->defaultColumns[] = 'faculties';
 			$this->defaultColumns[] = 'majors';
 			$this->defaultColumns[] = 'major_all';
 		}
@@ -180,6 +184,7 @@ class ViewIpediaUniversities extends CActiveRecord
 			);
 			//$this->defaultColumns[] = 'university_id';
 			$this->defaultColumns[] = 'university_name';
+			$this->defaultColumns[] = 'faculties';
 			$this->defaultColumns[] = 'majors';
 			$this->defaultColumns[] = 'major_all';
 		}
