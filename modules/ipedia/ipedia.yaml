@@ -24,6 +24,9 @@ plugin_menu		:
 	- urlTitle: Positions
 		urlRules: {siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: o/position/manage, attr: -, icon: -}
+	- urlTitle: Faculties
+		urlRules: {siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: o/faculty/manage, attr: -, icon: -}
 	- urlTitle: Majors
 		urlRules: {siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: o/major/manage, attr: -, icon: -}
@@ -71,6 +74,10 @@ content_menu	:
 	- urlTitle: View Position
 		urlRules: {ipedia, o/position, edit, siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: view, attr: id=$_GET*id, icon: -}
+# controller o/faculty
+	- urlTitle: Add Faculty
+		urlRules: {ipedia, o/faculty, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: add, attr: -, icon: -}
 # controller o/major
 	- urlTitle: Add Major
 		urlRules: {ipedia, o/major, manage, siteType: "0,1", userLevel: "1,2"}

@@ -303,7 +303,7 @@ class IpediaFaculties extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'major_search',
-				'value' => '$data->view->majors',
+				'value' => '$data->view->majors ? $data->view->majors : 0',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),	
@@ -311,7 +311,7 @@ class IpediaFaculties extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'university_search',
-				'value' => '$data->view->universities',
+				'value' => '$data->view->universities ? $data->view->universities : 0',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),	
