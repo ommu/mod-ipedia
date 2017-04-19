@@ -47,6 +47,7 @@ class IpediaUniversities extends CActiveRecord
 	// Variable Search
 	public $creation_search;
 	public $modified_search;
+	public $faculty_search;
 	public $major_search;
 
 	/**
@@ -88,7 +89,7 @@ class IpediaUniversities extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('university_id, publish, directory_id, acreditation, creation_date, creation_id, modified_date, modified_id,
-				university_name_i creation_search, modified_search, major_search,', 'safe', 'on'=>'search'),
+				university_name_i creation_search, modified_search, faculty_search, major_search,', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -126,6 +127,7 @@ class IpediaUniversities extends CActiveRecord
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'university_name_i' => Yii::t('attribute', 'University'),
 			'university_major_i' => Yii::t('attribute', 'Major'),
+			'faculty_search' => Yii::t('attribute', 'Faculties'),
 			'major_search' => Yii::t('attribute', 'Majors'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
@@ -208,6 +210,7 @@ class IpediaUniversities extends CActiveRecord
 		$criteria->compare('view.university_name',strtolower($this->university_name_i), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
+		$criteria->compare('view.faculties',$this->faculty_search);
 		$criteria->compare('view.majors',$this->major_search);
 
 		if(!isset($_GET['IpediaUniversities_sort']))
@@ -313,8 +316,16 @@ class IpediaUniversities extends CActiveRecord
 				), true),
 			);
 			$this->defaultColumns[] = array(
+				'name' => 'faculty_search',
+				'value' => '$data->view->faculties ? $data->view->faculties : 0',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),	
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
 				'name' => 'major_search',
-				'value' => 'CHtml::link($data->view->majors, Yii::app()->controller->createUrl("o/universitymajor/manage",array(\'university\'=>$data->university_id,\'type\'=>\'publish\')))',
+				'value' => 'CHtml::link($data->view->majors ? $data->view->majors : 0, Yii::app()->controller->createUrl("o/universitymajor/manage",array(\'university\'=>$data->university_id,\'type\'=>\'publish\')))',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),	

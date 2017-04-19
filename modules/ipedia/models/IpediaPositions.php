@@ -323,7 +323,7 @@ class IpediaPositions extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'skill_search',
-				'value' => 'CHtml::link($data->view->skills, Yii::app()->controller->createUrl("o/positionskill/manage",array(\'position\'=>$data->position_id,\'type\'=>\'publish\')))',
+				'value' => 'CHtml::link($data->view->skills ? $data->view->skills : 0, Yii::app()->controller->createUrl("o/positionskill/manage",array(\'position\'=>$data->position_id,\'type\'=>\'publish\')))',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),	

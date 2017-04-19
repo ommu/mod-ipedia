@@ -305,7 +305,7 @@ class IpediaCompanies extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'industry_search',
-				'value' => 'CHtml::link($data->view->industries, Yii::app()->controller->createUrl("o/companyindustry/manage",array(\'company\'=>$data->company_id,\'type\'=>\'publish\')))',
+				'value' => 'CHtml::link($data->view->industries ? $data->view->industries : 0, Yii::app()->controller->createUrl("o/companyindustry/manage",array(\'company\'=>$data->company_id,\'type\'=>\'publish\')))',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),	

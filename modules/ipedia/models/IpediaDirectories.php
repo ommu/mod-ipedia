@@ -297,7 +297,7 @@ class IpediaDirectories extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'location_search',
-				'value' => 'CHtml::link($data->view->locations, Yii::app()->controller->createUrl("o/location/manage",array(\'directory\'=>$data->directory_id,\'type\'=>\'publish\')))',
+				'value' => 'CHtml::link($data->view->locations ? $data->view->locations : 0, Yii::app()->controller->createUrl("o/location/manage",array(\'directory\'=>$data->directory_id,\'type\'=>\'publish\')))',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),	
