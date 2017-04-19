@@ -43,8 +43,6 @@ class IpediaIndustryMajor extends CActiveRecord
 	public $major_name_i;
 	
 	// Variable Search
-	public $industry_search;
-	public $major_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -83,7 +81,7 @@ class IpediaIndustryMajor extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, publish, industry_id, major_id, creation_date, creation_id, modified_date, modified_id,
-				industry_search, major_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				industry_name_i, major_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -116,8 +114,8 @@ class IpediaIndustryMajor extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
-			'industry_search' => Yii::t('attribute', 'Industry'),
-			'major_search' => Yii::t('attribute', 'Major'),
+			'industry_name_i' => Yii::t('attribute', 'Industry'),
+			'major_name_i' => Yii::t('attribute', 'Major'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -204,8 +202,8 @@ class IpediaIndustryMajor extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
-		$criteria->compare('industry_v.industry_name',strtolower($this->industry_search), true);
-		$criteria->compare('major.major_name',strtolower($this->major_search), true);
+		$criteria->compare('industry_v.industry_name',strtolower($this->industry_name_i), true);
+		$criteria->compare('major.major_name',strtolower($this->major_name_i), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -270,13 +268,13 @@ class IpediaIndustryMajor extends CActiveRecord
 			);
 			if(!isset($_GET['industry'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'industry_search',
+					'name' => 'industry_name_i',
 					'value' => '$data->industry->view->industry_name',
 				);
 			}
 			if(!isset($_GET['major'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'major_search',
+					'name' => 'major_name_i',
 					'value' => '$data->major->major_name',
 				);
 			}

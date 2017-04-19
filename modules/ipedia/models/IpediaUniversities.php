@@ -42,6 +42,7 @@ class IpediaUniversities extends CActiveRecord
 {
 	public $defaultColumns = array();
 	public $university_name_i;
+	public $university_faculty_i;
 	public $university_major_i;
 	
 	// Variable Search
@@ -85,7 +86,7 @@ class IpediaUniversities extends CActiveRecord
 			array('directory_id, creation_id, modified_id', 'length', 'max'=>11),
 			array('acreditation', 'length', 'max'=>1),
 			array('directory_id, acreditation,
-				university_major_i', 'safe'),
+				university_faculty_i, university_major_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('university_id, publish, directory_id, acreditation, creation_date, creation_id, modified_date, modified_id,
@@ -126,6 +127,7 @@ class IpediaUniversities extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'university_name_i' => Yii::t('attribute', 'University'),
+			'university_faculty_i' => Yii::t('attribute', 'Faculty'),
 			'university_major_i' => Yii::t('attribute', 'Major'),
 			'faculty_search' => Yii::t('attribute', 'Faculties'),
 			'major_search' => Yii::t('attribute', 'Majors'),

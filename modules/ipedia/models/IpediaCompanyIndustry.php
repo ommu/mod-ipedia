@@ -43,8 +43,6 @@ class IpediaCompanyIndustry extends CActiveRecord
 	public $industry_name_i;
 	
 	// Variable Search
-	public $company_search;
-	public $industry_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -83,7 +81,7 @@ class IpediaCompanyIndustry extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, publish, company_id, industry_id, creation_date, creation_id, modified_date, modified_id,
-				company_search, industry_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				company_name_i, industry_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -116,8 +114,8 @@ class IpediaCompanyIndustry extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
-			'company_search' => Yii::t('attribute', 'Company'),
-			'industry_search' => Yii::t('attribute', 'Industry'),
+			'company_name_i' => Yii::t('attribute', 'Company'),
+			'industry_name_i' => Yii::t('attribute', 'Industry'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -204,8 +202,8 @@ class IpediaCompanyIndustry extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
-		$criteria->compare('company_v.company_name',strtolower($this->company_search), true);
-		$criteria->compare('industry_v.industry_name',strtolower($this->industry_search), true);
+		$criteria->compare('company_v.company_name',strtolower($this->company_name_i), true);
+		$criteria->compare('industry_v.industry_name',strtolower($this->industry_name_i), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -270,13 +268,13 @@ class IpediaCompanyIndustry extends CActiveRecord
 			);
 			if(!isset($_GET['company'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'company_search',
+					'name' => 'company_name_i',
 					'value' => '$data->company->view->company_name',
 				);
 			}
 			if(!isset($_GET['industry'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'industry_search',
+					'name' => 'industry_name_i',
 					'value' => '$data->industry->view->industry_name',
 				);
 			}

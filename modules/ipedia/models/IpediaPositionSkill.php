@@ -43,8 +43,6 @@ class IpediaPositionSkill extends CActiveRecord
 	public $skill_name_i;
 	
 	// Variable Search
-	public $position_search;
-	public $skill_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -83,7 +81,7 @@ class IpediaPositionSkill extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, publish, position_id, skill_id, creation_date, creation_id, modified_date, modified_id,
-				position_search, skill_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				position_name_i, skill_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -116,8 +114,8 @@ class IpediaPositionSkill extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
-			'position_search' => Yii::t('attribute', 'Position'),
-			'skill_search' => Yii::t('attribute', 'Skill'),
+			'position_name_i' => Yii::t('attribute', 'Position'),
+			'skill_name_i' => Yii::t('attribute', 'Skill'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -204,8 +202,8 @@ class IpediaPositionSkill extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
-		$criteria->compare('position.position_name',strtolower($this->position_search), true);
-		$criteria->compare('skill_v.skill_name',strtolower($this->skill_search), true);
+		$criteria->compare('position.position_name',strtolower($this->position_name_i), true);
+		$criteria->compare('skill_v.skill_name',strtolower($this->skill_name_i), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -270,13 +268,13 @@ class IpediaPositionSkill extends CActiveRecord
 			);
 			if(!isset($_GET['position'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'position_search',
+					'name' => 'position_name_i',
 					'value' => '$data->position->position_name',
 				);
 			}
 			if(!isset($_GET['skill'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'skill_search',
+					'name' => 'skill_name_i',
 					'value' => '$data->skill->view->skill_name',
 				);
 			}

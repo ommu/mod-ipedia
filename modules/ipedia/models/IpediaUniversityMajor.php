@@ -45,9 +45,6 @@ class IpediaUniversityMajor extends CActiveRecord
 	public $major_name_i;
 	
 	// Variable Search
-	public $university_search;
-	public $faculty_search;
-	public $major_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -86,7 +83,7 @@ class IpediaUniversityMajor extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, publish, university_id, faculty_id, major_id, creation_date, creation_id, modified_date, modified_id,
-				university_search, faculty_search, major_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				university_name_i, faculty_name_i, major_name_i, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -121,9 +118,9 @@ class IpediaUniversityMajor extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
-			'university_search' => Yii::t('attribute', 'University'),
-			'faculty_search' => Yii::t('attribute', 'Faculty'),
-			'major_search' => Yii::t('attribute', 'Major'),
+			'university_name_i' => Yii::t('attribute', 'University'),
+			'faculty_name_i' => Yii::t('attribute', 'Faculty'),
+			'major_name_i' => Yii::t('attribute', 'Major'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -218,9 +215,9 @@ class IpediaUniversityMajor extends CActiveRecord
 		else
 			$criteria->compare('t.modified_id',$this->modified_id);
 		
-		$criteria->compare('university_v.university_name',strtolower($this->university_search), true);
-		$criteria->compare('faculty_v.faculty_name',strtolower($this->faculty_search), true);
-		$criteria->compare('major.major_name',strtolower($this->major_search), true);
+		$criteria->compare('university_v.university_name',strtolower($this->university_name_i), true);
+		$criteria->compare('faculty_v.faculty_name',strtolower($this->faculty_name_i), true);
+		$criteria->compare('major.major_name',strtolower($this->major_name_i), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -286,19 +283,19 @@ class IpediaUniversityMajor extends CActiveRecord
 			);
 			if(!isset($_GET['university'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'university_search',
+					'name' => 'university_name_i',
 					'value' => '$data->university->view->university_name',
 				);
 			}
 			if(!isset($_GET['faculty'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'faculty_search',
+					'name' => 'faculty_name_i',
 					'value' => '$data->faculty->view->faculty_name',
 				);
 			}
 			if(!isset($_GET['major'])) {
 				$this->defaultColumns[] = array(
-					'name' => 'major_search',
+					'name' => 'major_name_i',
 					'value' => '$data->major->major_name',
 				);
 			}
