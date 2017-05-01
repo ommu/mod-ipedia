@@ -10,7 +10,7 @@
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 3 March 2017, 13:45 WIB
  * @link https://github.com/ommu/iPedia
- * @contect (+62)856-299-4114
+ * @contact (+62)856-299-4114
  *
  */
 
