@@ -383,7 +383,7 @@ class IpediaCompanies extends CActiveRecord
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
 			$criteria=new CDbCriteria;
-			$criteria->compare('t.directory_name', strtolower(trim($this->company_name_i)));
+			$criteria->compare('directory_name', strtolower(trim($this->company_name_i)));
 			$model = IpediaDirectories::model()->find($criteria);
 			if($model != null)
 				$this->directory_id = $model->directory_id;

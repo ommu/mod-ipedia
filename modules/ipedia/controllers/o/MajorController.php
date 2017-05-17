@@ -138,13 +138,13 @@ class MajorController extends Controller
 						}
 					}
 				}
-				$criteria->select = "t.major_id, t.major_name";
-				$criteria->compare('t.publish',1);
-				$criteria->compare('t.major_name',strtolower($_GET['term']), true);
+				$criteria->select = "major_id, major_name";
+				$criteria->compare('publish',1);
+				$criteria->compare('major_name',strtolower($_GET['term']), true);
 				if($id != null)
-					$criteria->addNotInCondition('t.major_id',$items);
+					$criteria->addNotInCondition('major_id',$items);
 				$criteria->limit = $limit;
-				$criteria->order = "t.major_id ASC";
+				$criteria->order = "major_id ASC";
 				$model = IpediaMajors::model()->findAll($criteria);
 				/*
 				echo '<pre>';

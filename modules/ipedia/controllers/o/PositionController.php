@@ -129,13 +129,13 @@ class PositionController extends Controller
 						}
 					}
 				}
-				$criteria->select = "t.position_id, t.position_name";
-				$criteria->compare('t.publish',1);
-				$criteria->compare('t.position_name',strtolower($_GET['term']), true);
+				$criteria->select = "position_id, position_name";
+				$criteria->compare('publish',1);
+				$criteria->compare('position_name',strtolower($_GET['term']), true);
 				if($id != null)
-					$criteria->addNotInCondition('t.position_id',$items);
+					$criteria->addNotInCondition('position_id',$items);
 				$criteria->limit = $limit;
-				$criteria->order = "t.position_id ASC";
+				$criteria->order = "position_id ASC";
 				$model = IpediaPositions::model()->findAll($criteria);
 				/*
 				echo '<pre>';

@@ -389,7 +389,7 @@ class IpediaFaculties extends CActiveRecord
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
 			$criteria=new CDbCriteria;
-			$criteria->compare('t.another_name', strtolower(trim($this->faculty_name_i)));
+			$criteria->compare('another_name', strtolower(trim($this->faculty_name_i)));
 			$model = IpediaAnothers::model()->find($criteria);
 			if($model != null)
 				$this->another_id = $model->another_id;
