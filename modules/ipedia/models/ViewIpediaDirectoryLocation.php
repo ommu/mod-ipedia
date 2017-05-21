@@ -6,7 +6,7 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 6 March 2017, 12:27 WIB
- * @link https://github.com/ommu/iPedia
+ * @link https://github.com/ommu/mod-ipedia
  * @contact (+62)856-299-4114
  *
  * This is the template for generating the model class of a specified table.
