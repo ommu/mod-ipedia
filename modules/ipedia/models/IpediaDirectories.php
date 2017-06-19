@@ -126,16 +126,6 @@ class IpediaDirectories extends CActiveRecord
 			'organization_search' => Yii::t('attribute', 'Organization'),
 			'university_search' => Yii::t('attribute', 'University'),
 		);
-		/*
-			'Directory' => 'Directory',
-			'Publish' => 'Publish',
-			'Directory Name' => 'Directory Name',
-			'Creation Date' => 'Creation Date',
-			'Creation' => 'Creation',
-			'Modified Date' => 'Modified Date',
-			'Modified' => 'Modified',
-		
-		*/
 	}
 
 	/**

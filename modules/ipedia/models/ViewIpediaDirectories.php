@@ -111,13 +111,6 @@ class ViewIpediaDirectories extends CActiveRecord
 			'locations' => Yii::t('attribute', 'Locations'),
 			'location_all' => Yii::t('attribute', 'Location All'),
 		);
-		/*
-			'Directory' => 'Directory',
-			'Directory Name' => 'Directory Name',
-			'Locations' => 'Locations',
-			'Location All' => 'Location All',
-		
-		*/
 	}
 
 	/**

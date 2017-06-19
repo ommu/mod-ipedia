@@ -139,20 +139,6 @@ class IpediaPositions extends CActiveRecord
 			'position_knowledge_search' => Yii::t('attribute', 'Knowledge'),
 			'skill_search' => Yii::t('attribute', 'Skill'),
 		);
-		/*
-			'Position' => 'Position',
-			'Publish' => 'Publish',
-			'Position Name' => 'Position Name',
-			'Position Desc' => 'Position Desc',
-			'Position Task' => 'Position Task',
-			'Position Jobdesc' => 'Position Jobdesc',
-			'Position Knowledge' => 'Position Knowledge',
-			'Creation Date' => 'Creation Date',
-			'Creation' => 'Creation',
-			'Modified Date' => 'Modified Date',
-			'Modified' => 'Modified',
-		
-		*/
 	}
 
 	/**

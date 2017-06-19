@@ -94,11 +94,6 @@ class ViewIpediaOrganizations extends CActiveRecord
 			'organization_id' => Yii::t('attribute', 'Organization'),
 			'organization_name' => Yii::t('attribute', 'Organization Name'),
 		);
-		/*
-			'Organization' => 'Organization',
-			'Organization Name' => 'Organization Name',
-		
-		*/
 	}
 
 	/**

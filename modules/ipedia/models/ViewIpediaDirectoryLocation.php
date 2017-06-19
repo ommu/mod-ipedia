@@ -104,16 +104,6 @@ class ViewIpediaDirectoryLocation extends CActiveRecord
 			'province_name' => Yii::t('attribute', 'Province Name'),
 			'country_name' => Yii::t('attribute', 'Country Name'),
 		);
-		/*
-			'Location' => 'Location',
-			'Directory Name' => 'Directory Name',
-			'City Name' => 'City Name',
-			'Province Name' => 'Province Name',
-			'Country Name' => 'Country Name',
-			'District Name' => 'District Name',
-			'Village Name' => 'Village Name',
-		
-		*/
 	}
 
 	/**

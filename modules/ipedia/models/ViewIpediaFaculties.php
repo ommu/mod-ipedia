@@ -6,7 +6,7 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 19 April 2017, 02:27 WIB
- * @link http://opensource.ommu.co
+ * @link https://github.com/ommu/mod-ipedia
  * @contact (+62)856-299-4114
  *
  * This is the template for generating the model class of a specified table.
@@ -98,13 +98,6 @@ class ViewIpediaFaculties extends CActiveRecord
 			'majors' => Yii::t('attribute', 'Majors'),
 			'universities' => Yii::t('attribute', 'Universities'),
 		);
-		/*
-			'Faculty' => 'Faculty',
-			'Faculty Name' => 'Faculty Name',
-			'Majors' => 'Majors',
-			'Universities' => 'Universities',
-		
-		*/
 	}
 
 	/**

@@ -134,17 +134,6 @@ class IpediaIndustries extends CActiveRecord
 			'major_search' => Yii::t('attribute', 'Majors'),
 			'company_search' => Yii::t('attribute', 'Companies'),
 		);
-		/*
-			'Industry' => 'Industry',
-			'Publish' => 'Publish',
-			'Tag' => 'Tag',
-			'Industry Desc' => 'Industry Desc',
-			'Creation Date' => 'Creation Date',
-			'Creation' => 'Creation',
-			'Modified Date' => 'Modified Date',
-			'Modified' => 'Modified',
-		
-		*/
 	}
 
 	/**

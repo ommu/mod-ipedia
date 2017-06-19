@@ -105,15 +105,6 @@ class ViewIpediaIndustries extends CActiveRecord
 			'companies' => Yii::t('attribute', 'Companies'),
 			'company_all' => Yii::t('attribute', 'Company All'),
 		);
-		/*
-			'Industry' => 'Industry',
-			'Industry Name' => 'Industry Name',
-			'Majors' => 'Majors',
-			'Major All' => 'Major All',
-			'Companies' => 'Companies',
-			'Company All' => 'Company All',
-		
-		*/
 	}
 
 	/**

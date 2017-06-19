@@ -139,23 +139,6 @@ class IpediaDirectoryLocation extends CActiveRecord
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
-		/*
-			'Location' => 'Location',
-			'Publish' => 'Publish',
-			'Directory' => 'Directory',
-			'Headquarters' => 'Headquarters',
-			'Address' => 'Address',
-			'Country' => 'Country',
-			'Province' => 'Province',
-			'City' => 'City',
-			'District' => 'District',
-			'Village' => 'Village',
-			'Creation Date' => 'Creation Date',
-			'Creation' => 'Creation',
-			'Modified Date' => 'Modified Date',
-			'Modified' => 'Modified',
-		
-		*/
 	}
 
 	/**

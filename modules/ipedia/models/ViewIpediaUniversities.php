@@ -101,13 +101,6 @@ class ViewIpediaUniversities extends CActiveRecord
 			'majors' => Yii::t('attribute', 'Majors'),
 			'major_all' => Yii::t('attribute', 'Major All'),
 		);
-		/*
-			'University' => 'University',
-			'University Name' => 'University Name',
-			'Majors' => 'Majors',
-			'Major All' => 'Major All',
-		
-		*/
 	}
 
 	/**

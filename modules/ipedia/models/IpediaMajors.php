@@ -127,17 +127,6 @@ class IpediaMajors extends CActiveRecord
 			'university_search' => Yii::t('attribute', 'Universities'),
 			'industry_search' => Yii::t('attribute', 'Industries'),
 		);
-		/*
-			'Major' => 'Major',
-			'Publish' => 'Publish',
-			'Major Name' => 'Major Name',
-			'Major Desc' => 'Major Desc',
-			'Creation Date' => 'Creation Date',
-			'Creation' => 'Creation',
-			'Modified Date' => 'Modified Date',
-			'Modified' => 'Modified',
-		
-		*/
 	}
 
 	/**

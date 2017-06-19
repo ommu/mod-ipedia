@@ -6,7 +6,7 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 19 April 2017, 02:17 WIB
- * @link http://opensource.ommu.co
+ * @link https://github.com/ommu/mod-ipedia
  * @contact (+62)856-299-4114
  *
  * This is the template for generating the model class of a specified table.
@@ -110,16 +110,6 @@ class IpediaAnothers extends CActiveRecord
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
-		/*
-			'Another' => 'Another',
-			'Publish' => 'Publish',
-			'Another Name' => 'Another Name',
-			'Creation Date' => 'Creation Date',
-			'Creation' => 'Creation',
-			'Modified Date' => 'Modified Date',
-			'Modified' => 'Modified',
-		
-		*/
 	}
 
 	/**

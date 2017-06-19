@@ -131,16 +131,6 @@ class IpediaCompanies extends CActiveRecord
 			'modified_search' => Yii::t('attribute', 'Modified'),
 			'industry_search' => Yii::t('attribute', 'Industries'),
 		);
-		/*
-			'Company' => 'Company',
-			'Publish' => 'Publish',
-			'Directory' => 'Directory',
-			'Creation Date' => 'Creation Date',
-			'Creation' => 'Creation',
-			'Modified Date' => 'Modified Date',
-			'Modified' => 'Modified',
-		
-		*/
 	}
 
 	/**

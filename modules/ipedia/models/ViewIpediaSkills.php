@@ -99,13 +99,6 @@ class ViewIpediaSkills extends CActiveRecord
 			'positions' => Yii::t('attribute', 'Positions'),
 			'position_all' => Yii::t('attribute', 'Position All'),
 		);
-		/*
-			'Skill' => 'Skill',
-			'Skill Name' => 'Skill Name',
-			'Positions' => 'Positions',
-			'Position All' => 'Position All',
-		
-		*/
 	}
 
 	/**

@@ -104,15 +104,6 @@ class ViewIpediaMajors extends CActiveRecord
 			'industries' => Yii::t('attribute', 'Industries'),
 			'industry_all' => Yii::t('attribute', 'Industry All'),
 		);
-		/*
-			'Major' => 'Major',
-			'Major Name' => 'Major Name',
-			'Universities' => 'Universities',
-			'University All' => 'University All',
-			'Industries' => 'Industries',
-			'Industry All' => 'Industry All',
-		
-		*/
 	}
 
 	/**

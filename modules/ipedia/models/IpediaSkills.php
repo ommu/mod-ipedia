@@ -128,17 +128,6 @@ class IpediaSkills extends CActiveRecord
 			'modified_search' => Yii::t('attribute', 'Modified'),
 			'position_search' => Yii::t('attribute', 'Positions'),
 		);
-		/*
-			'Skill' => 'Skill',
-			'Publish' => 'Publish',
-			'Tag' => 'Tag',
-			'Skill Desc' => 'Skill Desc',
-			'Creation Date' => 'Creation Date',
-			'Creation' => 'Creation',
-			'Modified Date' => 'Modified Date',
-			'Modified' => 'Modified',
-		
-		*/
 	}
 
 	/**

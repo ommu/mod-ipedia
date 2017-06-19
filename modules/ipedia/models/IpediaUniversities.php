@@ -134,17 +134,6 @@ class IpediaUniversities extends CActiveRecord
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
-		/*
-			'University' => 'University',
-			'Publish' => 'Publish',
-			'Directory' => 'Directory',
-			'Acreditation' => 'Acreditation',
-			'Creation Date' => 'Creation Date',
-			'Creation' => 'Creation',
-			'Modified Date' => 'Modified Date',
-			'Modified' => 'Modified',
-		
-		*/
 	}
 
 	/**
