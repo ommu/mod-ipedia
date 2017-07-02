@@ -32,12 +32,12 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuCvExperiences[] $ommuCvExperiences
- * @property OmmuCvReferenceReferee[] $ommuCvReferenceReferees
- * @property OmmuCvTrainings[] $ommuCvTrainings
- * @property OmmuIpediaDirectories $directory
- * @property OmmuIpediaCompanyIndustry[] $ommuIpediaCompanyIndustries
- * @property OmmuMemberCompany[] $ommuMemberCompanies
+ * @property CvExperiences[] $CvExperiences
+ * @property CvReferenceReferee[] $CvReferenceReferees
+ * @property CvTrainings[] $CvTrainings
+ * @property IpediaDirectories $directory
+ * @property IpediaCompanyIndustry[] $IpediaCompanyIndustries
+ * @property MemberCompany[] $MemberCompanies
  */
 class IpediaCompanies extends CActiveRecord
 {

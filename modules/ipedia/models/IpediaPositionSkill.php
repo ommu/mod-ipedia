@@ -33,8 +33,8 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuIpediaPositions $position
- * @property OmmuIpediaSkills $skill
+ * @property IpediaPositions $position
+ * @property IpediaSkills $skill
  */
 class IpediaPositionSkill extends CActiveRecord
 {

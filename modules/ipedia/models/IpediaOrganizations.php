@@ -32,8 +32,8 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuCvOrganizations[] $ommuCvOrganizations
- * @property OmmuIpediaDirectories $directory
+ * @property CvOrganizations[] $CvOrganizations
+ * @property IpediaDirectories $directory
  */
 class IpediaOrganizations extends CActiveRecord
 {

@@ -33,9 +33,9 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuIpediaIndustryMajor[] $ommuIpediaIndustryMajors
- * @property OmmuIpediaUniversityMajor[] $ommuIpediaUniversityMajors
- * @property OmmuVacancyMajor[] $ommuVacancyMajors
+ * @property IpediaIndustryMajor[] $IpediaIndustryMajors
+ * @property IpediaUniversityMajor[] $IpediaUniversityMajors
+ * @property VacancyMajor[] $VacancyMajors
  */
 class IpediaMajors extends CActiveRecord
 {

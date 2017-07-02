@@ -36,10 +36,10 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuCvExperiences[] $ommuCvExperiences
- * @property OmmuCvReferenceReferee[] $ommuCvReferenceReferees
- * @property OmmuIpediaPositionSkill[] $ommuIpediaPositionSkills
- * @property OmmuVacancies[] $ommuVacancies
+ * @property CvExperiences[] $CvExperiences
+ * @property CvReferenceReferee[] $CvReferenceReferees
+ * @property IpediaPositionSkill[] $IpediaPositionSkills
+ * @property Vacancies[] $Vacancies
  */
 class IpediaPositions extends CActiveRecord
 {

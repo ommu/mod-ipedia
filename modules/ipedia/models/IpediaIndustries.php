@@ -33,10 +33,10 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuIpediaCompanyIndustry[] $ommuIpediaCompanyIndustries
- * @property OmmuCoreTags $tag
- * @property OmmuIpediaIndustryMajor[] $ommuIpediaIndustryMajors
- * @property OmmuVacancyIndustry[] $ommuVacancyIndustries
+ * @property IpediaCompanyIndustry[] $IpediaCompanyIndustries
+ * @property CoreTags $tag
+ * @property IpediaIndustryMajor[] $IpediaIndustryMajors
+ * @property VacancyIndustry[] $VacancyIndustries
  */
 class IpediaIndustries extends CActiveRecord
 {

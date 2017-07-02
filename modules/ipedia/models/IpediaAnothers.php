@@ -32,7 +32,7 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuIpediaFaculties[] $ommuIpediaFaculties
+ * @property IpediaFaculties[] $IpediaFaculties
  */
 class IpediaAnothers extends CActiveRecord
 {

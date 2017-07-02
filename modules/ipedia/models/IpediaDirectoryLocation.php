@@ -39,7 +39,7 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuIpediaDirectories $directory
+ * @property IpediaDirectories $directory
  */
 class IpediaDirectoryLocation extends CActiveRecord
 {

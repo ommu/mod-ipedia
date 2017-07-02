@@ -33,9 +33,9 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuCvSkills[] $ommuCvSkills
- * @property OmmuIpediaPositionSkill[] $ommuIpediaPositionSkills
- * @property OmmuCoreTags $tag
+ * @property CvSkills[] $CvSkills
+ * @property IpediaPositionSkill[] $IpediaPositionSkills
+ * @property CoreTags $tag
  */
 class IpediaSkills extends CActiveRecord
 {
