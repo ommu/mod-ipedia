@@ -26,7 +26,7 @@ if(Yii::app()->user->hasFlash('success'))
 ?>
 <?php //end.Messages ?>
 
-<?php $this->widget('application.components.system.FDetailView', array(
+<?php $this->widget('application.libraries.core.components.system.FDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		array(
