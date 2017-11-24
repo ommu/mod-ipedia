@@ -317,7 +317,7 @@ class IpediaPositions extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'position_desc_search',
-				'value' => '$data->view->position_desc == 1 ? Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
+				'value' => '$data->view->position_desc == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -329,7 +329,7 @@ class IpediaPositions extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'position_task_search',
-				'value' => '$data->view->position_task == 1 ? Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
+				'value' => '$data->view->position_task == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -341,7 +341,7 @@ class IpediaPositions extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'position_jobdesc_search',
-				'value' => '$data->view->position_jobdesc == 1 ? Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
+				'value' => '$data->view->position_jobdesc == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -353,7 +353,7 @@ class IpediaPositions extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'position_knowledge_search',
-				'value' => '$data->view->position_knowledge == 1 ? Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Chtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
+				'value' => '$data->view->position_knowledge == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
