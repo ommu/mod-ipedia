@@ -8,7 +8,7 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 19 April 2017, 09:51 WIB
- * @link https://github.com/ommu/mod-ipedia
+ * @link https://github.com/ommu/ommu-ipedia
  * @contact (+62)856-299-4114
  *
  */
