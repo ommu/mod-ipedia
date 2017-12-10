@@ -42,7 +42,7 @@
 		<?php echo $form->labelEx($model,'position_desc'); ?>
 		<div class="desc">
 			<?php //echo $form->textArea($model,'position_desc',array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
-			$this->widget('application.extensions.imperavi.ImperaviRedactorWidget', array(
+			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_desc,
 				// Redactor options
@@ -69,7 +69,7 @@
 		<?php echo $form->labelEx($model,'position_task'); ?>
 		<div class="desc">
 			<?php //echo $form->textArea($model,'position_task',array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
-			$this->widget('application.extensions.imperavi.ImperaviRedactorWidget', array(
+			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_task,
 				// Redactor options
@@ -96,7 +96,7 @@
 		<?php echo $form->labelEx($model,'position_jobdesc'); ?>
 		<div class="desc">
 			<?php //echo $form->textArea($model,'position_jobdesc',array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
-			$this->widget('application.extensions.imperavi.ImperaviRedactorWidget', array(
+			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_jobdesc,
 				// Redactor options
@@ -123,7 +123,7 @@
 		<?php echo $form->labelEx($model,'position_knowledge'); ?>
 		<div class="desc">
 			<?php //echo $form->textArea($model,'position_knowledge',array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
-			$this->widget('application.extensions.imperavi.ImperaviRedactorWidget', array(
+			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_knowledge,
 				// Redactor options
