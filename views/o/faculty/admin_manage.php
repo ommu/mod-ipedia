@@ -3,13 +3,12 @@
  * Ipedia Faculties (ipedia-faculties)
  * @var $this FacultyController
  * @var $model IpediaFaculties
- * version: 0.0.1
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 19 April 2017, 09:51 WIB
  * @link https://github.com/ommu/ommu-ipedia
- * @contact (+62)856-299-4114
  *
  */
 

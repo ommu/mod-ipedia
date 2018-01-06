@@ -3,13 +3,12 @@
  * Ipedia Skills (ipedia-skills)
  * @var $this SkillController
  * @var $model IpediaSkills
- * version: 0.0.1
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 3 March 2017, 13:45 WIB
  * @link https://github.com/ommu/ommu-ipedia
- * @contact (+62)856-299-4114
  *
  */
 
