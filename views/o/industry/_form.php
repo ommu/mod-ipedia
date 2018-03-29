@@ -140,7 +140,7 @@
 					}?>
 				</div>
 			</div>
-		</div>		
+		</div>
 		<?php }?>
 
 		<div class="clearfix publish">
