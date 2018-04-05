@@ -1,24 +1,30 @@
 {
 	"name": "ommu/ipedia",
-	"description": "iPedia Module for Ommu Platform",
+	"description": "iPedia Module from Ommu Platform",
 	"keywords": [
-		"ommu",
-		"platform",
-		"ommu platform",
 		"module",
-		"ipedia"
+		"ipedia",
+		"biography",
+		"education",
+		"experience",
+		"organization",
+		"training",
+		"portfolio",
+		"skill",
+		"ommu",
+		"ommu platform"
 	],
-	"homepage": "https://github.com/ommu/ommu-ipedia",
+	"homepage": "https://github.com/ommu/mod-ipedia",
 	"type": "ommu-module",
 	"license": "Apache-2.0",
 	"support": {
-		"issues": "https://github.com/ommu/ommu-ipedia/issues",
-		"wiki": "https://github.com/ommu/ommu-ipedia/wiki",
-		"source": "https://github.com/ommu/ommu-ipedia"
+		"issues": "https://github.com/ommu/mod-ipedia/issues",
+		"wiki": "https://github.com/ommu/mod-ipedia/wiki",
+		"source": "https://github.com/ommu/mod-ipedia"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/ommu/ommu-ipedia.git"
+		"url": "https://github.com/ommu/mod-ipedia.git"
 	},
 	"authors": [
 		{
