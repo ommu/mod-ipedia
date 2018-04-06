@@ -8,7 +8,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 19 April 2017, 09:50 WIB
- * @link https://github.com/ommu/ommu-ipedia
+ * @link https://github.com/ommu/mod-ipedia
  *
  */
 
