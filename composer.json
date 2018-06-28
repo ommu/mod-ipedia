@@ -12,7 +12,7 @@
 		"portfolio",
 		"skill",
 		"ommu",
-		"ommu platform"
+		"ommu-platform"
 	],
 	"homepage": "https://github.com/ommu/mod-ipedia",
 	"type": "ommu-module",
