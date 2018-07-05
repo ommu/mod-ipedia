@@ -38,6 +38,8 @@
  */
 class IpediaSkills extends CActiveRecord
 {
+	use UtilityTrait;
+
 	public $defaultColumns = array();
 	public $skill_name_i;
 	public $skill_position_i;
@@ -375,7 +377,7 @@ class IpediaSkills extends CActiveRecord
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
 			$criteria=new CDbCriteria;
-			$criteria->compare('body', Utility::getUrlTitle(strtolower(trim($this->skill_name_i))));
+			$criteria->compare('body', $this->urlTitle($this->skill_name_i));
 			$model = OmmuTags::model()->find($criteria);
 			if($model != null)
 				$this->tag_id = $model->tag_id;

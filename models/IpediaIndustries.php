@@ -39,6 +39,8 @@
  */
 class IpediaIndustries extends CActiveRecord
 {
+	use UtilityTrait;
+
 	public $defaultColumns = array();
 	public $industry_name_i;
 	public $industry_major_i;
@@ -390,7 +392,7 @@ class IpediaIndustries extends CActiveRecord
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
 			$criteria=new CDbCriteria;
-			$criteria->compare('body', Utility::getUrlTitle(strtolower(trim($this->industry_name_i))));
+			$criteria->compare('body', $this->urlTitle($this->industry_name_i));
 			$model = OmmuTags::model()->find($criteria);
 			
 			if($model != null)

@@ -132,9 +132,10 @@ class SkillController extends Controller
 						}
 					}
 				}
+				$term = Yii::app()->getRequest()->getParam('term');
 				$criteria->select = "t.skill_id";
 				$criteria->compare('t.publish',1);
-				$criteria->compare('view.skill_name',Utility::getUrlTitle(strtolower(trim(Yii::app()->getRequest()->getParam('term')))), true);
+				$criteria->compare('view.skill_name',$this->urlTitle($term), true);
 				if($id != null)
 					$criteria->addNotInCondition('t.skill_id',$items);
 				$criteria->limit = $limit;
