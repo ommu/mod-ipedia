@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 3 March 2017, 10:20 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -34,7 +34,7 @@
 			<div class="desc">
 				<?php if(!$model->isNewRecord && !$model->getErrors())
 					$model->university_name_i = $model->view->university_name;
-				//echo $form->textField($model,'university_name_i',array('class'=>'span-8'));
+				//echo $form->textField($model,'university_name_i', array('class'=>'span-8'));
 				$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
 					'model' => $model,
 					'attribute' => 'university_name_i',
@@ -59,7 +59,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'acreditation'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'acreditation',array('maxlength'=>1,'class'=>'span-3')); ?>
+				<?php echo $form->textField($model,'acreditation', array('maxlength'=>1,'class'=>'span-3')); ?>
 				<?php echo $form->error($model,'acreditation'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -69,7 +69,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'university_major_i'); ?>
 			<div class="desc">
-				<?php //echo $form->textField($model,'university_major_i',array('maxlength'=>32,'class'=>'span-6'));
+				<?php //echo $form->textField($model,'university_major_i', array('maxlength'=>32,'class'=>'span-6'));
 				$url = Yii::app()->controller->createUrl('o/universitymajor/add', array('type'=>'ipedia'));
 				$university = $model->university_id;
 				$tagId = 'IpediaUniversities_university_major_i';
@@ -126,7 +126,7 @@
 	</fieldset>
 </div>
 <div class="dialog-submit">
-	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') ,array('onclick' => 'setEnableSave()')); ?>
+	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') , array('onclick' => 'setEnableSave()')); ?>
 	<?php echo CHtml::button(Yii::t('phrase', 'Cancel'), array('id'=>'closed')); ?>
 </div>
 <?php $this->endWidget(); ?>

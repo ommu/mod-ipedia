@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 3 March 2017, 14:42 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -34,7 +34,7 @@
 			<div class="desc">
 				<?php if(!$model->isNewRecord && !$model->getErrors())
 					$model->industry_name_i = $model->view->industry_name;
-				echo $form->textField($model,'industry_name_i',array('maxlength'=>64,'class'=>'span-8')); ?>
+				echo $form->textField($model,'industry_name_i', array('maxlength'=>64,'class'=>'span-8')); ?>
 				<?php echo $form->error($model,'industry_name_i'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -43,7 +43,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'industry_desc'); ?>
 			<div class="desc">
-				<?php echo $form->textArea($model,'industry_desc',array('rows'=>6, 'cols'=>50, 'class'=>'span-10 smaller')); ?>
+				<?php echo $form->textArea($model,'industry_desc', array('rows'=>6, 'cols'=>50, 'class'=>'span-10 smaller')); ?>
 				<?php echo $form->error($model,'industry_desc'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -53,7 +53,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'industry_major_i'); ?>
 			<div class="desc">
-				<?php //echo $form->textField($model,'industry_major_i',array('maxlength'=>32,'class'=>'span-6'));
+				<?php //echo $form->textField($model,'industry_major_i', array('maxlength'=>32,'class'=>'span-6'));
 				$url = Yii::app()->controller->createUrl('o/industrymajor/add', array('type'=>'ipedia'));
 				$industry = $model->industry_id;
 				$tagId = 'IpediaIndustries_industry_major_i';
@@ -99,7 +99,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'industry_company_i'); ?>
 			<div class="desc">
-				<?php //echo $form->textField($model,'industry_company_i',array('maxlength'=>32,'class'=>'span-6'));
+				<?php //echo $form->textField($model,'industry_company_i', array('maxlength'=>32,'class'=>'span-6'));
 				$url = Yii::app()->controller->createUrl('o/companyindustry/add', array('type'=>'ipedia'));
 				$industry = $model->industry_id;
 				$tagId = 'IpediaIndustries_industry_company_i';
@@ -156,7 +156,7 @@
 	</fieldset>
 </div>
 <div class="dialog-submit">
-	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') ,array('onclick' => 'setEnableSave()')); ?>
+	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') , array('onclick' => 'setEnableSave()')); ?>
 	<?php echo CHtml::button(Yii::t('phrase', 'Cancel'), array('id'=>'closed')); ?>
 </div>
 <?php $this->endWidget(); ?>

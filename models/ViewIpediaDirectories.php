@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 2 March 2017, 14:37 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -130,18 +130,18 @@ class ViewIpediaDirectories extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.directory_id',$this->directory_id);
-		$criteria->compare('t.directory_name',strtolower($this->directory_name),true);
-		$criteria->compare('t.companies',$this->companies);
-		$criteria->compare('t.company_id',$this->company_id);
-		$criteria->compare('t.organizations',$this->organizations);
-		$criteria->compare('t.organization_id',$this->organization_id);
-		$criteria->compare('t.universities',$this->universities);
-		$criteria->compare('t.university_id',$this->university_id);
-		$criteria->compare('t.locations',$this->locations);
-		$criteria->compare('t.location_all',$this->location_all);
+		$criteria->compare('t.directory_id', $this->directory_id);
+		$criteria->compare('t.directory_name', strtolower($this->directory_name), true);
+		$criteria->compare('t.companies', $this->companies);
+		$criteria->compare('t.company_id', $this->company_id);
+		$criteria->compare('t.organizations', $this->organizations);
+		$criteria->compare('t.organization_id', $this->organization_id);
+		$criteria->compare('t.universities', $this->universities);
+		$criteria->compare('t.university_id', $this->university_id);
+		$criteria->compare('t.locations', $this->locations);
+		$criteria->compare('t.location_all', $this->location_all);
 
-		if(!isset($_GET['ViewIpediaDirectories_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewIpediaDirectories_sort'))
 			$criteria->order = 't.directory_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -214,7 +214,7 @@ class ViewIpediaDirectories extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 3 March 2017, 15:37 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -21,7 +21,7 @@
 	<ul>
 		<li>
 			<?php echo $model->getAttributeLabel('location_id'); ?><br/>
-			<?php echo $form->textField($model,'location_id',array('size'=>11,'maxlength'=>11)); ?>
+			<?php echo $form->textField($model,'location_id', array('size'=>11,'maxlength'=>11)); ?>
 		</li>
 
 		<li>
@@ -31,7 +31,7 @@
 
 		<li>
 			<?php echo $model->getAttributeLabel('directory_id'); ?><br/>
-			<?php echo $form->textField($model,'directory_id',array('size'=>11,'maxlength'=>11)); ?>
+			<?php echo $form->textField($model,'directory_id', array('size'=>11,'maxlength'=>11)); ?>
 		</li>
 
 		<li>
@@ -41,7 +41,7 @@
 
 		<li>
 			<?php echo $model->getAttributeLabel('address'); ?><br/>
-			<?php echo $form->textArea($model,'address',array('rows'=>6, 'cols'=>50)); ?>
+			<?php echo $form->textArea($model,'address', array('rows'=>6, 'cols'=>50)); ?>
 		</li>
 
 		<li>
@@ -56,17 +56,17 @@
 
 		<li>
 			<?php echo $model->getAttributeLabel('city_id'); ?><br/>
-			<?php echo $form->textField($model,'city_id',array('size'=>11,'maxlength'=>11)); ?>
+			<?php echo $form->textField($model,'city_id', array('size'=>11,'maxlength'=>11)); ?>
 		</li>
 
 		<li>
 			<?php echo $model->getAttributeLabel('district_id'); ?><br/>
-			<?php echo $form->textField($model,'district_id',array('size'=>11,'maxlength'=>11)); ?>
+			<?php echo $form->textField($model,'district_id', array('size'=>11,'maxlength'=>11)); ?>
 		</li>
 
 		<li>
 			<?php echo $model->getAttributeLabel('village_id'); ?><br/>
-			<?php echo $form->textField($model,'village_id',array('size'=>11,'maxlength'=>11)); ?>
+			<?php echo $form->textField($model,'village_id', array('size'=>11,'maxlength'=>11)); ?>
 		</li>
 
 		<li>
@@ -76,7 +76,7 @@
 
 		<li>
 			<?php echo $model->getAttributeLabel('creation_id'); ?><br/>
-			<?php echo $form->textField($model,'creation_id',array('size'=>11,'maxlength'=>11)); ?>
+			<?php echo $form->textField($model,'creation_id', array('size'=>11,'maxlength'=>11)); ?>
 		</li>
 
 		<li>
@@ -86,7 +86,7 @@
 
 		<li>
 			<?php echo $model->getAttributeLabel('modified_id'); ?><br/>
-			<?php echo $form->textField($model,'modified_id',array('size'=>11,'maxlength'=>11)); ?>
+			<?php echo $form->textField($model,'modified_id', array('size'=>11,'maxlength'=>11)); ?>
 		</li>
 
 		<li class="submit">

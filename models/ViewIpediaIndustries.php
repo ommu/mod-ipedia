@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 2 March 2017, 14:37 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -124,14 +124,14 @@ class ViewIpediaIndustries extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.industry_id',$this->industry_id);
-		$criteria->compare('t.industry_name',strtolower($this->industry_name),true);
-		$criteria->compare('t.majors',$this->majors);
-		$criteria->compare('t.major_all',$this->major_all);
-		$criteria->compare('t.companies',$this->companies);
-		$criteria->compare('t.company_all',$this->company_all);
+		$criteria->compare('t.industry_id', $this->industry_id);
+		$criteria->compare('t.industry_name', strtolower($this->industry_name), true);
+		$criteria->compare('t.majors', $this->majors);
+		$criteria->compare('t.major_all', $this->major_all);
+		$criteria->compare('t.companies', $this->companies);
+		$criteria->compare('t.company_all', $this->company_all);
 
-		if(!isset($_GET['ViewIpediaIndustries_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewIpediaIndustries_sort'))
 			$criteria->order = 't.industry_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -196,7 +196,7 @@ class ViewIpediaIndustries extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

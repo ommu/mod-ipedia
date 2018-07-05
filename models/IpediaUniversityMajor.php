@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 2 March 2017, 14:36 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -167,49 +167,49 @@ class IpediaUniversityMajor extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.id',strtolower($this->id),true);
-		if(isset($_GET['type']) && $_GET['type'] == 'publish')
-			$criteria->compare('t.publish',1);
-		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
-			$criteria->compare('t.publish',0);
-		elseif(isset($_GET['type']) && $_GET['type'] == 'trash')
-			$criteria->compare('t.publish',2);
+		$criteria->compare('t.id', strtolower($this->id), true);
+		if(Yii::app()->getRequest()->getParam('type') == 'publish')
+			$criteria->compare('t.publish', 1);
+		elseif(Yii::app()->getRequest()->getParam('type') == 'unpublish')
+			$criteria->compare('t.publish', 0);
+		elseif(Yii::app()->getRequest()->getParam('type') == 'trash')
+			$criteria->compare('t.publish', 2);
 		else {
-			$criteria->addInCondition('t.publish',array(0,1));
-			$criteria->compare('t.publish',$this->publish);
+			$criteria->addInCondition('t.publish', array(0,1));
+			$criteria->compare('t.publish', $this->publish);
 		}
-		if(isset($_GET['university']))
-			$criteria->compare('t.university_id',$_GET['university']);
+		if(Yii::app()->getRequest()->getParam('university'))
+			$criteria->compare('t.university_id', Yii::app()->getRequest()->getParam('university'));
 		else
-			$criteria->compare('t.university_id',$this->university_id);
-		if(isset($_GET['faculty']))
-			$criteria->compare('t.faculty_id',$_GET['faculty']);
+			$criteria->compare('t.university_id', $this->university_id);
+		if(Yii::app()->getRequest()->getParam('faculty'))
+			$criteria->compare('t.faculty_id', Yii::app()->getRequest()->getParam('faculty'));
 		else
-			$criteria->compare('t.faculty_id',$this->faculty_id);
-		if(isset($_GET['major']))
-			$criteria->compare('t.major_id',$_GET['major']);
+			$criteria->compare('t.faculty_id', $this->faculty_id);
+		if(Yii::app()->getRequest()->getParam('major'))
+			$criteria->compare('t.major_id', Yii::app()->getRequest()->getParam('major'));
 		else
-			$criteria->compare('t.major_id',$this->major_id);
-		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
-		if(isset($_GET['creation']))
-			$criteria->compare('t.creation_id',$_GET['creation']);
+			$criteria->compare('t.major_id', $this->major_id);
+		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
+			$criteria->compare('date(t.creation_date)', date('Y-m-d', strtotime($this->creation_date)));
+		if(Yii::app()->getRequest()->getParam('creation'))
+			$criteria->compare('t.creation_id', Yii::app()->getRequest()->getParam('creation'));
 		else
-			$criteria->compare('t.creation_id',$this->creation_id);
-		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.modified_date)',date('Y-m-d', strtotime($this->modified_date)));
-		if(isset($_GET['modified']))
-			$criteria->compare('t.modified_id',$_GET['modified']);
+			$criteria->compare('t.creation_id', $this->creation_id);
+		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
+			$criteria->compare('date(t.modified_date)', date('Y-m-d', strtotime($this->modified_date)));
+		if(Yii::app()->getRequest()->getParam('modified'))
+			$criteria->compare('t.modified_id', Yii::app()->getRequest()->getParam('modified'));
 		else
-			$criteria->compare('t.modified_id',$this->modified_id);
+			$criteria->compare('t.modified_id', $this->modified_id);
 		
-		$criteria->compare('university_v.university_name',strtolower($this->university_name_i), true);
-		$criteria->compare('faculty_v.faculty_name',strtolower($this->faculty_name_i), true);
-		$criteria->compare('major.major_name',strtolower($this->major_name_i), true);
-		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
-		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
+		$criteria->compare('university_v.university_name', strtolower($this->university_name_i), true);
+		$criteria->compare('faculty_v.faculty_name', strtolower($this->faculty_name_i), true);
+		$criteria->compare('major.major_name', strtolower($this->major_name_i), true);
+		$criteria->compare('creation.displayname', strtolower($this->creation_search), true);
+		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);
 
-		if(!isset($_GET['IpediaUniversityMajor_sort']))
+		if(!Yii::app()->getRequest()->getParam('IpediaUniversityMajor_sort'))
 			$criteria->order = 't.id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -269,19 +269,19 @@ class IpediaUniversityMajor extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			if(!isset($_GET['university'])) {
+			if(!Yii::app()->getRequest()->getParam('university')) {
 				$this->defaultColumns[] = array(
 					'name' => 'university_name_i',
 					'value' => '$data->university->view->university_name',
 				);
 			}
-			if(!isset($_GET['faculty'])) {
+			if(!Yii::app()->getRequest()->getParam('faculty')) {
 				$this->defaultColumns[] = array(
 					'name' => 'faculty_name_i',
 					'value' => '$data->faculty->view->faculty_name',
 				);
 			}
-			if(!isset($_GET['major'])) {
+			if(!Yii::app()->getRequest()->getParam('major')) {
 				$this->defaultColumns[] = array(
 					'name' => 'major_name_i',
 					'value' => '$data->major->major_name',
@@ -308,7 +308,7 @@ class IpediaUniversityMajor extends CActiveRecord
 					),
 					'options'=>array(
 						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
+						'dateFormat' => 'yy-mm-dd',
 						'showOtherMonths' => true,
 						'selectOtherMonths' => true,
 						'changeMonth' => true,
@@ -317,10 +317,10 @@ class IpediaUniversityMajor extends CActiveRecord
 					),
 				), true),
 			);
-			if(!isset($_GET['type'])) {
+			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->id)), $data->publish, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish", array("id"=>$data->id)), $data->publish, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
@@ -341,7 +341,7 @@ class IpediaUniversityMajor extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

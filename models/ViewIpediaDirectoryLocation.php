@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 6 March 2017, 12:27 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -123,15 +123,15 @@ class ViewIpediaDirectoryLocation extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.location_id',$this->location_id);
-		$criteria->compare('t.directory_name',strtolower($this->directory_name),true);
-		$criteria->compare('t.village_name',strtolower($this->village_name),true);
-		$criteria->compare('t.district_name',strtolower($this->district_name),true);
-		$criteria->compare('t.city_name',strtolower($this->city_name),true);
-		$criteria->compare('t.province_name',strtolower($this->province_name),true);
-		$criteria->compare('t.country_name',strtolower($this->country_name),true);
+		$criteria->compare('t.location_id', $this->location_id);
+		$criteria->compare('t.directory_name', strtolower($this->directory_name), true);
+		$criteria->compare('t.village_name', strtolower($this->village_name), true);
+		$criteria->compare('t.district_name', strtolower($this->district_name), true);
+		$criteria->compare('t.city_name', strtolower($this->city_name), true);
+		$criteria->compare('t.province_name', strtolower($this->province_name), true);
+		$criteria->compare('t.country_name', strtolower($this->country_name), true);
 
-		if(!isset($_GET['ViewIpediaDirectoryLocation_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewIpediaDirectoryLocation_sort'))
 			$criteria->order = 't. DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -198,7 +198,7 @@ class ViewIpediaDirectoryLocation extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

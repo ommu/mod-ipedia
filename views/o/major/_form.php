@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 3 March 2017, 11:12 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -31,7 +31,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'major_name'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'major_name',array('maxlength'=>64, 'class'=>'span-7')); ?>
+				<?php echo $form->textField($model,'major_name', array('maxlength'=>64, 'class'=>'span-7')); ?>
 				<?php echo $form->error($model,'major_name'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -40,7 +40,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'major_desc'); ?>
 			<div class="desc">
-				<?php echo $form->textArea($model,'major_desc',array('rows'=>6, 'cols'=>50, 'class'=>'span-10 smaller')); ?>
+				<?php echo $form->textArea($model,'major_desc', array('rows'=>6, 'cols'=>50, 'class'=>'span-10 smaller')); ?>
 				<?php echo $form->error($model,'major_desc'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -50,7 +50,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'major_university_i'); ?>
 			<div class="desc">
-				<?php //echo $form->textField($model,'major_university_i',array('maxlength'=>32,'class'=>'span-6'));
+				<?php //echo $form->textField($model,'major_university_i', array('maxlength'=>32,'class'=>'span-6'));
 				$url = Yii::app()->controller->createUrl('o/universitymajor/add', array('type'=>'ipedia'));
 				$major = $model->major_id;
 				$tagId = 'IpediaMajors_major_university_i';
@@ -96,7 +96,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'major_industry_i'); ?>
 			<div class="desc">
-				<?php //echo $form->textField($model,'major_industry_i',array('maxlength'=>32,'class'=>'span-6'));
+				<?php //echo $form->textField($model,'major_industry_i', array('maxlength'=>32,'class'=>'span-6'));
 				$url = Yii::app()->controller->createUrl('o/industrymajor/add', array('type'=>'ipedia'));
 				$major = $model->major_id;
 				$tagId = 'IpediaMajors_major_industry_i';
@@ -153,7 +153,7 @@
 	</fieldset>
 </div>
 <div class="dialog-submit">
-	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') ,array('onclick' => 'setEnableSave()')); ?>
+	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') , array('onclick' => 'setEnableSave()')); ?>
 	<?php echo CHtml::button(Yii::t('phrase', 'Cancel'), array('id'=>'closed')); ?>
 </div>
 <?php $this->endWidget(); ?>

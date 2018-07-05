@@ -22,7 +22,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 3 March 2017, 11:12 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -113,7 +113,7 @@ class MajorController extends Controller
 	public function actionSuggest($data=null, $id=null, $limit=10) 
 	{
 		if(Yii::app()->request->isAjaxRequest) {
-			if(isset($_GET['term'])) {
+			if(Yii::app()->getRequest()->getParam('term')) {
 				$criteria = new CDbCriteria;
 				$items = array();
 				
@@ -137,8 +137,8 @@ class MajorController extends Controller
 					}
 				}
 				$criteria->select = "major_id, major_name";
-				$criteria->compare('publish',1);
-				$criteria->compare('major_name',strtolower($_GET['term']), true);
+				$criteria->compare('publish', 1);
+				$criteria->compare('major_name', strtolower(Yii::app()->getRequest()->getParam('term')), true);
 				if($id != null)
 					$criteria->addNotInCondition('major_id',$items);
 				$criteria->limit = $limit;
@@ -156,7 +156,7 @@ class MajorController extends Controller
 						$result[] = array('id' => $items->major_id, 'value' => $items->major_name);
 					}
 				} //else
-				//	$result[] = array('id' => 0, 'value' => $_GET['term']);
+				//	$result[] = array('id' => 0, 'value' => Yii::app()->getRequest()->getParam('term'));
 			}
 			echo CJSON::encode($result);
 			Yii::app()->end();
@@ -189,7 +189,7 @@ class MajorController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Ipedia Majors Manage');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_manage',array(
+		$this->render('admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -214,7 +214,7 @@ class MajorController extends Controller
 				echo $jsonError;
 
 			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+				if(Yii::app()->getRequest()->getParam('enablesave') == 1) {
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
@@ -237,7 +237,7 @@ class MajorController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Create Ipedia Majors');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_add',array(
+		$this->render('admin_add', array(
 			'model'=>$model,
 		));
 	}
@@ -262,7 +262,7 @@ class MajorController extends Controller
 				echo $jsonError;
 
 			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+				if(Yii::app()->getRequest()->getParam('enablesave') == 1) {
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
@@ -285,7 +285,7 @@ class MajorController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Update Ipedia Majors');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_edit',array(
+		$this->render('admin_edit', array(
 			'model'=>$model,
 		));
 	}
@@ -305,7 +305,7 @@ class MajorController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'View Ipedia Majors');
 		$this->pageDescription = '';
 		$this->pageMeta = $setting->meta_keyword;
-		$this->render('admin_view',array(
+		$this->render('admin_view', array(
 			'model'=>$model,
 		));
 	}	
@@ -317,7 +317,7 @@ class MajorController extends Controller
 	public function actionRunAction() {
 		$id       = $_POST['trash_id'];
 		$criteria = null;
-		$actions  = $_GET['action'];
+		$actions  = Yii::app()->getRequest()->getParam('action');
 
 		if(count($id) > 0) {
 			$criteria = new CDbCriteria;
@@ -341,7 +341,7 @@ class MajorController extends Controller
 		}
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax'])) {
+		if(!Yii::app()->getRequest()->getParam('ajax')) {
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
 		}
 	}
@@ -421,7 +421,7 @@ class MajorController extends Controller
 			$this->pageTitle = $title;
 			$this->pageDescription = '';
 			$this->pageMeta = '';
-			$this->render('admin_publish',array(
+			$this->render('admin_publish', array(
 				'title'=>$title,
 				'model'=>$model,
 			));

@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 2 March 2017, 14:39 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -128,16 +128,16 @@ class ViewIpediaPositions extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.position_id',$this->position_id);
-		$criteria->compare('t.position_name',strtolower($this->position_name),true);
-		$criteria->compare('t.position_desc',$this->position_desc);
-		$criteria->compare('t.position_task',$this->position_task);
-		$criteria->compare('t.position_jobdesc',$this->position_jobdesc);
-		$criteria->compare('t.position_knowledge',$this->position_knowledge);
-		$criteria->compare('t.skills',$this->skills);
-		$criteria->compare('t.skill_all',$this->skill_all);
+		$criteria->compare('t.position_id', $this->position_id);
+		$criteria->compare('t.position_name', strtolower($this->position_name), true);
+		$criteria->compare('t.position_desc', $this->position_desc);
+		$criteria->compare('t.position_task', $this->position_task);
+		$criteria->compare('t.position_jobdesc', $this->position_jobdesc);
+		$criteria->compare('t.position_knowledge', $this->position_knowledge);
+		$criteria->compare('t.skills', $this->skills);
+		$criteria->compare('t.skill_all', $this->skill_all);
 
-		if(!isset($_GET['ViewIpediaPositions_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewIpediaPositions_sort'))
 			$criteria->order = 't.position_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -206,7 +206,7 @@ class ViewIpediaPositions extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

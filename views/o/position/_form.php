@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 3 March 2017, 11:12 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -31,7 +31,7 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'position_name'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'position_name',array('maxlength'=>64,'class'=>'span-6')); ?>
+			<?php echo $form->textField($model,'position_name', array('maxlength'=>64,'class'=>'span-6')); ?>
 			<?php echo $form->error($model,'position_name'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -40,7 +40,7 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'position_desc'); ?>
 		<div class="desc">
-			<?php //echo $form->textArea($model,'position_desc',array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
+			<?php //echo $form->textArea($model,'position_desc', array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
 			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_desc,
@@ -67,7 +67,7 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'position_task'); ?>
 		<div class="desc">
-			<?php //echo $form->textArea($model,'position_task',array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
+			<?php //echo $form->textArea($model,'position_task', array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
 			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_task,
@@ -94,7 +94,7 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'position_jobdesc'); ?>
 		<div class="desc">
-			<?php //echo $form->textArea($model,'position_jobdesc',array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
+			<?php //echo $form->textArea($model,'position_jobdesc', array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
 			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_jobdesc,
@@ -121,7 +121,7 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'position_knowledge'); ?>
 		<div class="desc">
-			<?php //echo $form->textArea($model,'position_knowledge',array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
+			<?php //echo $form->textArea($model,'position_knowledge', array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
 			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_knowledge,
@@ -149,7 +149,7 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'position_skill_i'); ?>
 		<div class="desc">
-			<?php //echo $form->textField($model,'position_skill_i',array('maxlength'=>32,'class'=>'span-6'));
+			<?php //echo $form->textField($model,'position_skill_i', array('maxlength'=>32,'class'=>'span-6'));
 			$url = Yii::app()->controller->createUrl('o/positionskill/add', array('type'=>'ipedia'));
 			$position = $model->position_id;
 			$tagId = 'IpediaPositions_position_skill_i';

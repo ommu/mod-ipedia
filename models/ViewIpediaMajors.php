@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 2 March 2017, 14:38 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -123,14 +123,14 @@ class ViewIpediaMajors extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.major_id',$this->major_id);
-		$criteria->compare('t.major_name',strtolower($this->major_name),true);
-		$criteria->compare('t.universities',$this->universities);
-		$criteria->compare('t.university_all',$this->university_all);
-		$criteria->compare('t.industries',$this->industries);
-		$criteria->compare('t.industry_all',$this->industry_all);
+		$criteria->compare('t.major_id', $this->major_id);
+		$criteria->compare('t.major_name', strtolower($this->major_name), true);
+		$criteria->compare('t.universities', $this->universities);
+		$criteria->compare('t.university_all', $this->university_all);
+		$criteria->compare('t.industries', $this->industries);
+		$criteria->compare('t.industry_all', $this->industry_all);
 
-		if(!isset($_GET['ViewIpediaMajors_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewIpediaMajors_sort'))
 			$criteria->order = 't.major_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -195,7 +195,7 @@ class ViewIpediaMajors extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

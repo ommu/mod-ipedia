@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 19 April 2017, 02:27 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
@@ -117,12 +117,12 @@ class ViewIpediaFaculties extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.faculty_id',$this->faculty_id);
-		$criteria->compare('t.faculty_name',strtolower($this->faculty_name),true);
-		$criteria->compare('t.majors',$this->majors);
-		$criteria->compare('t.universities',$this->universities);
+		$criteria->compare('t.faculty_id', $this->faculty_id);
+		$criteria->compare('t.faculty_name', strtolower($this->faculty_name), true);
+		$criteria->compare('t.majors', $this->majors);
+		$criteria->compare('t.universities', $this->universities);
 
-		if(!isset($_GET['ViewIpediaFaculties_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewIpediaFaculties_sort'))
 			$criteria->order = 't.faculty_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -191,7 +191,7 @@ class ViewIpediaFaculties extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)
