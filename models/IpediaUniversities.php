@@ -39,6 +39,8 @@
  */
 class IpediaUniversities extends CActiveRecord
 {
+	use GridViewTrait;
+
 	public $defaultColumns = array();
 	public $university_name_i;
 	public $university_faculty_i;
@@ -328,10 +330,7 @@ class IpediaUniversities extends CActiveRecord
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
-					'filter'=>array(
-						1=>Yii::t('phrase', 'Yes'),
-						0=>Yii::t('phrase', 'No'),
-					),
+					'filter' => $this->filterYesNo(),
 					'type' => 'raw',
 				);
 			}

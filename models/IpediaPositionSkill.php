@@ -37,6 +37,8 @@
  */
 class IpediaPositionSkill extends CActiveRecord
 {
+	use GridViewTrait;
+
 	public $defaultColumns = array();
 	public $position_name_i;
 	public $skill_name_i;
@@ -303,10 +305,7 @@ class IpediaPositionSkill extends CActiveRecord
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
-					'filter'=>array(
-						1=>Yii::t('phrase', 'Yes'),
-						0=>Yii::t('phrase', 'No'),
-					),
+					'filter' => $this->filterYesNo(),
 					'type' => 'raw',
 				);
 			}

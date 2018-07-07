@@ -39,6 +39,7 @@
 class IpediaSkills extends CActiveRecord
 {
 	use UtilityTrait;
+	use GridViewTrait;
 
 	public $defaultColumns = array();
 	public $skill_name_i;
@@ -309,10 +310,7 @@ class IpediaSkills extends CActiveRecord
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
-					'filter'=>array(
-						1=>Yii::t('phrase', 'Yes'),
-						0=>Yii::t('phrase', 'No'),
-					),
+					'filter' => $this->filterYesNo(),
 					'type' => 'raw',
 				);
 			}

@@ -42,6 +42,8 @@
  */
 class IpediaPositions extends CActiveRecord
 {
+	use GridViewTrait;
+
 	public $defaultColumns = array();
 	public $position_skill_i;
 	
@@ -320,10 +322,7 @@ class IpediaPositions extends CActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter'=>array(
-					1=>Yii::t('phrase', 'Yes'),
-					0=>Yii::t('phrase', 'No'),
-				),
+				'filter' => $this->filterYesNo(),
 				'type' => 'raw',
 			);
 			$this->defaultColumns[] = array(
@@ -332,10 +331,7 @@ class IpediaPositions extends CActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter'=>array(
-					1=>Yii::t('phrase', 'Yes'),
-					0=>Yii::t('phrase', 'No'),
-				),
+				'filter' => $this->filterYesNo(),
 				'type' => 'raw',
 			);
 			$this->defaultColumns[] = array(
@@ -344,10 +340,7 @@ class IpediaPositions extends CActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter'=>array(
-					1=>Yii::t('phrase', 'Yes'),
-					0=>Yii::t('phrase', 'No'),
-				),
+				'filter' => $this->filterYesNo(),
 				'type' => 'raw',
 			);
 			$this->defaultColumns[] = array(
@@ -356,10 +349,7 @@ class IpediaPositions extends CActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter'=>array(
-					1=>Yii::t('phrase', 'Yes'),
-					0=>Yii::t('phrase', 'No'),
-				),
+				'filter' => $this->filterYesNo(),
 				'type' => 'raw',
 			);
 			if(!Yii::app()->getRequest()->getParam('type')) {
@@ -369,10 +359,7 @@ class IpediaPositions extends CActiveRecord
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
-					'filter'=>array(
-						1=>Yii::t('phrase', 'Yes'),
-						0=>Yii::t('phrase', 'No'),
-					),
+					'filter' => $this->filterYesNo(),
 					'type' => 'raw',
 				);
 			}
