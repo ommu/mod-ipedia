@@ -110,7 +110,7 @@ class OrganizationController extends Controller
 	public function actionManage() 
 	{
 		$model=new IpediaOrganizations('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['IpediaOrganizations'])) {
 			$model->attributes=$_GET['IpediaOrganizations'];
 		}

@@ -150,7 +150,7 @@ class IndustrymajorController extends Controller
 	public function actionManage() 
 	{
 		$model=new IpediaIndustryMajor('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['IpediaIndustryMajor'])) {
 			$model->attributes=$_GET['IpediaIndustryMajor'];
 		}

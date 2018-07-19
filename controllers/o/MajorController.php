@@ -171,7 +171,7 @@ class MajorController extends Controller
 	public function actionManage() 
 	{
 		$model=new IpediaMajors('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['IpediaMajors'])) {
 			$model->attributes=$_GET['IpediaMajors'];
 		}

@@ -110,7 +110,7 @@ class LocationController extends Controller
 	public function actionManage() 
 	{
 		$model=new IpediaDirectoryLocation('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['IpediaDirectoryLocation'])) {
 			$model->attributes=$_GET['IpediaDirectoryLocation'];
 		}

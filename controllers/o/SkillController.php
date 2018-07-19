@@ -168,7 +168,7 @@ class SkillController extends Controller
 	public function actionManage() 
 	{
 		$model=new IpediaSkills('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['IpediaSkills'])) {
 			$model->attributes=$_GET['IpediaSkills'];
 		}

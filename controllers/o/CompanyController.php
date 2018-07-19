@@ -167,7 +167,7 @@ class CompanyController extends Controller
 	public function actionManage() 
 	{
 		$model=new IpediaCompanies('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['IpediaCompanies'])) {
 			$model->attributes=$_GET['IpediaCompanies'];
 		}

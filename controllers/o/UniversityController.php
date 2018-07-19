@@ -167,7 +167,7 @@ class UniversityController extends Controller
 	public function actionManage() 
 	{
 		$model=new IpediaUniversities('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['IpediaUniversities'])) {
 			$model->attributes=$_GET['IpediaUniversities'];
 		}

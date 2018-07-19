@@ -110,7 +110,7 @@ class FacultyController extends Controller
 	public function actionManage() 
 	{
 		$model=new IpediaFaculties('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['IpediaFaculties'])) {
 			$model->attributes=$_GET['IpediaFaculties'];
 		}

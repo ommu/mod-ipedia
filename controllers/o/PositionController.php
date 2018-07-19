@@ -162,7 +162,7 @@ class PositionController extends Controller
 	public function actionManage() 
 	{
 		$model=new IpediaPositions('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['IpediaPositions'])) {
 			$model->attributes=$_GET['IpediaPositions'];
 		}
