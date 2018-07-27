@@ -117,7 +117,7 @@ class UniversityController extends Controller
 				$criteria = new CDbCriteria;
 				$criteria->with = array(
 					'view' => array(
-						'alias'=>'view',
+						'alias' => 'view',
 					),
 				);
 				$items = array();				

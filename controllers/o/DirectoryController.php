@@ -118,7 +118,7 @@ class DirectoryController extends Controller
 				if(isset($data) && $data == 'company') {	
 					$criteria->with = array(
 						'companies' => array(
-							'alias'=>'companies',
+							'alias' => 'companies',
 							'together' => true,
 						),
 					);
@@ -126,7 +126,7 @@ class DirectoryController extends Controller
 				} else if(isset($data) && $data == 'organization') {	
 					$criteria->with = array(
 						'organizations' => array(
-							'alias'=>'organizations',
+							'alias' => 'organizations',
 							'together' => true,
 						),
 					);
@@ -134,7 +134,7 @@ class DirectoryController extends Controller
 				} else if(isset($data) && $data == 'university') {	
 					$criteria->with = array(
 						'universities' => array(
-							'alias'=>'universities',
+							'alias' => 'universities',
 							'together' => true,
 						),
 					);

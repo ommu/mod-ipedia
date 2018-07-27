@@ -143,20 +143,20 @@ class IpediaIndustryMajor extends CActiveRecord
 		// Custom Search		
 		$criteria->with = array(
 			'industry.view' => array(
-				'alias'=>'industry_v',
-				'select'=>'industry_name'
+				'alias' => 'industry_v',
+				'select' => 'industry_name'
 			),
 			'major' => array(
-				'alias'=>'major',
-				'select'=>'major_name'
+				'alias' => 'major',
+				'select' => 'major_name'
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname'
+				'alias' => 'creation',
+				'select' => 'displayname'
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname'
+				'alias' => 'modified',
+				'select' => 'displayname'
 			),
 		);
 

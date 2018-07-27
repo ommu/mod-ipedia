@@ -148,15 +148,15 @@ class IpediaFaculties extends CActiveRecord
 		// Custom Search		
 		$criteria->with = array(
 			'view' => array(
-				'alias'=>'view',
+				'alias' => 'view',
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname'
+				'alias' => 'creation',
+				'select' => 'displayname'
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname'
+				'alias' => 'modified',
+				'select' => 'displayname'
 			),
 		);
 
@@ -332,8 +332,8 @@ class IpediaFaculties extends CActiveRecord
 		$criteria=new CDbCriteria;
 		$criteria->with = array(
 			'another' => array(
-				'alias'=>'another',
-				'select'=>'another_name'
+				'alias' => 'another',
+				'select' => 'another_name'
 			),
 		);
 		$criteria->compare('another.another_name', strtolower(trim($this->faculty_name_i)));

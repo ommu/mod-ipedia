@@ -163,16 +163,16 @@ class IpediaDirectoryLocation extends CActiveRecord
 		// Custom Search		
 		$criteria->with = array(
 			'directory' => array(
-				'alias'=>'directory',
-				'select'=>'directory_name'
+				'alias' => 'directory',
+				'select' => 'directory_name'
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname'
+				'alias' => 'creation',
+				'select' => 'displayname'
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname'
+				'alias' => 'modified',
+				'select' => 'displayname'
 			),
 		);
 

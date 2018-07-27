@@ -155,15 +155,15 @@ class IpediaCompanies extends CActiveRecord
 		// Custom Search		
 		$criteria->with = array(
 			'view' => array(
-				'alias'=>'view',
+				'alias' => 'view',
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname'
+				'alias' => 'creation',
+				'select' => 'displayname'
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname'
+				'alias' => 'modified',
+				'select' => 'displayname'
 			),
 		);
 
@@ -327,8 +327,8 @@ class IpediaCompanies extends CActiveRecord
 		$criteria=new CDbCriteria;
 		$criteria->with = array(
 			'directory' => array(
-				'alias'=>'directory',
-				'select'=>'directory_name'
+				'alias' => 'directory',
+				'select' => 'directory_name'
 			),
 		);
 		$criteria->compare('directory.directory_name', strtolower(trim($this->company_name_i)));

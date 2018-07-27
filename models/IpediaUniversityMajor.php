@@ -148,24 +148,24 @@ class IpediaUniversityMajor extends CActiveRecord
 		// Custom Search		
 		$criteria->with = array(
 			'university.view' => array(
-				'alias'=>'university_v',
-				'select'=>'university_name'
+				'alias' => 'university_v',
+				'select' => 'university_name'
 			),
 			'faculty.view' => array(
-				'alias'=>'faculty_v',
-				'select'=>'faculty_name'
+				'alias' => 'faculty_v',
+				'select' => 'faculty_name'
 			),
 			'major' => array(
-				'alias'=>'major',
-				'select'=>'major_name'
+				'alias' => 'major',
+				'select' => 'major_name'
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname'
+				'alias' => 'creation',
+				'select' => 'displayname'
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname'
+				'alias' => 'modified',
+				'select' => 'displayname'
 			),
 		);
 

@@ -143,20 +143,20 @@ class IpediaPositionSkill extends CActiveRecord
 		// Custom Search		
 		$criteria->with = array(
 			'position' => array(
-				'alias'=>'position',
-				'select'=>'position_name'
+				'alias' => 'position',
+				'select' => 'position_name'
 			),
 			'skill.view' => array(
-				'alias'=>'skill_v',
-				'select'=>'skill_name'
+				'alias' => 'skill_v',
+				'select' => 'skill_name'
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname'
+				'alias' => 'creation',
+				'select' => 'displayname'
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname'
+				'alias' => 'modified',
+				'select' => 'displayname'
 			),
 		);
 

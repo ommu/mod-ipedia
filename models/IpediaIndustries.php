@@ -159,15 +159,15 @@ class IpediaIndustries extends CActiveRecord
 		// Custom Search		
 		$criteria->with = array(
 			'view' => array(
-				'alias'=>'view',
+				'alias' => 'view',
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname'
+				'alias' => 'creation',
+				'select' => 'displayname'
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname'
+				'alias' => 'modified',
+				'select' => 'displayname'
 			),
 		);
 
@@ -343,8 +343,8 @@ class IpediaIndustries extends CActiveRecord
 		$criteria=new CDbCriteria;
 		$criteria->with = array(
 			'tag' => array(
-				'alias'=>'tag',
-				'select'=>'body'
+				'alias' => 'tag',
+				'select' => 'body'
 			),
 		);
 		$criteria->compare('tag.body', strtolower($this->industry_name_i));
