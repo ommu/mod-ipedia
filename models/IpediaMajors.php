@@ -275,7 +275,7 @@ class IpediaMajors extends CActiveRecord
 				'value' => 'CHtml::link($data->view->universities ? $data->view->universities : 0, Yii::app()->controller->createUrl("o/universitymajor/manage", array(\'major\'=>$data->major_id,\'type\'=>\'publish\')))',
 				'htmlOptions' => array(
 					'class' => 'center',
-				),	
+				),
 				'type' => 'raw',
 			);
 			$this->defaultColumns[] = array(
@@ -283,13 +283,13 @@ class IpediaMajors extends CActiveRecord
 				'value' => 'CHtml::link($data->view->industries ? $data->view->industries : 0, Yii::app()->controller->createUrl("o/industrymajor/manage", array(\'major\'=>$data->major_id,\'type\'=>\'publish\')))',
 				'htmlOptions' => array(
 					'class' => 'center',
-				),	
+				),
 				'type' => 'raw',
 			);
 			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish", array("id"=>$data->major_id)), $data->publish, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\', array(\'id\'=>$data->major_id)), $data->publish, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),

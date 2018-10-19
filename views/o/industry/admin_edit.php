@@ -16,7 +16,7 @@
 	$this->breadcrumbs=array(
 		'Ipedia Industries'=>array('manage'),
 		$model->industry_id=>array('view','id'=>$model->industry_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

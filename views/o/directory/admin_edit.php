@@ -16,7 +16,7 @@
 	$this->breadcrumbs=array(
 		'Ipedia Directories'=>array('manage'),
 		$model->directory_id=>array('view','id'=>$model->directory_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

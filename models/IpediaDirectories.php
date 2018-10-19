@@ -273,7 +273,7 @@ class IpediaDirectories extends CActiveRecord
 				'value' => 'CHtml::link($data->view->locations ? $data->view->locations : 0, Yii::app()->controller->createUrl("o/location/manage", array(\'directory\'=>$data->directory_id,\'type\'=>\'publish\')))',
 				'htmlOptions' => array(
 					'class' => 'center',
-				),	
+				),
 				'type' => 'raw',
 			);
 			$this->defaultColumns[] = array(
@@ -306,7 +306,7 @@ class IpediaDirectories extends CActiveRecord
 			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish", array("id"=>$data->directory_id)), $data->publish, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\', array(\'id\'=>$data->directory_id)), $data->publish, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),

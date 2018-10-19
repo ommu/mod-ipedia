@@ -16,7 +16,7 @@
 	$this->breadcrumbs=array(
 		'Ipedia Faculties'=>array('manage'),
 		$model->faculty_id=>array('view','id'=>$model->faculty_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

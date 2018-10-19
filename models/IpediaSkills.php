@@ -282,13 +282,13 @@ class IpediaSkills extends CActiveRecord
 				'value' => 'CHtml::link($data->view->positions ? $data->view->positions : 0, Yii::app()->controller->createUrl("o/positionskill/manage", array(\'skill\'=>$data->skill_id,\'type\'=>\'publish\')))',
 				'htmlOptions' => array(
 					'class' => 'center',
-				),	
+				),
 				'type' => 'raw',
 			);
 			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish", array("id"=>$data->skill_id)), $data->publish, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\', array(\'id\'=>$data->skill_id)), $data->publish, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),

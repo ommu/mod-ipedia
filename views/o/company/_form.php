@@ -17,7 +17,6 @@
 <?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 	'id'=>'ipedia-companies-form',
 	'enableAjaxValidation'=>true,
-	//'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>
 
 <div class="dialog-content">
@@ -100,7 +99,7 @@
 					<?php }
 					}?>
 				</div>
-				<?php if($model->isNewRecord) {?><span class="small-px">tambahkan tanda koma (,) jika ingin menambahkan keyword lebih dari satu</span><?php }?>
+				<?php if($model->isNewRecord) {?><div class="small-px">tambahkan tanda koma (,) jika ingin menambahkan keyword lebih dari satu</div><?php }?>
 			</div>
 		</div>
 		<?php }?>

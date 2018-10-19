@@ -15,7 +15,7 @@
 
 	$this->breadcrumbs=array(
 		'Ipedia Organizations'=>array('manage'),
-		'Create',
+		Yii::t('phrase', 'Create'),
 	);
 ?>
 

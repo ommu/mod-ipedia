@@ -16,7 +16,7 @@
 	$this->breadcrumbs=array(
 		'Ipedia Skills'=>array('manage'),
 		$model->skill_id=>array('view','id'=>$model->skill_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

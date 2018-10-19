@@ -281,13 +281,13 @@ class IpediaCompanies extends CActiveRecord
 				'value' => 'CHtml::link($data->view->industries ? $data->view->industries : 0, Yii::app()->controller->createUrl("o/companyindustry/manage", array(\'company\'=>$data->company_id,\'type\'=>\'publish\')))',
 				'htmlOptions' => array(
 					'class' => 'center',
-				),	
+				),
 				'type' => 'raw',
 			);
 			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish", array("id"=>$data->company_id)), $data->publish, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\', array(\'id\'=>$data->company_id)), $data->publish, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),

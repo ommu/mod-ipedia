@@ -17,7 +17,6 @@
 <?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 	'id'=>'ipedia-positions-form',
 	'enableAjaxValidation'=>true,
-	//'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>
 
 <?php //begin.Messages ?>
@@ -40,13 +39,10 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'position_desc'); ?>
 		<div class="desc">
-			<?php //echo $form->textArea($model,'position_desc', array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
-			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
+			<?php $this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_desc,
-				// Redactor options
 				'options'=>array(
-					//'lang'=>'fi',
 					'buttons'=>array(
 						'html', 'formatting', '|', 
 						'bold', 'italic', 'deleted', '|',
@@ -67,13 +63,10 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'position_task'); ?>
 		<div class="desc">
-			<?php //echo $form->textArea($model,'position_task', array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
-			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
+			<?php $this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_task,
-				// Redactor options
 				'options'=>array(
-					//'lang'=>'fi',
 					'buttons'=>array(
 						'html', 'formatting', '|', 
 						'bold', 'italic', 'deleted', '|',
@@ -94,13 +87,10 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'position_jobdesc'); ?>
 		<div class="desc">
-			<?php //echo $form->textArea($model,'position_jobdesc', array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
-			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
+			<?php $this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_jobdesc,
-				// Redactor options
 				'options'=>array(
-					//'lang'=>'fi',
 					'buttons'=>array(
 						'html', 'formatting', '|', 
 						'bold', 'italic', 'deleted', '|',
@@ -121,13 +111,10 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'position_knowledge'); ?>
 		<div class="desc">
-			<?php //echo $form->textArea($model,'position_knowledge', array('rows'=>6, 'cols'=>50,'class'=>'span-10 medium'));
-			$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
+			<?php $this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 				'model'=>$model,
 				'attribute'=>position_knowledge,
-				// Redactor options
 				'options'=>array(
-					//'lang'=>'fi',
 					'buttons'=>array(
 						'html', 'formatting', '|', 
 						'bold', 'italic', 'deleted', '|',
