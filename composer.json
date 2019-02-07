@@ -1,0 +1,49 @@
+{
+	"name": "ommu/ipedia",
+	"description": "iPedia Module from Ommu Platform",
+	"keywords": [
+		"module",
+		"ipedia",
+		"company",
+		"university",
+		"position",
+		"industry",
+		"major",
+		"skill",
+		"ommu",
+		"ommu-platform",
+		"yii2"
+	],
+	"homepage": "https://github.com/ommu/mod-ipedia",
+	"type": "ommu-module",
+	"license": "Apache-2.0",
+	"support": {
+		"issues": "https://github.com/ommu/mod-ipedia/issues",
+		"wiki": "https://github.com/ommu/mod-ipedia/wiki",
+		"source": "https://github.com/ommu/mod-ipedia"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ommu/mod-ipedia.git"
+	},
+	"authors": [
+		{
+			"name": "Putra Sudaryanto",
+			"email": "putra@sudaryanto.id",
+			"homepage": "https://putra.sudaryanto.id",
+			"role": "Creator"
+		}
+	],
+	"require": {
+		"php": "~7.0",
+		"oomphinc/composer-installers-extender": "^1.0",
+		"yiisoft/yii2": "~2.0.13",
+		"ommu/yii-traits": "~2.1",
+		"ommu/yii2-redactor": "~2.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"ommu\\ipedia\\": ""
+		}
+	}
+}
