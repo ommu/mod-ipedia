@@ -4,15 +4,15 @@
 	"keywords": [
 		"module",
 		"ipedia",
-		"biography",
-		"education",
-		"experience",
-		"organization",
-		"training",
-		"portfolio",
+		"company",
+		"university",
+		"position",
+		"industry",
+		"major",
 		"skill",
 		"ommu",
-		"ommu-platform"
+		"ommu-platform",
+		"yii"
 	],
 	"homepage": "https://github.com/ommu/mod-ipedia",
 	"type": "ommu-module",
@@ -38,7 +38,5 @@
 		"php": ">=5.3.2",
 		"oomphinc/composer-installers-extender": "^1.0",
 		"yiisoft/yii": ">=1.1.14"
-	},
-	"require-dev": {
 	}
 }
