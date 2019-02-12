@@ -16,6 +16,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
+use ommu\ipedia\models\IpediaCompanies;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Companies'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->company_name;
@@ -39,7 +40,7 @@ $this->params['menu']['content'] = [
 		'company_id',
 		[
 			'attribute' => 'publish',
-			'value' => $this->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish, '0=unpublish, 1=publish, 2=trash, 3=admin_checked'),
+			'value' => in_array($model->publish, [0,1]) ? $this->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish) : IpediaCompanies::getPublish($model->publish),
 			'format' => 'raw',
 		],
 		[
@@ -47,7 +48,7 @@ $this->params['menu']['content'] = [
 			'value' => function ($model) {
 				$memberDisplayname = isset($model->member) ? $model->member->displayname : '-';
 				if($memberDisplayname != '-')
-					return Html::a($memberDisplayname, ['member/view', 'id'=>$model->member_id], ['title'=>$memberDisplayname]);
+					return Html::a($memberDisplayname, ['/member/manage/admin/view', 'id'=>$model->member_id], ['title'=>$memberDisplayname]);
 				return $memberDisplayname;
 			},
 			'format' => 'html',
@@ -55,16 +56,6 @@ $this->params['menu']['content'] = [
 		[
 			'attribute' => 'company_name',
 			'value' => $model->company_name ? $model->company_name : '-',
-		],
-		[
-			'attribute' => 'directoryName',
-			'value' => function ($model) {
-				$directoryName = isset($model->directory) ? $model->directory->directory_name : '-';
-				if($directoryName != '-')
-					return Html::a($directoryName, ['directory/view', 'id'=>$model->directory_id], ['title'=>$directoryName]);
-				return $directoryName;
-			},
-			'format' => 'html',
 		],
 		[
 			'attribute' => 'creation_date',
@@ -87,48 +78,13 @@ $this->params['menu']['content'] = [
 			'value' => Yii::$app->formatter->asDatetime($model->updated_date, 'medium'),
 		],
 		[
-			'attribute' => 'achievements',
-			'value' => Html::a($model->achievements, ['achievement/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} achievements', ['count'=>$model->achievements])]),
-			'format' => 'html',
-		],
-		[
-			'attribute' => 'experiences',
-			'value' => Html::a($model->experiences, ['experience/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} experiences', ['count'=>$model->experiences])]),
-			'format' => 'html',
-		],
-		[
-			'attribute' => 'organizations',
-			'value' => Html::a($model->organizations, ['organization/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} organizations', ['count'=>$model->organizations])]),
-			'format' => 'html',
-		],
-		[
-			'attribute' => 'referees',
-			'value' => Html::a($model->referees, ['referee/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} referees', ['count'=>$model->referees])]),
-			'format' => 'html',
-		],
-		[
-			'attribute' => 'trainings',
-			'value' => Html::a($model->trainings, ['training/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} trainings', ['count'=>$model->trainings])]),
-			'format' => 'html',
-		],
-		[
 			'attribute' => 'industries',
-			'value' => Html::a($model->industries, ['industry/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$model->industries])]),
+			'value' => Html::a($model->industries, ['company-industry/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$model->industries])]),
 			'format' => 'html',
 		],
 		[
 			'attribute' => 'universities',
 			'value' => Html::a($model->universities, ['university/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} universities', ['count'=>$model->universities])]),
-			'format' => 'html',
-		],
-		[
-			'attribute' => 'companies',
-			'value' => Html::a($model->companies, ['company/manage', 'company'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} companies', ['count'=>$model->companies])]),
-			'format' => 'html',
-		],
-		[
-			'attribute' => 'projects',
-			'value' => Html::a($model->projects, ['project/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} projects', ['count'=>$model->projects])]),
 			'format' => 'html',
 		],
 	],

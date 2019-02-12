@@ -15,6 +15,7 @@
  *	Delete
  *	RunAction
  *	Publish
+ *	Suggest
  *
  *	findModel
  *
@@ -72,7 +73,6 @@ class CompanyController extends Controller
 	 */
 	public function actionManage()
 	{
-		$directory = Yii::$app->request->get('directory');
 		$member = Yii::$app->request->get('member');
 
 		$searchModel = new IpediaCompaniesSearch();
@@ -88,8 +88,6 @@ class CompanyController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
-		if($directory != null)
-			$directories = IpediaDirectories::findOne($directory);
 		if($member != null)
 			$members = Members::findOne($member);
 
@@ -100,8 +98,6 @@ class CompanyController extends Controller
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
-			'directory' => $directory,
-			'directories' => $directories,
 			'member' => $member,
 			'members' => $members,
 		]);
@@ -222,6 +218,31 @@ class CompanyController extends Controller
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia company success updated.'));
 			return $this->redirect(['manage']);
 		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function actionSuggest()
+	{
+		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+		$term = Yii::$app->request->get('term');
+		
+		$model = IpediaCompanies::find()
+			->alias('t')
+			->where(['like', 't.company_name', $term]);
+		$model = $model->published()->limit(15)->all();
+
+		$result = [];
+		foreach($model as $val) {
+			$result[] = [
+				'id' => $val->company_id,
+				'label' => $val->company_name, 
+				'member' => $val->member_id, 
+			];
+		}
+		return $result;
 	}
 
 	/**

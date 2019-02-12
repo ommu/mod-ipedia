@@ -6,7 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2019 OMMU (www.ommu.co)
  * @created date 7 February 2019, 19:54 WIB
- * @modified date 8 February 2019, 10:53 WIB
+ * @modified date 12 February 2019, 11:44 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
  * This is the model class for table "ommu_ipedia_companies".
@@ -38,16 +38,19 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use ommu\users\models\Users;
 use ommu\member\models\Members;
+use ommu\ipedia\models\view\IpediaCompanies as IpediaCompaniesView;
 
 class IpediaCompanies extends \app\components\ActiveRecord
 {
 	use \ommu\traits\UtilityTrait;
 
-	public $gridForbiddenColumn = [];
+	public $gridForbiddenColumn = ['modified_date', 'modifiedDisplayname', 'updated_date'];
 
 	public $memberDisplayname;
 	public $creationDisplayname;
 	public $modifiedDisplayname;
+	public $isMember;
+	public $isUniversity;
 
 	/**
 	 * @return string the associated database table name
@@ -63,9 +66,10 @@ class IpediaCompanies extends \app\components\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['member_id', 'company_name'], 'required'],
+			[['company_name'], 'required'],
 			[['publish', 'member_id', 'creation_id', 'modified_id'], 'integer'],
 			[['company_name'], 'string'],
+			[['member_id'], 'safe'],
 			[['member_id'], 'exist', 'skipOnError' => true, 'targetClass' => Members::className(), 'targetAttribute' => ['member_id' => 'member_id']],
 		];
 	}
@@ -78,7 +82,7 @@ class IpediaCompanies extends \app\components\ActiveRecord
 		return [
 			'company_id' => Yii::t('app', 'Company'),
 			'publish' => Yii::t('app', 'Publish'),
-			'member_id' => Yii::t('app', 'Member'),
+			'member_id' => Yii::t('app', 'Member ID'),
 			'company_name' => Yii::t('app', 'Company Name'),
 			'creation_date' => Yii::t('app', 'Creation Date'),
 			'creation_id' => Yii::t('app', 'Creation'),
@@ -90,6 +94,8 @@ class IpediaCompanies extends \app\components\ActiveRecord
 			'memberDisplayname' => Yii::t('app', 'Member'),
 			'creationDisplayname' => Yii::t('app', 'Creation'),
 			'modifiedDisplayname' => Yii::t('app', 'Modified'),
+			'isMember' => Yii::t('app', 'Member'),
+			'isUniversity' => Yii::t('app', 'University'),
 		];
 	}
 
@@ -162,6 +168,14 @@ class IpediaCompanies extends \app\components\ActiveRecord
 	}
 
 	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getView()
+	{
+		return $this->hasOne(IpediaCompaniesView::className(), ['company_id' => 'company_id']);
+	}
+
+	/**
 	 * {@inheritdoc}
 	 * @return \ommu\ipedia\models\query\IpediaCompanies the active query used by this AR class.
 	 */
@@ -182,14 +196,6 @@ class IpediaCompanies extends \app\components\ActiveRecord
 			'class'  => 'yii\grid\SerialColumn',
 			'contentOptions' => ['class'=>'center'],
 		];
-		if(!Yii::$app->request->get('member')) {
-			$this->templateColumns['memberDisplayname'] = [
-				'attribute' => 'memberDisplayname',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->member) ? $model->member->displayname : '-';
-				},
-			];
-		}
 		$this->templateColumns['company_name'] = [
 			'attribute' => 'company_name',
 			'value' => function($model, $key, $index, $column) {
@@ -237,27 +243,34 @@ class IpediaCompanies extends \app\components\ActiveRecord
 			'attribute' => 'industries',
 			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
-				return Html::a($model->industries, ['industry/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$model->industries])]);
+				return Html::a($model->industries, ['company-industry/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$model->industries])]);
 			},
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',
 		];
-		$this->templateColumns['universities'] = [
-			'attribute' => 'universities',
-			'filter' => false,
+		$this->templateColumns['isUniversity'] = [
+			'attribute' => 'isUniversity',
+			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return Html::a($model->universities, ['university/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} universities', ['count'=>$model->universities])]);
+				return $this->filterYesNo($model->isUniversity);
 			},
 			'contentOptions' => ['class'=>'center'],
-			'format' => 'html',
+		];
+		$this->templateColumns['isMember'] = [
+			'attribute' => 'isMember',
+			'filter' => $this->filterYesNo(),
+			'value' => function($model, $key, $index, $column) {
+				return $this->filterYesNo($model->isMember);
+			},
+			'contentOptions' => ['class'=>'center'],
 		];
 		if(!Yii::$app->request->get('trash')) {
 			$this->templateColumns['publish'] = [
 				'attribute' => 'publish',
-				'filter' => $this->filterYesNo(),
+				'filter' => self::getPublish(),
 				'value' => function($model, $key, $index, $column) {
 					$url = Url::to(['publish', 'id'=>$model->primaryKey]);
-					return $this->quickAction($url, $model->publish, '0=unpublish, 1=publish, 2=trash, 3=admin_checked');
+					return in_array($model->publish, [0,1]) ? $this->quickAction($url, $model->publish) : self::getPublish($model->publish);
 				},
 				'contentOptions' => ['class'=>'center'],
 				'format' => 'raw',
@@ -284,6 +297,40 @@ class IpediaCompanies extends \app\components\ActiveRecord
 	}
 
 	/**
+	 * function getPublish
+	 */
+	public static function getPublish($value=null)
+	{
+		$items = array(
+			'0' => Yii::t('app', 'Unpublish'),
+			'1' => Yii::t('app', 'Publish'),
+			// '2' => Yii::t('app', 'Trash'),
+			'3' => Yii::t('app', 'Checked'),
+		);
+
+		if($value !== null)
+			return $items[$value];
+		else
+			return $items;
+	}
+
+	/**
+	 * User get information
+	 */
+	public function getIsMember($memberId)
+	{
+		return $memberId ? 1 : 0;
+	}
+
+	/**
+	 * User get information
+	 */
+	public function getIsUniversity($universities)
+	{
+		return $universities ? 1 : 0;
+	}
+
+	/**
 	 * after find attributes
 	 */
 	public function afterFind()
@@ -293,6 +340,8 @@ class IpediaCompanies extends \app\components\ActiveRecord
 		// $this->memberDisplayname = isset($this->member) ? $this->member->displayname : '-';
 		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
 		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
+		$this->isMember = $this->getIsMember($this->member_id);
+		$this->isUniversity = $this->getIsUniversity($this->universities);
 	}
 
 	/**

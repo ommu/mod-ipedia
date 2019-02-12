@@ -32,8 +32,6 @@ use app\components\ActiveForm;
 
 		<?php echo $form->field($model, 'company_name');?>
 
-		<?php echo $form->field($model, 'directoryName');?>
-
 		<?php echo $form->field($model, 'creation_date')
 			->input('date');?>
 

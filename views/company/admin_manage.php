@@ -37,30 +37,6 @@ $this->params['menu']['option'] = [
 <div class="ipedia-companies-manage">
 <?php Pjax::begin(); ?>
 
-<?php if($directory != null) {
-$model = $directories;
-echo DetailView::widget([
-	'model' => $directories,
-	'options' => [
-		'class'=>'table table-striped detail-view',
-	],
-	'attributes' => [
-		[
-			'attribute' => 'directory_name',
-			'value' => $model->directory_name ? $model->directory_name : '-',
-		],
-		[
-			'attribute' => 'creation_date',
-			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
-		],
-		[
-			'attribute' => 'creationDisplayname',
-			'value' => isset($model->creation) ? $model->creation->displayname : '-',
-		],
-	],
-]);
-}?>
-
 <?php if($member != null) {
 $model = $members;
 echo DetailView::widget([
@@ -74,41 +50,13 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$profileName = isset($model->profile) ? $model->profile->title->message : '-';
 				if($profileName != '-')
-					return Html::a($profileName, ['profile/view', 'id'=>$model->profile_id], ['title'=>$profileName]);
+					return Html::a($profileName, ['/member/setting/profile/view', 'id'=>$model->profile_id], ['title'=>$profileName]);
 				return $profileName;
 			},
 			'format' => 'html',
 		],
 		'username',
 		'displayname',
-		[
-			'attribute' => 'photo_header',
-			'value' => function ($model) {
-				$uploadPath = Members::getUploadPath(false);
-				return $model->photo_header ? Html::img(join('/', [Url::Base(), $uploadPath, $model->photo_header]), ['width' => '100%']).'<br/><br/>'.$model->photo_header : '-';
-			},
-			'format' => 'html',
-		],
-		[
-			'attribute' => 'photo_profile',
-			'value' => function ($model) {
-				$uploadPath = Members::getUploadPath(false);
-				return $model->photo_profile ? Html::img(join('/', [Url::Base(), $uploadPath, $model->photo_profile]), ['width' => '100%']).'<br/><br/>'.$model->photo_profile : '-';
-			},
-			'format' => 'html',
-		],
-		[
-			'attribute' => 'short_biography',
-			'value' => $model->short_biography ? $model->short_biography : '-',
-		],
-		[
-			'attribute' => 'approved_date',
-			'value' => Yii::$app->formatter->asDatetime($model->approved_date, 'medium'),
-		],
-		[
-			'attribute' => 'approvedDisplayname',
-			'value' => isset($model->approvedRltn) ? $model->approvedRltn->displayname : '-',
-		],
 		[
 			'attribute' => 'creation_date',
 			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),

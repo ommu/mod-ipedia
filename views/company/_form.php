@@ -16,6 +16,7 @@
 
 use yii\helpers\Html;
 use app\components\ActiveForm;
+use ommu\ipedia\models\IpediaCompanies;
 ?>
 
 <div class="ipedia-companies-form">
@@ -28,16 +29,17 @@ use app\components\ActiveForm;
 
 <?php //echo $form->errorSummary($model);?>
 
+<?php echo $form->field($model, 'company_name', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+	->textInput()
+	->label($model->getAttributeLabel('company_name'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+
 <?php echo $form->field($model, 'member_id', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput(['type'=>'number', 'min'=>'1'])
 	->label($model->getAttributeLabel('member_id'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'company_name', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
-	->textarea(['rows'=>6, 'cols'=>50])
-	->label($model->getAttributeLabel('company_name'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-
-<?php echo $form->field($model, 'publish', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12 checkbox">{input}{error}</div>'])
-	->checkbox(['label'=>''])
+<?php $publish = IpediaCompanies::getPublish();
+echo $form->field($model, 'publish', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+	->dropDownList($publish, ['prompt' => ''])
 	->label($model->getAttributeLabel('publish'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <div class="ln_solid"></div>

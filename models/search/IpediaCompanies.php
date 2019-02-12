@@ -27,8 +27,9 @@ class IpediaCompanies extends IpediaCompaniesModel
 	public function rules()
 	{
 		return [
-			[['company_id', 'publish', 'member_id', 'directory_id', 'creation_id', 'modified_id'], 'integer'],
-			[['company_name', 'creation_date', 'modified_date', 'updated_date', 'memberDisplayname', 'directoryName', 'creationDisplayname', 'modifiedDisplayname'], 'safe'],
+			[['company_id', 'publish', 'member_id', 'creation_id', 'modified_id'], 'integer'],
+			[['company_name', 'creation_date', 'modified_date', 'updated_date',
+				'memberDisplayname', 'creationDisplayname', 'modifiedDisplayname', 'isMember', 'isUniversity'], 'safe'],
 		];
 	}
 
@@ -63,9 +64,9 @@ class IpediaCompanies extends IpediaCompaniesModel
 		$query = IpediaCompaniesModel::find()->alias('t');
 		$query->joinWith([
 			'member member', 
-			'directory directory', 
 			'creation creation', 
-			'modified modified'
+			'modified modified', 
+			'view view',
 		]);
 
 		// add conditions that should always apply here
@@ -82,10 +83,6 @@ class IpediaCompanies extends IpediaCompaniesModel
 			'asc' => ['member.displayname' => SORT_ASC],
 			'desc' => ['member.displayname' => SORT_DESC],
 		];
-		$attributes['directoryName'] = [
-			'asc' => ['directory.directory_name' => SORT_ASC],
-			'desc' => ['directory.directory_name' => SORT_DESC],
-		];
 		$attributes['creationDisplayname'] = [
 			'asc' => ['creation.displayname' => SORT_ASC],
 			'desc' => ['creation.displayname' => SORT_DESC],
@@ -93,6 +90,18 @@ class IpediaCompanies extends IpediaCompaniesModel
 		$attributes['modifiedDisplayname'] = [
 			'asc' => ['modified.displayname' => SORT_ASC],
 			'desc' => ['modified.displayname' => SORT_DESC],
+		];
+		$attributes['isMember'] = [
+			'asc' => ['view.member' => SORT_ASC],
+			'desc' => ['view.member' => SORT_DESC],
+		];
+		$attributes['isUniversity'] = [
+			'asc' => ['view.university' => SORT_ASC],
+			'desc' => ['view.university' => SORT_DESC],
+		];
+		$attributes['industries'] = [
+			'asc' => ['view.industries' => SORT_ASC],
+			'desc' => ['view.industries' => SORT_DESC],
 		];
 		$dataProvider->setSort([
 			'attributes' => $attributes,
@@ -111,26 +120,26 @@ class IpediaCompanies extends IpediaCompaniesModel
 		$query->andFilterWhere([
 			't.company_id' => $this->company_id,
 			't.member_id' => isset($params['member']) ? $params['member'] : $this->member_id,
-			't.directory_id' => isset($params['directory']) ? $params['directory'] : $this->directory_id,
 			'cast(t.creation_date as date)' => $this->creation_date,
 			't.creation_id' => isset($params['creation']) ? $params['creation'] : $this->creation_id,
 			'cast(t.modified_date as date)' => $this->modified_date,
 			't.modified_id' => isset($params['modified']) ? $params['modified'] : $this->modified_id,
 			'cast(t.updated_date as date)' => $this->updated_date,
+			'view.member' => $this->isMember,
+			'view.university' => $this->isUniversity,
 		]);
 
 		if(isset($params['trash']))
-			$query->andFilterWhere(['NOT IN', 't.publish', [0,1]]);
+			$query->andFilterWhere(['NOT IN', 't.publish', [0,1,3]]);
 		else {
 			if(!isset($params['publish']) || (isset($params['publish']) && $params['publish'] == ''))
-				$query->andFilterWhere(['IN', 't.publish', [0,1]]);
+				$query->andFilterWhere(['IN', 't.publish', [0,1,3]]);
 			else
 				$query->andFilterWhere(['t.publish' => $this->publish]);
 		}
 
 		$query->andFilterWhere(['like', 't.company_name', $this->company_name])
 			->andFilterWhere(['like', 'member.displayname', $this->memberDisplayname])
-			->andFilterWhere(['like', 'directory.directory_name', $this->directoryName])
 			->andFilterWhere(['like', 'creation.displayname', $this->creationDisplayname])
 			->andFilterWhere(['like', 'modified.displayname', $this->modifiedDisplayname]);
 
