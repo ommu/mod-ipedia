@@ -79,12 +79,18 @@ $this->params['menu']['content'] = [
 		],
 		[
 			'attribute' => 'industries',
-			'value' => Html::a($model->industries, ['company-industry/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$model->industries])]),
+			'value' => function ($model) {
+				$industries = $model->getIndustries(true);
+				return Html::a($industries, ['company-industry/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$industries])]);
+			},
 			'format' => 'html',
 		],
 		[
 			'attribute' => 'universities',
-			'value' => Html::a($model->universities, ['university/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} universities', ['count'=>$model->universities])]),
+			'value' => function ($model) {
+				$universities = $model->getUniversities(true);
+				return Html::a($universities, ['university/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} universities', ['count'=>$universities])]);
+			},
 			'format' => 'html',
 		],
 	],
