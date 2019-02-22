@@ -22,6 +22,7 @@ use ommu\ipedia\models\IpediaCompanies;
 <div class="ipedia-companies-form">
 
 <?php $form = ActiveForm::begin([
+	'options' => ['class'=>'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -29,18 +30,18 @@ use ommu\ipedia\models\IpediaCompanies;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'company_name', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'company_name')
 	->textInput()
-	->label($model->getAttributeLabel('company_name'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('company_name')); ?>
 
-<?php echo $form->field($model, 'member_id', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'member_id')
 	->textInput(['type'=>'number', 'min'=>'1'])
-	->label($model->getAttributeLabel('member_id'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('member_id')); ?>
 
 <?php $publish = IpediaCompanies::getPublish();
-echo $form->field($model, 'publish', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'publish')
 	->dropDownList($publish, ['prompt' => ''])
-	->label($model->getAttributeLabel('publish'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('publish')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group">
