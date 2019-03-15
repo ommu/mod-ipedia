@@ -59,9 +59,12 @@ class IpediaCompanies extends IpediaCompaniesModel
 	 *
 	 * @return ActiveDataProvider
 	 */
-	public function search($params)
+	public function search($params, $column=null)
 	{
-		$query = IpediaCompaniesModel::find()->alias('t');
+		if(!($column && is_array($column)))
+			$query = IpediaCompaniesModel::find()->alias('t');
+		else
+			$query = IpediaCompaniesModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'member member', 
 			'creation creation', 
