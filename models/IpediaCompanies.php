@@ -214,6 +214,7 @@ class IpediaCompanies extends \app\components\ActiveRecord
 				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
+					// return $model->creationDisplayname;
 				},
 			];
 		}
@@ -229,6 +230,7 @@ class IpediaCompanies extends \app\components\ActiveRecord
 				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
+					// return $model->modifiedDisplayname;
 				},
 			];
 		}
@@ -241,28 +243,28 @@ class IpediaCompanies extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['industries'] = [
 			'attribute' => 'industries',
-			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
 				$industries = $model->getIndustries(true);
 				return Html::a($industries, ['company-industry/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$industries])]);
 			},
+			'filter' => false,
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['isUniversity'] = [
 			'attribute' => 'isUniversity',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				return $this->filterYesNo($model->isUniversity);
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 		];
 		$this->templateColumns['isMember'] = [
 			'attribute' => 'isMember',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				return $this->filterYesNo($model->isMember);
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 		];
 		if(!Yii::$app->request->get('trash')) {

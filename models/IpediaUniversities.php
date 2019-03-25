@@ -182,6 +182,7 @@ class IpediaUniversities extends \app\components\ActiveRecord
 				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
+					// return $model->creationDisplayname;
 				},
 			];
 		}
@@ -197,6 +198,7 @@ class IpediaUniversities extends \app\components\ActiveRecord
 				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
+					// return $model->modifiedDisplayname;
 				},
 			];
 		}
@@ -209,11 +211,11 @@ class IpediaUniversities extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['majors'] = [
 			'attribute' => 'majors',
-			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
 				$majors = $model->getMajors(true);
 				return Html::a($majors, ['major/manage', 'university'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} majors', ['count'=>$majors])]);
 			},
+			'filter' => false,
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',
 		];
