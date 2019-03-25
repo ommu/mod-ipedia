@@ -42,7 +42,7 @@ class IpediaCompanyIndustry extends \app\components\ActiveRecord
 	public $gridForbiddenColumn = [];
 
 	public $companyName;
-	public $industryTagId;
+	public $industryName;
 	public $creationDisplayname;
 	public $modifiedDisplayname;
 
@@ -83,7 +83,7 @@ class IpediaCompanyIndustry extends \app\components\ActiveRecord
 			'modified_id' => Yii::t('app', 'Modified'),
 			'updated_date' => Yii::t('app', 'Updated Date'),
 			'companyName' => Yii::t('app', 'Company'),
-			'industryTagId' => Yii::t('app', 'Industry'),
+			'industryName' => Yii::t('app', 'Industry'),
 			'creationDisplayname' => Yii::t('app', 'Creation'),
 			'modifiedDisplayname' => Yii::t('app', 'Modified'),
 		];
@@ -147,14 +147,16 @@ class IpediaCompanyIndustry extends \app\components\ActiveRecord
 				'attribute' => 'companyName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->company) ? $model->company->company_name : '-';
+					// return $model->companyName;
 				},
 			];
 		}
 		if(!Yii::$app->request->get('industry')) {
-			$this->templateColumns['industryTagId'] = [
-				'attribute' => 'industryTagId',
+			$this->templateColumns['industryName'] = [
+				'attribute' => 'industryName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->industry) ? $model->industry->tag->body : '-';
+					// return $model->industryName;
 				},
 			];
 		}
@@ -237,7 +239,7 @@ class IpediaCompanyIndustry extends \app\components\ActiveRecord
 		parent::afterFind();
 
 		// $this->companyName = isset($this->company) ? $this->company->company_name : '-';
-		// $this->industryTagId = isset($this->industry) ? $this->industry->tag->body : '-';
+		// $this->industryName = isset($this->industry) ? $this->industry->tag->body : '-';
 		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
 		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
 	}

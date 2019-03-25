@@ -161,6 +161,7 @@ class IpediaUniversities extends \app\components\ActiveRecord
 				'attribute' => 'companyName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->company) ? $model->company->company_name : '-';
+					// return $model->companyName;
 				},
 			];
 		}
