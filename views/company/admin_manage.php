@@ -38,9 +38,9 @@ $this->params['menu']['option'] = [
 <?php Pjax::begin(); ?>
 
 <?php if($member != null) {
-$model = $members;
+$model = $member;
 echo DetailView::widget([
-	'model' => $members,
+	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
@@ -50,21 +50,13 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$profileName = isset($model->profile) ? $model->profile->title->message : '-';
 				if($profileName != '-')
-					return Html::a($profileName, ['/member/setting/profile/view', 'id'=>$model->profile_id], ['title'=>$profileName]);
+					return Html::a($profileName, ['/member/setting/profile/view', 'id'=>$model->profile_id], ['title'=>$profileName, 'class'=>'modal-btn']);
 				return $profileName;
 			},
 			'format' => 'html',
 		],
 		'username',
 		'displayname',
-		[
-			'attribute' => 'creation_date',
-			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
-		],
-		[
-			'attribute' => 'creationDisplayname',
-			'value' => isset($model->creation) ? $model->creation->displayname : '-',
-		],
 	],
 ]);
 }?>

@@ -36,7 +36,6 @@ use mdm\admin\components\AccessControl;
 use ommu\ipedia\models\IpediaCompanies;
 use ommu\ipedia\models\search\IpediaCompanies as IpediaCompaniesSearch;
 use ommu\ipedia\models\IpediaDirectories;
-use ommu\member\models\Members;
 
 class CompanyController extends Controller
 {
@@ -73,8 +72,6 @@ class CompanyController extends Controller
 	 */
 	public function actionManage()
 	{
-		$member = Yii::$app->request->get('member');
-
 		$searchModel = new IpediaCompaniesSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -88,8 +85,8 @@ class CompanyController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
-		if($member != null)
-			$members = Members::findOne($member);
+		if(($member = Yii::$app->request->get('member')) != null)
+			$member = \ommu\member\models\Members::findOne($member);
 
 		$this->view->title = Yii::t('app', 'Companies');
 		$this->view->description = '';
@@ -99,7 +96,6 @@ class CompanyController extends Controller
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
 			'member' => $member,
-			'members' => $members,
 		]);
 	}
 
