@@ -30,8 +30,8 @@
 namespace ommu\ipedia\controllers;
 
 use Yii;
-use yii\filters\VerbFilter;
 use app\components\Controller;
+use yii\filters\VerbFilter;
 use mdm\admin\components\AccessControl;
 use ommu\ipedia\models\IpediaCompanies;
 use ommu\ipedia\models\search\IpediaCompanies as IpediaCompaniesSearch;
