@@ -223,11 +223,11 @@ class IpediaUniversities extends \app\components\ActiveRecord
 		if(!Yii::$app->request->get('trash')) {
 			$this->templateColumns['publish'] = [
 				'attribute' => 'publish',
-				'filter' => $this->filterYesNo(),
 				'value' => function($model, $key, $index, $column) {
 					$url = Url::to(['publish', 'id'=>$model->primaryKey]);
 					return $this->quickAction($url, $model->publish, '0=unpublish, 1=publish, 2=trash, 3=admin_checked');
 				},
+				'filter' => $this->filterYesNo(),
 				'contentOptions' => ['class'=>'center'],
 				'format' => 'raw',
 			];
