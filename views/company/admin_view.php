@@ -39,7 +39,7 @@ $this->params['menu']['content'] = [
 		'company_id',
 		[
 			'attribute' => 'publish',
-			'value' => in_array($model->publish, [0,1]) ? $this->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish) : IpediaCompanies::getPublish($model->publish),
+			'value' => in_array($model->publish, [0,1]) ? $model->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish) : IpediaCompanies::getPublish($model->publish),
 			'format' => 'raw',
 		],
 		[
