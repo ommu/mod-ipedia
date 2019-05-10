@@ -1,7 +1,7 @@
 <?php
 /**
  * CompanyController
- * @var $this app\components\View
+ * @var $this ommu\archive\controllers\CompanyController
  * @var $model ommu\ipedia\models\IpediaCompanies
  *
  * CompanyController implements the CRUD actions for IpediaCompanies model.
