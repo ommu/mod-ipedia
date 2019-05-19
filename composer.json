@@ -1,6 +1,7 @@
 {
 	"name": "ommu/ipedia",
 	"description": "iPedia Module from Ommu Platform",
+	"type": "ommu-module",
 	"keywords": [
 		"module",
 		"ipedia",
@@ -14,9 +15,8 @@
 		"ommu-platform",
 		"yii2"
 	],
-	"homepage": "https://github.com/ommu/mod-ipedia",
-	"type": "ommu-module",
 	"license": "Apache-2.0",
+	"homepage": "https://github.com/ommu/mod-ipedia",
 	"support": {
 		"issues": "https://github.com/ommu/mod-ipedia/issues",
 		"wiki": "https://github.com/ommu/mod-ipedia/wiki",
