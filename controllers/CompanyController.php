@@ -228,8 +228,10 @@ class CompanyController extends Controller
 		
 		$model = IpediaCompanies::find()
 			->alias('t')
-			->where(['like', 't.company_name', $term]);
-		$model = $model->published()->limit(15)->all();
+			->andWhere(['like', 't.company_name', $term]);
+		$model = $model->published()
+			->limit(15)
+			->all();
 
 		$result = [];
 		foreach($model as $val) {
