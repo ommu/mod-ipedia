@@ -104,7 +104,8 @@ class IpediaUniversities extends \app\components\ActiveRecord
 	{
 		if($count == false) {
 			return $this->hasMany(IpediaUniversityMajor::className(), ['university_id' => 'university_id'])
-				->andOnCondition([sprintf('%s.publish', IpediaUniversityMajor::tableName()) => $publish]);
+				->alias('majors')
+				->andOnCondition([sprintf('%s.publish', 'majors') => $publish]);
 		}
 
 		$model = IpediaUniversityMajor::find()
@@ -228,9 +229,9 @@ class IpediaUniversities extends \app\components\ActiveRecord
 				'attribute' => 'publish',
 				'value' => function($model, $key, $index, $column) {
 					$url = Url::to(['publish', 'id'=>$model->primaryKey]);
-					return $this->quickAction($url, $model->publish, '0=unpublish, 1=publish, 2=trash, 3=admin_checked');
+					return in_array($model->publish, [0,1]) ? $this->quickAction($url, $model->publish) : self::getPublish($model->publish);
 				},
-				'filter' => $this->filterYesNo(),
+				'filter' => self::getPublish(),
 				'contentOptions' => ['class'=>'center'],
 				'format' => 'raw',
 			];
@@ -243,16 +244,36 @@ class IpediaUniversities extends \app\components\ActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::find()
-				->select([$column])
-				->where(['university_id' => $id])
-				->one();
-			return $model->$column;
+			$model = self::find();
+			if(is_array($column))
+				$model->select($column);
+			else
+				$model->select([$column]);
+			$model = $model->where(['university_id' => $id])->one();
+			return is_array($column) ? $model : $model->$column;
 			
 		} else {
 			$model = self::findOne($id);
 			return $model;
 		}
+	}
+
+	/**
+	 * function getPublish
+	 */
+	public static function getPublish($value=null)
+	{
+		$items = array(
+			'0' => Yii::t('app', 'Unpublish'),
+			'1' => Yii::t('app', 'Publish'),
+			// '2' => Yii::t('app', 'Trash'),
+			'3' => Yii::t('app', 'Checked'),
+		);
+
+		if($value !== null)
+			return $items[$value];
+		else
+			return $items;
 	}
 
 	/**

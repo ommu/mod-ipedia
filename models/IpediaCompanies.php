@@ -114,7 +114,8 @@ class IpediaCompanies extends \app\components\ActiveRecord
 	{
 		if($count == false) {
 			return $this->hasMany(IpediaCompanyIndustry::className(), ['company_id' => 'company_id'])
-				->andOnCondition([sprintf('%s.publish', IpediaCompanyIndustry::tableName()) => $publish]);
+				->alias('industries')
+				->andOnCondition([sprintf('%s.publish', 'industries') => $publish]);
 		}
 
 		$model = IpediaCompanyIndustry::find()
@@ -136,7 +137,8 @@ class IpediaCompanies extends \app\components\ActiveRecord
 	{
 		if($count == false) {
 			return $this->hasMany(IpediaUniversities::className(), ['company_id' => 'company_id'])
-				->andOnCondition([sprintf('%s.publish', IpediaUniversities::tableName()) => $publish]);
+				->alias('universities')
+				->andOnCondition([sprintf('%s.publish', 'universities') => $publish]);
 		}
 
 		$model = IpediaUniversities::find()
@@ -273,11 +275,11 @@ class IpediaCompanies extends \app\components\ActiveRecord
 		if(!Yii::$app->request->get('trash')) {
 			$this->templateColumns['publish'] = [
 				'attribute' => 'publish',
-				'filter' => self::getPublish(),
 				'value' => function($model, $key, $index, $column) {
 					$url = Url::to(['publish', 'id'=>$model->primaryKey]);
 					return in_array($model->publish, [0,1]) ? $this->quickAction($url, $model->publish) : self::getPublish($model->publish);
 				},
+				'filter' => self::getPublish(),
 				'contentOptions' => ['class'=>'center'],
 				'format' => 'raw',
 			];
@@ -290,11 +292,13 @@ class IpediaCompanies extends \app\components\ActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::find()
-				->select([$column])
-				->where(['company_id' => $id])
-				->one();
-			return $model->$column;
+			$model = self::find();
+			if(is_array($column))
+				$model->select($column);
+			else
+				$model->select([$column]);
+			$model = $model->where(['company_id' => $id])->one();
+			return is_array($column) ? $model : $model->$column;
 			
 		} else {
 			$model = self::findOne($id);

@@ -70,7 +70,8 @@ class IpediaCompanies extends IpediaCompaniesModel
 			'creation creation', 
 			'modified modified', 
 			'view view',
-		]);
+		])
+		->groupBy(['company_id']);
 
 		// add conditions that should always apply here
 		$dataParams = [

@@ -26,6 +26,11 @@ use ommu\ipedia\models\IpediaCompanies;
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
+	'fieldConfig' => [
+		'errorOptions' => [
+			'encode' => false,
+		],
+	],
 ]); ?>
 
 <?php //echo $form->errorSummary($model);?>
@@ -40,7 +45,7 @@ use ommu\ipedia\models\IpediaCompanies;
 
 <?php $publish = IpediaCompanies::getPublish();
 echo $form->field($model, 'publish')
-	->dropDownList($publish, ['prompt' => ''])
+	->dropDownList($publish, ['prompt'=>''])
 	->label($model->getAttributeLabel('publish')); ?>
 
 <div class="ln_solid"></div>
