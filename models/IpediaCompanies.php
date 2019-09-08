@@ -119,7 +119,8 @@ class IpediaCompanies extends \app\components\ActiveRecord
 		}
 
 		$model = IpediaCompanyIndustry::find()
-			->where(['company_id' => $this->company_id]);
+			->alias('t')
+			->where(['t.company_id' => $this->company_id]);
 		if($publish == 0)
 			$model->unpublish();
 		elseif($publish == 1)
@@ -142,7 +143,8 @@ class IpediaCompanies extends \app\components\ActiveRecord
 		}
 
 		$model = IpediaUniversities::find()
-			->where(['company_id' => $this->company_id]);
+			->alias('t')
+			->where(['t.company_id' => $this->company_id]);
 		if($publish == 0)
 			$model->unpublish();
 		elseif($publish == 1)

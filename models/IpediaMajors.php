@@ -106,7 +106,8 @@ class IpediaMajors extends \app\components\ActiveRecord
 			->andOnCondition([sprintf('%s.publish', 'industries') => $publish]);
 
 		$model = IpediaIndustryMajor::find()
-			->where(['major_id' => $this->major_id]);
+			->alias('t')
+			->where(['t.major_id' => $this->major_id]);
 		if($publish == 0)
 			$model->unpublish();
 		elseif($publish == 1)
@@ -127,7 +128,8 @@ class IpediaMajors extends \app\components\ActiveRecord
 			return $this->hasMany(IpediaMajorGroupItem::className(), ['major_id' => 'major_id']);
 
 		$model = IpediaMajorGroupItem::find()
-			->where(['major_id' => $this->major_id]);
+			->alias('t')
+			->where(['t.major_id' => $this->major_id]);
 		$groups = $model->count();
 
 		return $groups ? $groups : 0;
@@ -152,7 +154,8 @@ class IpediaMajors extends \app\components\ActiveRecord
 			->andOnCondition([sprintf('%s.publish', 'universities') => $publish]);
 
 		$model = IpediaUniversityMajor::find()
-			->where(['major_id' => $this->major_id]);
+			->alias('t')
+			->where(['t.major_id' => $this->major_id]);
 		if($publish == 0)
 			$model->unpublish();
 		elseif($publish == 1)

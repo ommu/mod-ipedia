@@ -104,7 +104,8 @@ class IpediaPositions extends \app\components\ActiveRecord
 		}
 
 		$model = IpediaPositionSkill::find()
-			->where(['position_id' => $this->position_id]);
+			->alias('t')
+			->where(['t.position_id' => $this->position_id]);
 		if($publish == 0)
 			$model->unpublish();
 		elseif($publish == 1)

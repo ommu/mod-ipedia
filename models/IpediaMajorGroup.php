@@ -78,7 +78,8 @@ class IpediaMajorGroup extends \app\components\ActiveRecord
 			return $this->hasMany(IpediaMajorGroupItem::className(), ['group_id' => 'id']);
 
 		$model = IpediaMajorGroupItem::find()
-			->where(['group_id' => $this->id]);
+			->alias('t')
+			->where(['t.group_id' => $this->id]);
 		$majors = $model->count();
 
 		return $majors ? $majors : 0;

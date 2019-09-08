@@ -109,7 +109,8 @@ class IpediaUniversities extends \app\components\ActiveRecord
 		}
 
 		$model = IpediaUniversityMajor::find()
-			->where(['university_id' => $this->university_id]);
+			->alias('t')
+			->where(['t.university_id' => $this->university_id]);
 		if($publish == 0)
 			$model->unpublish();
 		elseif($publish == 1)
