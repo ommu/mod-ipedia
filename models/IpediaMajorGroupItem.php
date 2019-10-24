@@ -126,25 +126,23 @@ class IpediaMajorGroupItem extends \app\components\ActiveRecord
 			'class' => 'yii\grid\SerialColumn',
 			'contentOptions' => ['class'=>'center'],
 		];
-		if(!Yii::$app->request->get('group')) {
-			$this->templateColumns['group_id'] = [
-				'attribute' => 'group_id',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->group) ? $model->group->group_name : '-';
-					// return $model->groupName;
-				},
-				'filter' => IpediaMajorGroup::getGroup(),
-			];
-		}
-		if(!Yii::$app->request->get('major')) {
-			$this->templateColumns['majorName'] = [
-				'attribute' => 'majorName',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->major) ? $model->major->major_name : '-';
-					// return $model->majorName;
-				},
-			];
-		}
+		$this->templateColumns['group_id'] = [
+			'attribute' => 'group_id',
+			'value' => function($model, $key, $index, $column) {
+				return isset($model->group) ? $model->group->group_name : '-';
+				// return $model->groupName;
+			},
+			'filter' => IpediaMajorGroup::getGroup(),
+			'visible' => !Yii::$app->request->get('group') ? true : false,
+		];
+		$this->templateColumns['majorName'] = [
+			'attribute' => 'majorName',
+			'value' => function($model, $key, $index, $column) {
+				return isset($model->major) ? $model->major->major_name : '-';
+				// return $model->majorName;
+			},
+			'visible' => !Yii::$app->request->get('major') ? true : false,
+		];
 		$this->templateColumns['creation_date'] = [
 			'attribute' => 'creation_date',
 			'value' => function($model, $key, $index, $column) {
@@ -152,15 +150,14 @@ class IpediaMajorGroupItem extends \app\components\ActiveRecord
 			},
 			'filter' => $this->filterDatepicker($this, 'creation_date'),
 		];
-		if(!Yii::$app->request->get('creation')) {
-			$this->templateColumns['creationDisplayname'] = [
-				'attribute' => 'creationDisplayname',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->creation) ? $model->creation->displayname : '-';
-					// return $model->creationDisplayname;
-				},
-			];
-		}
+		$this->templateColumns['creationDisplayname'] = [
+			'attribute' => 'creationDisplayname',
+			'value' => function($model, $key, $index, $column) {
+				return isset($model->creation) ? $model->creation->displayname : '-';
+				// return $model->creationDisplayname;
+			},
+			'visible' => !Yii::$app->request->get('creation') ? true : false,
+		];
 	}
 
 	/**
