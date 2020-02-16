@@ -204,7 +204,7 @@ class IpediaCompanies extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'yii\grid\SerialColumn',
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['company_name'] = [
 			'attribute' => 'company_name',
@@ -256,7 +256,7 @@ class IpediaCompanies extends \app\components\ActiveRecord
 				return Html::a($industries, ['company-industry/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$industries])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['isUniversity'] = [
@@ -265,7 +265,7 @@ class IpediaCompanies extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->isUniversity);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['isMember'] = [
 			'attribute' => 'isMember',
@@ -273,7 +273,7 @@ class IpediaCompanies extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->isMember);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['publish'] = [
 			'attribute' => 'publish',
@@ -282,7 +282,7 @@ class IpediaCompanies extends \app\components\ActiveRecord
 				return in_array($model->publish, [0,1]) ? $this->quickAction($url, $model->publish) : self::getPublish($model->publish);
 			},
 			'filter' => self::getPublish(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 			'visible' => !Yii::$app->request->get('trash') ? true : false,
 		];

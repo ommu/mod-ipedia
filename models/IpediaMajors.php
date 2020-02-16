@@ -208,7 +208,7 @@ class IpediaMajors extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'yii\grid\SerialColumn',
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['anotherName'] = [
 			'attribute' => 'anotherName',
@@ -274,7 +274,7 @@ class IpediaMajors extends \app\components\ActiveRecord
 				return Html::a($industries, ['o/industry/manage', 'major'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$industries])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['groups'] = [
@@ -284,7 +284,7 @@ class IpediaMajors extends \app\components\ActiveRecord
 				return Html::a($groups, ['o/major-group/manage', 'major'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} groups', ['count'=>$groups])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['universities'] = [
@@ -294,7 +294,7 @@ class IpediaMajors extends \app\components\ActiveRecord
 				return Html::a($universities, ['o/university/manage', 'major'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} universities', ['count'=>$universities])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['publish'] = [
@@ -304,7 +304,7 @@ class IpediaMajors extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->publish, '"0=unpublish, 1=publish, 2=trash, 3=admin_checked"');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 			'visible' => !Yii::$app->request->get('trash') ? true : false,
 		];
