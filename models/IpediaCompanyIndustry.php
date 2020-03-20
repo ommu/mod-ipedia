@@ -2,9 +2,9 @@
 /**
  * IpediaCompanyIndustry
  * 
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2019 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
  * @created date 12 February 2019, 11:34 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
