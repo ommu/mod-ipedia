@@ -26,7 +26,7 @@ namespace ommu\ipedia\models;
 
 use Yii;
 use yii\helpers\Html;
-use ommu\users\models\Users;
+use app\models\Users;
 
 class IpediaMajorGroup extends \app\components\ActiveRecord
 {

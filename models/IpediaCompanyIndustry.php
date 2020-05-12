@@ -33,7 +33,7 @@ namespace ommu\ipedia\models;
 
 use Yii;
 use yii\helpers\Url;
-use ommu\users\models\Users;
+use app\models\Users;
 
 class IpediaCompanyIndustry extends \app\components\ActiveRecord
 {
