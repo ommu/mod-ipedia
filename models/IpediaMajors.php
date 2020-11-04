@@ -100,20 +100,22 @@ class IpediaMajors extends \app\components\ActiveRecord
 	 */
 	public function getIndustries($count=false, $publish=1)
 	{
-		if($count == false)
-			return $this->hasMany(IpediaIndustryMajor::className(), ['major_id' => 'major_id'])
-			->alias('industries')
-			->andOnCondition([sprintf('%s.publish', 'industries') => $publish]);
+        if ($count == false) {
+            return $this->hasMany(IpediaIndustryMajor::className(), ['major_id' => 'major_id'])
+                ->alias('industries')
+                ->andOnCondition([sprintf('%s.publish', 'industries') => $publish]);
+        }
 
 		$model = IpediaIndustryMajor::find()
-			->alias('t')
-			->where(['t.major_id' => $this->major_id]);
-		if($publish == 0)
-			$model->unpublish();
-		elseif($publish == 1)
-			$model->published();
-		elseif($publish == 2)
-			$model->deleted();
+            ->alias('t')
+            ->where(['t.major_id' => $this->major_id]);
+        if ($publish == 0) {
+            $model->unpublish();
+        } else if ($publish == 1) {
+            $model->published();
+        } else if ($publish == 2) {
+            $model->deleted();
+        }
 		$industries = $model->count();
 
 		return $industries ? $industries : 0;
@@ -124,12 +126,13 @@ class IpediaMajors extends \app\components\ActiveRecord
 	 */
 	public function getGroups($count=false)
 	{
-		if($count == false)
-			return $this->hasMany(IpediaMajorGroupItem::className(), ['major_id' => 'major_id']);
+        if ($count == false) {
+            return $this->hasMany(IpediaMajorGroupItem::className(), ['major_id' => 'major_id']);
+        }
 
 		$model = IpediaMajorGroupItem::find()
-			->alias('t')
-			->where(['t.major_id' => $this->major_id]);
+            ->alias('t')
+            ->where(['t.major_id' => $this->major_id]);
 		$groups = $model->count();
 
 		return $groups ? $groups : 0;
@@ -148,20 +151,22 @@ class IpediaMajors extends \app\components\ActiveRecord
 	 */
 	public function getUniversities($count=false, $publish=1)
 	{
-		if($count == false)
-			return $this->hasMany(IpediaUniversityMajor::className(), ['major_id' => 'major_id'])
-			->alias('universities')
-			->andOnCondition([sprintf('%s.publish', 'universities') => $publish]);
+        if ($count == false) {
+            return $this->hasMany(IpediaUniversityMajor::className(), ['major_id' => 'major_id'])
+                ->alias('universities')
+                ->andOnCondition([sprintf('%s.publish', 'universities') => $publish]);
+        }
 
 		$model = IpediaUniversityMajor::find()
-			->alias('t')
-			->where(['t.major_id' => $this->major_id]);
-		if($publish == 0)
-			$model->unpublish();
-		elseif($publish == 1)
-			$model->published();
-		elseif($publish == 2)
-			$model->deleted();
+            ->alias('t')
+            ->where(['t.major_id' => $this->major_id]);
+        if ($publish == 0) {
+            $model->unpublish();
+        } else if ($publish == 1) {
+            $model->published();
+        } else if ($publish == 2) {
+            $model->deleted();
+        }
 		$universities = $model->count();
 
 		return $universities ? $universities : 0;
@@ -199,11 +204,13 @@ class IpediaMajors extends \app\components\ActiveRecord
 	{
 		parent::init();
 
-		if(!(Yii::$app instanceof \app\components\Application))
-			return;
+        if (!(Yii::$app instanceof \app\components\Application)) {
+            return;
+        }
 
-		if(!$this->hasMethod('search'))
-			return;
+        if (!$this->hasMethod('search')) {
+            return;
+        }
 
 		$this->templateColumns['_no'] = [
 			'header' => '#',
@@ -315,19 +322,20 @@ class IpediaMajors extends \app\components\ActiveRecord
 	 */
 	public static function getInfo($id, $column=null)
 	{
-		if($column != null) {
-			$model = self::find();
-			if(is_array($column))
-				$model->select($column);
-			else
-				$model->select([$column]);
-			$model = $model->where(['major_id' => $id])->one();
-			return is_array($column) ? $model : $model->$column;
-			
-		} else {
-			$model = self::findOne($id);
-			return $model;
-		}
+        if ($column != null) {
+            $model = self::find();
+            if (is_array($column)) {
+                $model->select($column);
+            } else {
+                $model->select([$column]);
+            }
+            $model = $model->where(['major_id' => $id])->one();
+            return is_array($column) ? $model : $model->$column;
+
+        } else {
+            $model = self::findOne($id);
+            return $model;
+        }
 	}
 
 	/**
@@ -342,10 +350,11 @@ class IpediaMajors extends \app\components\ActiveRecord
 			'3' => Yii::t('app', 'Admin_checked'),
 		);
 
-		if($value !== null)
-			return $items[$value];
-		else
-			return $items;
+        if ($value !== null) {
+            return $items[$value];
+        } else {
+            return $items;
+        }
 	}
 
 	/**
@@ -365,15 +374,17 @@ class IpediaMajors extends \app\components\ActiveRecord
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			if($this->isNewRecord) {
-				if($this->creation_id == null)
-					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			} else {
-				if($this->modified_id == null)
-					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			}
-		}
-		return true;
+        if (parent::beforeValidate()) {
+            if ($this->isNewRecord) {
+                if ($this->creation_id == null) {
+                    $this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            } else {
+                if ($this->modified_id == null) {
+                    $this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            }
+        }
+        return true;
 	}
 }

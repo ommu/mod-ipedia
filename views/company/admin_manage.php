@@ -36,7 +36,7 @@ $this->params['menu']['option'] = [
 <div class="ipedia-companies-manage">
 <?php Pjax::begin(); ?>
 
-<?php if($member != null) {
+<?php if ($member != null) {
 $model = $member;
 echo DetailView::widget([
 	'model' => $model,
@@ -48,8 +48,9 @@ echo DetailView::widget([
 			'attribute' => 'profileName',
 			'value' => function ($model) {
 				$profileName = isset($model->profile) ? $model->profile->title->message : '-';
-				if($profileName != '-')
-					return Html::a($profileName, ['/member/setting/profile/view', 'id'=>$model->profile_id], ['title'=>$profileName, 'class'=>'modal-btn']);
+                if ($profileName != '-') {
+                    return Html::a($profileName, ['/member/setting/profile/view', 'id'=>$model->profile_id], ['title'=>$profileName, 'class'=>'modal-btn']);
+                }
 				return $profileName;
 			},
 			'format' => 'html',
@@ -70,12 +71,15 @@ array_push($columnData, [
 	'class' => 'app\components\grid\ActionColumn',
 	'header' => Yii::t('app', 'Option'),
 	'urlCreator' => function($action, $model, $key, $index) {
-		if($action == 'view')
-			return Url::to(['view', 'id'=>$key]);
-		if($action == 'update')
-			return Url::to(['update', 'id'=>$key]);
-		if($action == 'delete')
-			return Url::to(['delete', 'id'=>$key]);
+        if ($action == 'view') {
+            return Url::to(['view', 'id'=>$key]);
+        }
+        if ($action == 'update') {
+            return Url::to(['update', 'id'=>$key]);
+        }
+        if ($action == 'delete') {
+            return Url::to(['delete', 'id'=>$key]);
+        }
 	},
 	'buttons' => [
 		'view' => function ($url, $model, $key) {

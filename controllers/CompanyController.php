@@ -72,21 +72,23 @@ class CompanyController extends Controller
 	 */
 	public function actionManage()
 	{
-		$searchModel = new IpediaCompaniesSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new IpediaCompaniesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-		$gridColumn = Yii::$app->request->get('GridColumn', null);
-		$cols = [];
-		if($gridColumn != null && count($gridColumn) > 0) {
-			foreach($gridColumn as $key => $val) {
-				if($gridColumn[$key] == 1)
-					$cols[] = $key;
-			}
-		}
-		$columns = $searchModel->getGridColumn($cols);
+        $gridColumn = Yii::$app->request->get('GridColumn', null);
+        $cols = [];
+        if ($gridColumn != null && count($gridColumn) > 0) {
+            foreach ($gridColumn as $key => $val) {
+                if ($gridColumn[$key] == 1) {
+                    $cols[] = $key;
+                }
+            }
+        }
+        $columns = $searchModel->getGridColumn($cols);
 
-		if(($member = Yii::$app->request->get('member')) != null)
-			$member = \ommu\member\models\Members::findOne($member);
+        if (($member = Yii::$app->request->get('member')) != null) {
+            $member = \ommu\member\models\Members::findOne($member);
+        }
 
 		$this->view->title = Yii::t('app', 'Companies');
 		$this->view->description = '';
@@ -108,20 +110,21 @@ class CompanyController extends Controller
 	{
 		$model = new IpediaCompanies();
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia company success created.'));
 				return $this->redirect(['manage']);
 				//return $this->redirect(['view', 'id'=>$model->company_id]);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -143,19 +146,20 @@ class CompanyController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia company success updated.'));
 				return $this->redirect(['manage']);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -195,7 +199,7 @@ class CompanyController extends Controller
 		$model = $this->findModel($id);
 		$model->publish = 2;
 
-		if($model->save(false, ['publish','modified_id'])) {
+        if ($model->save(false, ['publish', 'modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia company success deleted.'));
 			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
@@ -213,7 +217,7 @@ class CompanyController extends Controller
 		$replace = $model->publish == 1 ? 0 : 1;
 		$model->publish = $replace;
 
-		if($model->save(false, ['publish','modified_id'])) {
+        if ($model->save(false, ['publish', 'modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia company success updated.'));
 			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
@@ -229,14 +233,14 @@ class CompanyController extends Controller
 		$term = Yii::$app->request->get('query');
 		
 		$model = IpediaCompanies::find()
-			->alias('t')
+            ->alias('t')
 			->andWhere(['like', 't.company_name', $term]);
 		$model = $model->published()
 			->limit(15)
 			->all();
 
 		$result = [];
-		foreach($model as $val) {
+        foreach ($model as $val) {
 			$result[] = [
 				'id' => $val->company_id,
 				'label' => $val->company_name, 
@@ -255,8 +259,9 @@ class CompanyController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = IpediaCompanies::findOne($id)) !== null)
-			return $model;
+        if (($model = IpediaCompanies::findOne($id)) !== null) {
+            return $model;
+        }
 
 		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
