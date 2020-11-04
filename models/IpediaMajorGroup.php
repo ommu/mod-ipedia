@@ -108,7 +108,7 @@ class IpediaMajorGroup extends \app\components\ActiveRecord
 	 */
 	public function init()
 	{
-		parent::init();
+        parent::init();
 
         if (!(Yii::$app instanceof \app\components\Application)) {
             return;
