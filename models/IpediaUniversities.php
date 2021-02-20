@@ -165,7 +165,7 @@ class IpediaUniversities extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['companyName'] = [
 			'attribute' => 'companyName',
@@ -222,20 +222,20 @@ class IpediaUniversities extends \app\components\ActiveRecord
 			'attribute' => 'majors',
 			'value' => function($model, $key, $index, $column) {
 				$majors = $model->getMajors(true);
-				return Html::a($majors, ['major/manage', 'university'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} majors', ['count'=>$majors])]);
+				return Html::a($majors, ['major/manage', 'university' => $model->primaryKey, 'publish' => 1], ['title' => Yii::t('app', '{count} majors', ['count' => $majors])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['publish'] = [
 			'attribute' => 'publish',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['publish', 'id'=>$model->primaryKey]);
+				$url = Url::to(['publish', 'id' => $model->primaryKey]);
 				return in_array($model->publish, [0,1]) ? $this->quickAction($url, $model->publish) : self::getPublish($model->publish);
 			},
 			'filter' => self::getPublish(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 			'visible' => !Yii::$app->request->get('trash') ? true : false,
 		];

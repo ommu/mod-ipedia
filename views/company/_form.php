@@ -22,7 +22,7 @@ use ommu\ipedia\models\IpediaCompanies;
 <div class="ipedia-companies-form">
 
 <?php $form = ActiveForm::begin([
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -40,12 +40,12 @@ use ommu\ipedia\models\IpediaCompanies;
 	->label($model->getAttributeLabel('company_name')); ?>
 
 <?php echo $form->field($model, 'member_id')
-	->textInput(['type'=>'number', 'min'=>'1'])
+	->textInput(['type' => 'number', 'min' => '1'])
 	->label($model->getAttributeLabel('member_id')); ?>
 
 <?php $publish = IpediaCompanies::getPublish();
 echo $form->field($model, 'publish')
-	->dropDownList($publish, ['prompt'=>''])
+	->dropDownList($publish, ['prompt' => ''])
 	->label($model->getAttributeLabel('publish')); ?>
 
 <hr/>

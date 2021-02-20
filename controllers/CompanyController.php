@@ -119,7 +119,7 @@ class CompanyController extends Controller
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia company success created.'));
                 return $this->redirect(['manage']);
-                //return $this->redirect(['view', 'id'=>$model->company_id]);
+                //return $this->redirect(['view', 'id' => $model->company_id]);
 
             } else {
                 if (Yii::$app->request->isAjax) {

@@ -208,7 +208,7 @@ class IpediaCompanies extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['company_name'] = [
 			'attribute' => 'company_name',
@@ -257,10 +257,10 @@ class IpediaCompanies extends \app\components\ActiveRecord
 			'attribute' => 'industries',
 			'value' => function($model, $key, $index, $column) {
 				$industries = $model->getIndustries(true);
-				return Html::a($industries, ['company-industry/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$industries])]);
+				return Html::a($industries, ['company-industry/manage', 'company' => $model->primaryKey, 'publish' => 1], ['title' => Yii::t('app', '{count} industries', ['count' => $industries])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['isUniversity'] = [
@@ -269,7 +269,7 @@ class IpediaCompanies extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->isUniversity);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['isMember'] = [
 			'attribute' => 'isMember',
@@ -277,16 +277,16 @@ class IpediaCompanies extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->isMember);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['publish'] = [
 			'attribute' => 'publish',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['publish', 'id'=>$model->primaryKey]);
+				$url = Url::to(['publish', 'id' => $model->primaryKey]);
 				return in_array($model->publish, [0,1]) ? $this->quickAction($url, $model->publish) : self::getPublish($model->publish);
 			},
 			'filter' => self::getPublish(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 			'visible' => !Yii::$app->request->get('trash') ? true : false,
 		];

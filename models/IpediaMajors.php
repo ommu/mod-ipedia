@@ -215,7 +215,7 @@ class IpediaMajors extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['anotherName'] = [
 			'attribute' => 'anotherName',
@@ -278,40 +278,40 @@ class IpediaMajors extends \app\components\ActiveRecord
 			'attribute' => 'industries',
 			'value' => function($model, $key, $index, $column) {
 				$industries = $model->getIndustries(true);
-				return Html::a($industries, ['o/industry/manage', 'major'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$industries])]);
+				return Html::a($industries, ['o/industry/manage', 'major' => $model->primaryKey, 'publish' => 1], ['title' => Yii::t('app', '{count} industries', ['count' => $industries])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['groups'] = [
 			'attribute' => 'groups',
 			'value' => function($model, $key, $index, $column) {
 				$groups = $model->getGroups(true);
-				return Html::a($groups, ['o/major-group/manage', 'major'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} groups', ['count'=>$groups])]);
+				return Html::a($groups, ['o/major-group/manage', 'major' => $model->primaryKey], ['title' => Yii::t('app', '{count} groups', ['count' => $groups])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['universities'] = [
 			'attribute' => 'universities',
 			'value' => function($model, $key, $index, $column) {
 				$universities = $model->getUniversities(true);
-				return Html::a($universities, ['o/university/manage', 'major'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} universities', ['count'=>$universities])]);
+				return Html::a($universities, ['o/university/manage', 'major' => $model->primaryKey, 'publish' => 1], ['title' => Yii::t('app', '{count} universities', ['count' => $universities])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['publish'] = [
 			'attribute' => 'publish',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['publish', 'id'=>$model->primaryKey]);
+				$url = Url::to(['publish', 'id' => $model->primaryKey]);
 				return $this->quickAction($url, $model->publish, '"0=unpublish, 1=publish, 2=trash, 3=admin_checked"');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 			'visible' => !Yii::$app->request->get('trash') ? true : false,
 		];

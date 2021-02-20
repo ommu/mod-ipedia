@@ -121,7 +121,7 @@ class IpediaMajorGroup extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['group_name'] = [
 			'attribute' => 'group_name',
@@ -148,10 +148,10 @@ class IpediaMajorGroup extends \app\components\ActiveRecord
 			'attribute' => 'majors',
 			'value' => function($model, $key, $index, $column) {
 				$majors = $model->getMajors(true);
-				return Html::a($majors, ['item/manage', 'group'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} majors', ['count'=>$majors])]);
+				return Html::a($majors, ['item/manage', 'group' => $model->primaryKey], ['title' => Yii::t('app', '{count} majors', ['count' => $majors])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'html',
 		];
 	}

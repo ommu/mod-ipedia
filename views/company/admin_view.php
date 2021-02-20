@@ -23,9 +23,9 @@ $this->params['breadcrumbs'][] = $model->company_name;
 
 if (!$small) {
     $this->params['menu']['content'] = [
-        ['label' => Yii::t('app', 'Detail'), 'url' => Url::to(['view', 'id'=>$model->company_id]), 'icon' => 'eye', 'htmlOptions' => ['class'=>'btn btn-success']],
-        ['label' => Yii::t('app', 'Update'), 'url' => Url::to(['update', 'id'=>$model->company_id]), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-        ['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->company_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
+        ['label' => Yii::t('app', 'Detail'), 'url' => Url::to(['view', 'id' => $model->company_id]), 'icon' => 'eye', 'htmlOptions' => ['class' => 'btn btn-success']],
+        ['label' => Yii::t('app', 'Update'), 'url' => Url::to(['update', 'id' => $model->company_id]), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+        ['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id' => $model->company_id]), 'htmlOptions' => ['data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method' => 'post', 'class' => 'btn btn-danger'], 'icon' => 'trash'],
     ];
 } ?>
 
@@ -34,13 +34,13 @@ if (!$small) {
 <?php echo DetailView::widget([
 	'model' => $model,
 	'options' => [
-		'class'=>'table table-striped detail-view',
+		'class' => 'table table-striped detail-view',
 	],
 	'attributes' => [
 		'company_id',
 		[
 			'attribute' => 'publish',
-			'value' => in_array($model->publish, [0,1]) ? $model->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish) : IpediaCompanies::getPublish($model->publish),
+			'value' => in_array($model->publish, [0,1]) ? $model->quickAction(Url::to(['publish', 'id' => $model->primaryKey]), $model->publish) : IpediaCompanies::getPublish($model->publish),
 			'format' => 'raw',
 		],
 		[
@@ -48,7 +48,7 @@ if (!$small) {
 			'value' => function ($model) {
 				$memberDisplayname = isset($model->member) ? $model->member->displayname : '-';
                 if ($memberDisplayname != '-') {
-                    return Html::a($memberDisplayname, ['/member/manage/admin/view', 'id'=>$model->member_id], ['title'=>$memberDisplayname]);
+                    return Html::a($memberDisplayname, ['/member/manage/admin/view', 'id' => $model->member_id], ['title' => $memberDisplayname]);
                 }
 				return $memberDisplayname;
 			},
@@ -87,7 +87,7 @@ if (!$small) {
 			'attribute' => 'industries',
 			'value' => function ($model) {
 				$industries = $model->getIndustries(true);
-				return Html::a($industries, ['company-industry/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} industries', ['count'=>$industries])]);
+				return Html::a($industries, ['company-industry/manage', 'company' => $model->primaryKey, 'publish' => 1], ['title' => Yii::t('app', '{count} industries', ['count' => $industries])]);
 			},
 			'format' => 'html',
 			'visible' => !$small,
@@ -96,7 +96,7 @@ if (!$small) {
 			'attribute' => 'universities',
 			'value' => function ($model) {
 				$universities = $model->getUniversities(true);
-				return Html::a($universities, ['university/manage', 'company'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} universities', ['count'=>$universities])]);
+				return Html::a($universities, ['university/manage', 'company' => $model->primaryKey, 'publish' => 1], ['title' => Yii::t('app', '{count} universities', ['count' => $universities])]);
 			},
 			'format' => 'html',
 			'visible' => !$small,

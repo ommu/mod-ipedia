@@ -160,7 +160,7 @@ class IpediaPositions extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['position_name'] = [
 			'attribute' => 'position_name',
@@ -233,20 +233,20 @@ class IpediaPositions extends \app\components\ActiveRecord
 			'attribute' => 'skills',
 			'value' => function($model, $key, $index, $column) {
 				$skills = $model->getSkills(true);
-				return Html::a($skills, ['skill/manage', 'position'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} skills', ['count'=>$skills])]);
+				return Html::a($skills, ['skill/manage', 'position' => $model->primaryKey, 'publish' => 1], ['title' => Yii::t('app', '{count} skills', ['count' => $skills])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['publish'] = [
 			'attribute' => 'publish',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['publish', 'id'=>$model->primaryKey]);
+				$url = Url::to(['publish', 'id' => $model->primaryKey]);
 				return in_array($model->publish, [0,1]) ? $this->quickAction($url, $model->publish) : self::getPublish($model->publish);
 			},
 			'filter' => self::getPublish(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 			'visible' => !Yii::$app->request->get('trash') ? true : false,
 		];
