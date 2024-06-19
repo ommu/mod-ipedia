@@ -1,13 +1,13 @@
 <?php
 /**
- * IpediaCompanies
+ * IpediaUniversities
  *
- * IpediaCompanies represents the model behind the search form about `ommu\ipedia\models\IpediaCompanies`.
+ * IpediaUniversities represents the model behind the search form about `ommu\ipedia\models\IpediaUniversities`.
  *
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
- * @created date 12 February 2019, 11:28 WIB
+ * @created date 25 June 2019, 14:17 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
  */
@@ -17,9 +17,9 @@ namespace ommu\ipedia\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use ommu\ipedia\models\IpediaCompanies as IpediaCompaniesModel;
+use ommu\ipedia\models\IpediaUniversities as IpediaUniversitiesModel;
 
-class IpediaCompanies extends IpediaCompaniesModel
+class IpediaUniversities extends IpediaUniversitiesModel
 {
 	/**
 	 * {@inheritdoc}
@@ -27,9 +27,8 @@ class IpediaCompanies extends IpediaCompaniesModel
 	public function rules()
 	{
 		return [
-			[['company_id', 'publish', 'member_id', 'creation_id', 'modified_id'], 'integer'],
-			[['company_name', 'creation_date', 'modified_date', 'updated_date',
-				'memberDisplayname', 'creationDisplayname', 'modifiedDisplayname', 'isMember', 'isUniversity'], 'safe'],
+			[['university_id', 'publish', 'company_id', 'creation_id', 'modified_id'], 'integer'],
+			[['education_type', 'creation_date', 'modified_date', 'updated_date', 'companyName', 'creationDisplayname', 'modifiedDisplayname'], 'safe'],
 		];
 	}
 
@@ -62,18 +61,17 @@ class IpediaCompanies extends IpediaCompaniesModel
 	public function search($params, $column=null)
 	{
         if (!($column && is_array($column))) {
-            $query = IpediaCompaniesModel::find()->alias('t');
+            $query = IpediaUniversitiesModel::find()->alias('t');
         } else {
-            $query = IpediaCompaniesModel::find()->alias('t')->select($column);
+            $query = IpediaUniversitiesModel::find()->alias('t')->select($column);
         }
 		$query->joinWith([
-			'member member', 
+			'company company', 
 			'creation creation', 
-			'modified modified', 
-			'view view',
+			'modified modified'
 		]);
 
-		$query->groupBy(['company_id']);
+		$query->groupBy(['university_id']);
 
         // add conditions that should always apply here
 		$dataParams = [
@@ -86,9 +84,9 @@ class IpediaCompanies extends IpediaCompaniesModel
 		$dataProvider = new ActiveDataProvider($dataParams);
 
 		$attributes = array_keys($this->getTableSchema()->columns);
-		$attributes['memberDisplayname'] = [
-			'asc' => ['member.displayname' => SORT_ASC],
-			'desc' => ['member.displayname' => SORT_DESC],
+		$attributes['companyName'] = [
+			'asc' => ['company.company_name' => SORT_ASC],
+			'desc' => ['company.company_name' => SORT_DESC],
 		];
 		$attributes['creationDisplayname'] = [
 			'asc' => ['creation.displayname' => SORT_ASC],
@@ -98,23 +96,14 @@ class IpediaCompanies extends IpediaCompaniesModel
 			'asc' => ['modified.displayname' => SORT_ASC],
 			'desc' => ['modified.displayname' => SORT_DESC],
 		];
-		$attributes['isMember'] = [
-			'asc' => ['view.member' => SORT_ASC],
-			'desc' => ['view.member' => SORT_DESC],
-		];
-		$attributes['isUniversity'] = [
-			'asc' => ['view.university' => SORT_ASC],
-			'desc' => ['view.university' => SORT_DESC],
-		];
-		$attributes['industries'] = [
-			'asc' => ['view.industries' => SORT_ASC],
-			'desc' => ['view.industries' => SORT_DESC],
-		];
 		$dataProvider->setSort([
 			'attributes' => $attributes,
-			'defaultOrder' => ['company_id' => SORT_DESC],
+			'defaultOrder' => ['university_id' => SORT_DESC],
 		]);
 
+        if (Yii::$app->request->get('university_id')) {
+            unset($params['university_id']);
+        }
 		$this->load($params);
 
         if (!$this->validate()) {
@@ -125,29 +114,27 @@ class IpediaCompanies extends IpediaCompaniesModel
 
 		// grid filtering conditions
 		$query->andFilterWhere([
-			't.company_id' => $this->company_id,
-			't.member_id' => isset($params['member']) ? $params['member'] : $this->member_id,
+			't.university_id' => $this->university_id,
+			't.company_id' => isset($params['company']) ? $params['company'] : $this->company_id,
 			'cast(t.creation_date as date)' => $this->creation_date,
 			't.creation_id' => isset($params['creation']) ? $params['creation'] : $this->creation_id,
 			'cast(t.modified_date as date)' => $this->modified_date,
 			't.modified_id' => isset($params['modified']) ? $params['modified'] : $this->modified_id,
 			'cast(t.updated_date as date)' => $this->updated_date,
-			'view.member' => $this->isMember,
-			'view.university' => $this->isUniversity,
 		]);
 
         if (isset($params['trash'])) {
-            $query->andFilterWhere(['NOT IN', 't.publish', [0,1,3]]);
+            $query->andFilterWhere(['NOT IN', 't.publish', [0,1]]);
         } else {
             if (!isset($params['publish']) || (isset($params['publish']) && $params['publish'] == '')) {
-                $query->andFilterWhere(['IN', 't.publish', [0,1,3]]);
+                $query->andFilterWhere(['IN', 't.publish', [0,1]]);
             } else {
                 $query->andFilterWhere(['t.publish' => $this->publish]);
             }
         }
 
-		$query->andFilterWhere(['like', 't.company_name', $this->company_name])
-			->andFilterWhere(['like', 'member.displayname', $this->memberDisplayname])
+		$query->andFilterWhere(['like', 't.education_type', $this->education_type])
+			->andFilterWhere(['like', 'company.company_name', $this->companyName])
 			->andFilterWhere(['like', 'creation.displayname', $this->creationDisplayname])
 			->andFilterWhere(['like', 'modified.displayname', $this->modifiedDisplayname]);
 

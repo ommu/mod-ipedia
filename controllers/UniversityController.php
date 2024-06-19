@@ -1,10 +1,10 @@
 <?php
 /**
- * CompanyController
- * @var $this ommu\ipedia\controllers\CompanyController
- * @var $model ommu\ipedia\models\IpediaCompanies
+ * UniversityController
+ * @var $this ommu\ipedia\controllers\UniversityController
+ * @var $model ommu\ipedia\models\IpediaUniversities
  *
- * CompanyController implements the CRUD actions for IpediaCompanies model.
+ * UniversityController implements the CRUD actions for IpediaUniversities model.
  * Reference start
  * TOC :
  *	Index
@@ -15,14 +15,13 @@
  *	Delete
  *	RunAction
  *	Publish
- *	Suggest
  *
  *	findModel
  *
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
- * @created date 12 February 2019, 11:16 WIB
+ * @created date 25 June 2019, 14:17 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
  */
@@ -33,11 +32,10 @@ use Yii;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use yii\filters\VerbFilter;
-use ommu\ipedia\models\IpediaCompanies;
-use ommu\ipedia\models\search\IpediaCompanies as IpediaCompaniesSearch;
-use ommu\ipedia\models\IpediaDirectories;
+use ommu\ipedia\models\IpediaUniversities;
+use ommu\ipedia\models\search\IpediaUniversities as IpediaUniversitiesSearch;
 
-class CompanyController extends Controller
+class UniversityController extends Controller
 {
 	/**
 	 * {@inheritdoc}
@@ -67,12 +65,12 @@ class CompanyController extends Controller
 	}
 
 	/**
-	 * Lists all IpediaCompanies models.
+	 * Lists all IpediaUniversities models.
 	 * @return mixed
 	 */
 	public function actionManage()
 	{
-        $searchModel = new IpediaCompaniesSearch();
+        $searchModel = new IpediaUniversitiesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $gridColumn = Yii::$app->request->get('GridColumn', null);
@@ -86,29 +84,29 @@ class CompanyController extends Controller
         }
         $columns = $searchModel->getGridColumn($cols);
 
-        if (($member = Yii::$app->request->get('member')) != null) {
-            $member = \ommu\member\models\Members::findOne($member);
+        if (($company = Yii::$app->request->get('company')) != null) {
+            $company = \ommu\ipedia\models\IpediaCompanies::findOne($company);
         }
 
-		$this->view->title = Yii::t('app', 'Companies');
+		$this->view->title = Yii::t('app', 'Universities');
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_manage', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
-			'member' => $member,
+			'company' => $company,
 		]);
 	}
 
 	/**
-	 * Creates a new IpediaCompanies model.
+	 * Creates a new IpediaUniversities model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 * @return mixed
 	 */
 	public function actionCreate()
 	{
-        $model = new IpediaCompanies();
+        $model = new IpediaUniversities();
 
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
@@ -117,9 +115,9 @@ class CompanyController extends Controller
             // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia company success created.'));
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia university success created.'));
                 return $this->redirect(['manage']);
-                //return $this->redirect(['view', 'id' => $model->company_id]);
+                //return $this->redirect(['view', 'id' => $model->university_id]);
 
             } else {
                 if (Yii::$app->request->isAjax) {
@@ -128,7 +126,7 @@ class CompanyController extends Controller
             }
         }
 
-		$this->view->title = Yii::t('app', 'Create Company');
+		$this->view->title = Yii::t('app', 'Create University');
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_create', [
@@ -137,7 +135,7 @@ class CompanyController extends Controller
 	}
 
 	/**
-	 * Updates an existing IpediaCompanies model.
+	 * Updates an existing IpediaUniversities model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id
 	 * @return mixed
@@ -153,7 +151,7 @@ class CompanyController extends Controller
             // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia company success updated.'));
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia university success updated.'));
                 return $this->redirect(['manage']);
 
             } else {
@@ -163,7 +161,7 @@ class CompanyController extends Controller
             }
         }
 
-		$this->view->title = Yii::t('app', 'Update Company: {company-name}', ['company-name' => $model->company_name]);
+		$this->view->title = Yii::t('app', 'Update University: {company-id}', ['company-id' => $model->company->company_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_update', [
@@ -172,7 +170,7 @@ class CompanyController extends Controller
 	}
 
 	/**
-	 * Displays a single IpediaCompanies model.
+	 * Displays a single IpediaUniversities model.
 	 * @param integer $id
 	 * @return mixed
 	 */
@@ -180,7 +178,7 @@ class CompanyController extends Controller
 	{
         $model = $this->findModel($id);
 
-		$this->view->title = Yii::t('app', 'Detail Company: {company-name}', ['company-name' => $model->company_name]);
+		$this->view->title = Yii::t('app', 'Detail University: {company-id}', ['company-id' => $model->company->company_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->oRender('admin_view', [
@@ -190,7 +188,7 @@ class CompanyController extends Controller
 	}
 
 	/**
-	 * Deletes an existing IpediaCompanies model.
+	 * Deletes an existing IpediaUniversities model.
 	 * If deletion is successful, the browser will be redirected to the 'index' page.
 	 * @param integer $id
 	 * @return mixed
@@ -201,13 +199,13 @@ class CompanyController extends Controller
 		$model->publish = 2;
 
         if ($model->save(false, ['publish', 'modified_id'])) {
-			Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia company success deleted.'));
+			Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia university success deleted.'));
 			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
 	}
 
 	/**
-	 * actionPublish an existing IpediaCompanies model.
+	 * actionPublish an existing IpediaUniversities model.
 	 * If publish is successful, the browser will be redirected to the 'index' page.
 	 * @param integer $id
 	 * @return mixed
@@ -219,48 +217,21 @@ class CompanyController extends Controller
 		$model->publish = $replace;
 
         if ($model->save(false, ['publish', 'modified_id'])) {
-			Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia company success updated.'));
+			Yii::$app->session->setFlash('success', Yii::t('app', 'Ipedia university success updated.'));
 			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
 	}
 
 	/**
-	 * {@inheritdoc}
-	 */
-	public function actionSuggest()
-	{
-		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-		$term = Yii::$app->request->get('query');
-		
-		$model = IpediaCompanies::find()
-            ->alias('t')
-			->andWhere(['like', 't.company_name', $term]);
-		$model = $model->published()
-			->limit(15)
-			->all();
-
-		$result = [];
-        foreach ($model as $val) {
-			$result[] = [
-				'id' => $val->company_id,
-				'label' => $val->company_name, 
-				'member' => $val->member_id, 
-			];
-		}
-		return $result;
-	}
-
-	/**
-	 * Finds the IpediaCompanies model based on its primary key value.
+	 * Finds the IpediaUniversities model based on its primary key value.
 	 * If the model is not found, a 404 HTTP exception will be thrown.
 	 * @param integer $id
-	 * @return IpediaCompanies the loaded model
+	 * @return IpediaUniversities the loaded model
 	 * @throws NotFoundHttpException if the model cannot be found
 	 */
 	protected function findModel($id)
 	{
-        if (($model = IpediaCompanies::findOne($id)) !== null) {
+        if (($model = IpediaUniversities::findOne($id)) !== null) {
             return $model;
         }
 

@@ -1,15 +1,15 @@
 <?php
 /**
- * Ipedia Companies (ipedia-companies)
+ * Ipedia Universities (ipedia-universities)
  * @var $this app\components\View
- * @var $this ommu\ipedia\controllers\CompanyController
- * @var $model ommu\ipedia\models\search\IpediaCompanies
+ * @var $this ommu\ipedia\controllers\UniversityController
+ * @var $model ommu\ipedia\models\search\IpediaUniversities
  * @var $form yii\widgets\ActiveForm
  *
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
- * @created date 12 February 2019, 11:16 WIB
+ * @created date 25 June 2019, 14:17 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
  */
@@ -18,7 +18,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
 
-<div class="ipedia-companies-search search-form">
+<div class="ipedia-universities-search search-form">
 
 	<?php $form = ActiveForm::begin([
 		'action' => ['index'],
@@ -28,9 +28,9 @@ use yii\widgets\ActiveForm;
 		],
 	]); ?>
 
-		<?php echo $form->field($model, 'memberDisplayname');?>
+		<?php echo $form->field($model, 'companyName');?>
 
-		<?php echo $form->field($model, 'company_name');?>
+		<?php echo $form->field($model, 'education_type');?>
 
 		<?php echo $form->field($model, 'creation_date')
 			->input('date');?>

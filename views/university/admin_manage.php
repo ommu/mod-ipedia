@@ -1,15 +1,15 @@
 <?php
 /**
- * Ipedia Companies (ipedia-companies)
+ * Ipedia Universities (ipedia-universities)
  * @var $this app\components\View
- * @var $this ommu\ipedia\controllers\CompanyController
- * @var $model ommu\ipedia\models\IpediaCompanies
- * @var $searchModel ommu\ipedia\models\search\IpediaCompanies
+ * @var $this ommu\ipedia\controllers\UniversityController
+ * @var $model ommu\ipedia\models\IpediaUniversities
+ * @var $searchModel ommu\ipedia\models\search\IpediaUniversities
  *
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
- * @created date 12 February 2019, 11:16 WIB
+ * @created date 25 June 2019, 14:17 WIB
  * @link https://github.com/ommu/mod-ipedia
  *
  */
@@ -19,13 +19,12 @@ use yii\helpers\Url;
 use app\components\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\DetailView;
-use ommu\ipedia\models\IpediaDirectories;
-use ommu\member\models\Members;
+use ommu\cat=university\models\IpediaCompanies;
 
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Add Company'), 'url' => Url::to(['create']), 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-success']],
+	['label' => Yii::t('app', 'Add University'), 'url' => Url::to(['create']), 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-success']],
 ];
 $this->params['menu']['option'] = [
 	//['label' => Yii::t('app', 'Search'), 'url' => 'javascript:void(0);'],
@@ -33,11 +32,11 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
-<div class="ipedia-companies-manage">
+<div class="ipedia-universities-manage">
 <?php Pjax::begin(); ?>
 
-<?php if ($member != null) {
-$model = $member;
+<?php if ($company != null) {
+$model = $company;
 echo DetailView::widget([
 	'model' => $model,
 	'options' => [
@@ -45,18 +44,31 @@ echo DetailView::widget([
 	],
 	'attributes' => [
 		[
-			'attribute' => 'profileName',
+			'attribute' => 'memberDisplayname',
 			'value' => function ($model) {
-				$profileName = isset($model->profile) ? $model->profile->title->message : '-';
-                if ($profileName != '-') {
-                    return Html::a($profileName, ['/member/setting/profile/view', 'id' => $model->profile_id], ['title' => $profileName, 'class' => 'modal-btn']);
+				$memberDisplayname = isset($model->member) ? $model->member->displayname : '-';
+                if ($memberDisplayname != '-') {
+                    return Html::a($memberDisplayname, ['member/view', 'id' => $model->member_id], ['title' => $memberDisplayname, 'class' => 'modal-btn']);
                 }
-				return $profileName;
+				return $memberDisplayname;
 			},
 			'format' => 'html',
 		],
-		'username',
-		'displayname',
+		[
+			'attribute' => 'company_name',
+			'value' => $model->company_name ? $model->company_name : '-',
+		],
+		[
+			'attribute' => 'directoryName',
+			'value' => function ($model) {
+				$directoryName = isset($model->directory) ? $model->directory->directory_name : '-';
+                if ($directoryName != '-') {
+                    return Html::a($directoryName, ['directory/view', 'id' => $model->directory_id], ['title' => $directoryName, 'class' => 'modal-btn']);
+                }
+				return $directoryName;
+			},
+			'format' => 'html',
+		],
 	],
 ]);
 }?>
